@@ -1,0 +1,5 @@
+#!/bin/bash
+build() {
+    add_full_dir /usr/lib/firmware/qcom/x1p42100/hp/omnibook-5
+}
+help() { echo 'Initial test platform firmware for the local USB preview'; }

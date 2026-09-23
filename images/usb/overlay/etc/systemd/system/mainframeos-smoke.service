@@ -1,0 +1,14 @@
+[Unit]
+Description=MainFrameOS isolated virtual boot check
+ConditionKernelCommandLine=mainframeos.smoke=1
+After=local-fs.target
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mainframeos-smoke
+StandardOutput=journal+console
+StandardError=journal+console
+
+[Install]
+WantedBy=multi-user.target
