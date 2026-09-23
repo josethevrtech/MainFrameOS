@@ -1,0 +1,13 @@
+# Local build products and sensitive material
+/build/
+/out/
+/private/
+*.img
+*.iso
+*.qcow2
+*.pkg.tar.*
+*.log
+.env
+.env.*
+*.pem
+*.key
