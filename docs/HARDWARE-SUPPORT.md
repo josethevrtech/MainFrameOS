@@ -1,20 +1,18 @@
 # Hardware scope and support policy
 
-## Initial scope
+## Product scope
 
-The reference target is HP OmniBook 5 16-bf0xxx, board 8E33. Prioritize this physical device and closely related Snapdragon laptops. No additional laptop, desktop or headset is currently certified for MainFrameOS.
+MainFrameOS targets Snapdragon laptops and headsets through one installer and a shared Arch Linux ARM system. Coverage can grow across manufacturers, chip generations and hardware configurations. There is no supported MainFrameOS release image yet.
 
-“Similar” means a promising port candidate with substantial shared platform support. It does not mean that the same installer, firmware, audio profile or power settings can be used unchanged.
+The current developer laptop is an initial test platform. Its exact identity belongs in the [technical test record](hardware/HP-OMNIBOOK-5-16-BF.md) and machine-readable profile, not in a product restriction. Contributors can propose other Snapdragon laptops or headsets without matching that laptop's brand or chip.
 
-## Expansion order
+## How coverage grows
 
-1. The reference OmniBook board and tested configuration.
-2. Other units with that board, checking firmware and component variants.
-3. Closely related OmniBook/Snapdragon platforms after reviewing their boot and Linux support.
-4. Other Snapdragon computers with available testers and maintainable upstream support.
-5. A separately scoped standalone VR headset investigation.
+Prioritize usable upstream support, recoverable boot access, available testers and maintainable drivers. Share common kernel, graphics and firmware integration; use board/configuration profiles for genuine differences. Prefer one shared kernel where feasible, while permitting explicitly tracked kernel tracks when a platform requires them.
 
-Do not select a second device based only on marketing name or CPU family. Compare device-tree availability, display/GPU support, firmware availability, audio topology, embedded controller, wireless hardware, boot access and recovery options.
+A single installer selects the appropriate profile and boot adapter. Firmware, audio wiring, displays and recovery procedures can still vary between configurations. See the [installer design](INSTALLER.md) and [Qualcomm enablement tracking](QUALCOMM-LINUX.md).
+
+Bring up the available laptop first to exercise the pipeline, add another distinct configuration to prove the shared design, and investigate accessible headsets within the same architecture. This is test sequencing, not an exclusive list of eligible devices.
 
 ## Status vocabulary
 

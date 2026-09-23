@@ -1,20 +1,22 @@
 # MainFrameOS
 
-**A productivity-first Arch Linux ARM distribution for Snapdragon computers.**
+**A productivity-first Arch Linux ARM distribution for Snapdragon laptops and headsets.**
 
-Developed by **josethevrtech**, MainFrameOS is intended to unify computers and XR devices into one ecosystem, starting with a focused laptop foundation.
+Developed by **josethevrtech**, MainFrameOS aims to deliver one distribution and one installer experience across supported Snapdragon laptops and headsets.
 
 MainFrameOS aims to combine a polished, integrated desktop with current software, dependable recovery, and native Linux, Android, and selected Windows applications. Large screens, keyboard and mouse workflows, docking, and everyday productivity come first. Gaming is optional.
 
-**Status: engineering bootstrap — isolated Arch Linux ARM package builds and a candidate device-tree build are implemented. No MainFrameOS installer or release image exists yet.** The current reference machine runs a custom experimental ARM SteamOS port. Its successful hardware work informs this project; it is not a MainFrameOS release.
+**Status: engineering bootstrap — isolated Arch Linux ARM package builds and a candidate device-tree build are implemented. No MainFrameOS installer or release image exists yet.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
 
-## Initial hardware focus
+## One installer for Snapdragon laptops and headsets
 
-The first target is the **HP OmniBook 5 Laptop 16-bf0xxx, board 8E33**. The inspected reference system has eight Qualcomm Oryon cores, an Adreno X1-45 GPU recorded by its previous Vulkan check, and device-tree compatibility `qcom,x1p42100`.
+The goal is a shared ARM64 installer that detects supported hardware and selects the appropriate kernel, firmware, boot setup and configuration. New devices should join the same distribution through maintained hardware profiles, without requiring a separate MainFrameOS edition for each laptop.
 
-Initial expansion is limited to closely related Snapdragon laptops after individual validation. Matching a chip family is insufficient for support: boot firmware, device trees, displays, audio wiring, embedded controllers and power behavior can differ.
+Snapdragon generations and manufacturers are candidates according to upstream Linux support, boot access and available testing. The developer's current laptop is the first test platform, not an exclusive target or a requirement for contributors.
 
-Snapdragon PCs and standalone VR headsets remain part of the longer-term vision. They are outside the first release's support commitment.
+Headsets share the same product and installation framework, with platform-specific boot/recovery adapters and an XR session where needed. A common installer does not imply that every headset can boot a USB image or use a laptop's partition layout. No device has release-certified MainFrameOS support yet.
+
+See the [unified installer design](docs/INSTALLER.md), [hardware support policy](docs/HARDWARE-SUPPORT.md) and [Qualcomm Linux enablement tracking](docs/QUALCOMM-LINUX.md).
 
 ## Build and maintenance
 
@@ -25,7 +27,7 @@ make check             # Offline contract and unit checks
 make bootstrap         # Native ARM64; verified ALARM bootstrap + rootless Podman builder
 make package-support   # Build MainFrameOS hardware identification package
 make package-canary    # Compile/test the imported Collabora json-c recipe
-make kernel-dtb        # Compile candidate OmniBook device tree; does not install it
+make kernel-dtb        # Compile the initial test-platform device tree; does not install it
 ```
 
 See [Build instructions](docs/BUILD-AND-PACKAGING.md), [Engineering contract](docs/ENGINEERING.md), [Collabora integration](docs/COLLABORA-INTEGRATION.md), [Build evidence](docs/BUILD-EVIDENCE.md), [Support](SUPPORT.md), and [Security](SECURITY.md). Builds are isolated from the running OS. Generated packages are unsigned development artifacts.
@@ -48,7 +50,7 @@ Android and Windows compatibility are development targets, not universal compati
 | --- | --- |
 | [Vision and scope](docs/VISION.md) | Product direction, priorities and first-release boundaries |
 | [Architecture](docs/ARCHITECTURE.md) | Base system, desktop, hardware profiles and application layers |
-| [Reference laptop](docs/hardware/HP-OMNIBOOK-5-16-BF.md) | Observed hardware, existing fixes and validation gaps |
+| [Hardware support](docs/HARDWARE-SUPPORT.md) | Platform coverage, configuration profiles and test evidence |
 | [Hardware support policy](docs/HARDWARE-SUPPORT.md) | What similar means and how devices become supported |
 | [Applications](docs/APPLICATIONS.md) | Native, Flatpak, Android and Windows strategy |
 | [Updates and recovery](docs/UPDATES-AND-RECOVERY.md) | Release channels, complete deployments and rollback |
@@ -60,8 +62,8 @@ Android and Windows compatibility are development targets, not universal compati
 
 ## First milestone
 
-Produce a repeatable Arch Linux ARM desktop image for the reference OmniBook that preserves its useful hardware behavior. Then demonstrate representative Flatpak, Android and Windows workflows before broadening device support.
+Build the shared installer and Arch Linux ARM desktop, using the available laptop for the first end-to-end test. Add supported Snapdragon configurations through the same profile system. Demonstrate representative Flatpak, Android and Windows workflows, then validate headset installation and XR workflows as hardware access permits.
 
-MainFrameOS is an independent project. Arch Linux ARM, Arch Linux, Valve/SteamOS, Qualcomm, HP, KDE and other upstream projects retain their own identities and licenses. The working name does not imply affiliation.
+MainFrameOS is an independent project. Arch Linux ARM, Arch Linux, Valve/SteamOS, Qualcomm, device manufacturers, KDE and other upstream projects retain their own identities and licenses. The working name does not imply affiliation.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for evidence and contribution expectations.

@@ -6,6 +6,7 @@ Primary sources checked while preparing the initial plan on 2026-09-23. Upstream
 | --- | --- |
 | [Arch Linux ARM background](https://archlinuxarm.org/about) | Project identity and ARM ports |
 | [Generic AArch64 root filesystem](https://archlinuxarm.org/platforms/armv8/generic) | Starting userspace, not a laptop support guarantee |
+| [Qualcomm Snapdragon X2 Linux announcement](https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux) | Driver upstreaming and announced distribution milestones; see [tracking policy](QUALCOMM-LINUX.md) |
 | [Qualcomm laptop kernel tree](https://github.com/linux-msm/laptops-kernel) | Community hardware work; not assumed to be the exact local kernel source |
 | [Mesa platforms](https://docs.mesa3d.org/systems.html) | Driver families |
 | [Freedreno / Turnip](https://docs.mesa3d.org/drivers/freedreno.html) | Qualcomm graphics and exact-device support lookup |
