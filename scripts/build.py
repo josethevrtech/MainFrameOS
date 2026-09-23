@@ -89,26 +89,32 @@ def bootstrap(lock):
     print('Builder created; freeze/reuse its image ID. A fresh bootstrap resolves current ALARM packages.')
 
 
-def build_package(lock, package):
-    if package not in ('mainframeos-support', 'compat-json-c'):
-        raise ValueError('unknown package')
+def validate_builder(lock):
     state = json.loads((BUILD / 'builder.json').read_text())
     if state['containerfile_sha256'] != digest(ROOT / 'build-support/Containerfile'):
         raise ValueError('builder recipe changed; rebuild explicitly')
     if state['bootstrap_sha256'] != lock['bootstrap']['sha256']:
         raise ValueError('bootstrap lock changed; rebuild explicitly')
+    return state
+
+
+def stage_recipe(source, work):
+    # Only the generated package workspace is disposable; never overlay old inputs.
+    if work.is_symlink():
+        raise ValueError('package workspace must not be a symlink')
+    if work.exists():
+        shutil.rmtree(work)
+    shutil.copytree(source, work, ignore=shutil.ignore_patterns('__pycache__'))
+
+
+def build_package(lock, package):
+    if package not in ('mainframeos-support', 'compat-json-c'):
+        raise ValueError('unknown package')
+    state = validate_builder(lock)
     OUT.mkdir(exist_ok=True)
     work = BUILD / 'packages' / package
-    work.mkdir(parents=True, exist_ok=True)
     source = ROOT / 'packages' / package
-    for item in source.iterdir():
-        if item.name == '__pycache__':
-            continue
-        dest = work / item.name
-        if item.is_dir():
-            shutil.copytree(item, dest, dirs_exist_ok=True)
-        else:
-            shutil.copyfile(item, dest)
+    stage_recipe(source, work)
     if package == 'compat-json-c':
         expected = lock['collabora']['files']
         for path, checksum in expected.items():

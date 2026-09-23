@@ -8,15 +8,13 @@ import sys
 import tarfile
 import tempfile
 
-from build import ROOT, BUILD, OUT, LOCK, container, digest, fetch
+from build import ROOT, BUILD, OUT, LOCK, container, digest, fetch, validate_builder
 
 
 def main():
     lock = json.loads(LOCK.read_text())
     source = lock['kernel_candidate']
-    builder = json.loads((BUILD / 'builder.json').read_text())
-    if builder['containerfile_sha256'] != digest(ROOT / 'build-support/Containerfile'):
-        raise ValueError('builder recipe changed; rebuild explicitly')
+    builder = validate_builder(lock)
     archive = BUILD / 'downloads' / source['filename']
     fetch(source['url'], archive, source['sha256'])
     work = BUILD / 'kernel-candidate'

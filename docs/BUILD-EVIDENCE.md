@@ -13,7 +13,7 @@ The builder uses the upstream-signed Arch Linux ARM AArch64 root filesystem and 
 | Collabora json-c 0.18-2 recipe | Compiled as AArch64 against ALARM; 25/25 upstream tests passed |
 | Kernel candidate | Pinned jglathe source tag matching local version string; exact installed equivalence remains unproven |
 | OmniBook candidate DTB | Compiled successfully from source with upstream ARM64 defconfig |
-| Repository tests | 13/13 unit tests passed; contracts, Python syntax and shell syntax checks passed |
+| Repository tests | 15/15 unit tests passed; contracts, Python syntax and shell syntax checks passed |
 | Reference identity probe | Matched HP OmniBook 5 / 8E33 and correctly reported bring-up, not release-ready |
 | Package lifecycle | Installed, checked all files, exercised help and removed support package in a disposable ALARM container |
 | Repeat package builds | Both package archives matched SHA-256 across two clean builds in the same frozen toolchain |
@@ -37,6 +37,10 @@ The package manifests record clean committed input `e2cfe78802cb76d4d0dd773ce4eb
 - Nested Landlock download restrictions failed inside the rootless builder. Applied the container-only exception documented in [Engineering](ENGINEERING.md).
 - An initially future-dated source timestamp caused Ninja to repeatedly regenerate. Corrected the epoch and made the build entry point reject future timestamps.
 - The kernel source archive contains an Ubuntu-packaging absolute symlink. Omitted the Debian/Ubuntu packaging directories while retaining safe extraction for Kbuild sources.
+
+## Review-driven build integrity fixes
+
+The automated PR review identified stale package staging files and a missing bootstrap-lock check on the kernel path. Package staging now starts from a fresh generated directory; package and kernel builds share the same builder validation. Regression tests cover deleted inputs and rejection of an outdated builder by both entry points.
 
 ## What this does not establish
 
