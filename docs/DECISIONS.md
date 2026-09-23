@@ -5,7 +5,7 @@ Updated 2026-09-23.
 | Decision | State | Reason / next action |
 | --- | --- | --- |
 | Name: MainFrameOS | Owner-selected working name | Use consistently; no affiliation claim |
-| Arch-based ARM system | Owner requirement | Proposed implementation base is Arch Linux ARM AArch64 |
+| Arch-based ARM system | Owner requirement | Confirmed implementation base is Arch Linux ARM AArch64; SteamOS is excluded as a build input |
 | Snapdragon-only hardware scope | Owner requirement | Do not expand to unrelated CPU platforms |
 | Productivity and large-screen focus | Owner requirement | Desktop, applications and docking take priority |
 | Native Linux, Android, `.exe`, Flatpak goals | Owner requirement | Validate each execution path and actual app workloads |
@@ -28,6 +28,10 @@ Updated 2026-09-23.
 - Android image source and optional services policy.
 - Essential Windows/Android application shortlist.
 - Second device profile and available tester.
-- Project licensing before external contribution or binary distribution.
+- Complete component-level license/firmware inventory before binary distribution. Original project code uses MIT; imported recipes retain their licenses.
 
 Choose these using evidence from the reference prototype. Do not turn untested proposals into release promises.
+
+## Engineering implementation decision
+
+Collabora Holo Core is a source-level integration reference, not a base repository. A json-c recipe is pinned and rebuilt on ALARM as a compatibility test. Rootless isolated builds and read-only board identification are implemented; managed OS deployment and full kernel equivalence remain pending. See [Collabora integration](COLLABORA-INTEGRATION.md).

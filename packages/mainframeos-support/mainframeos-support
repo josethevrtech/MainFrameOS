@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Read-only, allowlisted hardware identity and profile matching. MIT licensed."""
+import argparse
+import json
+from pathlib import Path
+import sys
+
+
+def identify(root):
+    fields = {}
+    for name in ('sys_vendor', 'product_name', 'board_name'):
+        try:
+            fields[name] = (root / 'sys/class/dmi/id' / name).read_text().strip()
+        except (OSError, UnicodeError):
+            fields[name] = None
+    try:
+        fields['compatible'] = (root / 'proc/device-tree/compatible').read_bytes().decode().rstrip('\0').split('\0')
+    except (OSError, UnicodeError):
+        fields['compatible'] = []
+    return fields
+
+
+def matches(identity, profile):
+    match = profile['match']
+    return (all(identity.get(k) == match[k] for k in ('sys_vendor', 'product_name', 'board_name'))
+            and match['compatible'] in identity['compatible'])
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=Path('/'), help='alternate root for fixtures; read-only')
+    parser.add_argument('--profiles', type=Path, default=Path('/usr/share/mainframeos/devices'))
+    args = parser.parse_args()
+    try:
+        paths = sorted(args.profiles.glob('*.json'))
+        if not paths:
+            raise ValueError('no device profiles found')
+        profiles = [json.loads(p.read_text()) for p in paths]
+        identity = identify(args.root)
+        found = [p for p in profiles if matches(identity, p)]
+        if len(found) > 1:
+            raise ValueError('ambiguous device profiles')
+        profile = found[0] if found else None
+        print(json.dumps({'schema_version': 1, 'identity': identity,
+                          'profile': profile['id'] if profile else None,
+                          'status': profile['status'] if profile else 'unknown',
+                          'release_ready': bool(profile and profile['release_ready'])}, indent=2))
+        return 0 if profile else 2
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f'mainframeos-support: {error}', file=sys.stderr)
+        return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

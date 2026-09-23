@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "package_recipe": "mainframeos-support",
+  "architecture": "aarch64",
+  "builder": {
+    "schema_version": 1,
+    "image": "sha256:33570228a71854135cddf1ea0b772f6d969808cd96fcd78dfb6352c886529633",
+    "bootstrap_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+    "package_inventory_sha256": "7e2445a974c9cefae0a424c80140bee6add8df60d636db7afa5cbab99f0b74a6",
+    "containerfile_sha256": "77161254753abc3010495ddf4ec1c4b59a96a506ee679f24c58324f75448443b"
+  },
+  "source_lock_sha256": "644f943a35bfd59d88ad2f4b3a29beb7bb96330c321a00606489bb0194cd1314",
+  "source_date_epoch": 1790121600,
+  "recipe_sha256": "1999dbf093e36fa32d36c81d045a21775a777968cf3f19530127b8c0cec9ee9b",
+  "recipe_inputs": {
+    "LICENSE": "9255078b658e379b9365ca8f540d2a09b3e59da1aba700348611fbe0581445ac",
+    "PKGBUILD": "1999dbf093e36fa32d36c81d045a21775a777968cf3f19530127b8c0cec9ee9b",
+    "hp-omnibook5-8e33.json": "fb18ab58bca710e38bd2c16464cc413518964e1a2153cbd0ae483bd042b502d0",
+    "mainframeos-support": "1ba87a99d4ef0d5e572f69822e9904a9d9d5d169fd9cb4d835ab7d9a79e05f36"
+  },
+  "build_script_sha256": "6c8726cb3a278695cf9cba9b1d412fab16589fb9b400fe804c3dfd6ee5b1308f",
+  "git_commit": "9e06a818e931838fc44481d811c52ba6d545f89b",
+  "working_tree_dirty": true,
+  "artifacts": {
+    "mainframeos-support-0.1.0-1-any.pkg.tar.xz": "97726b2349562d0af45ab4c6f0298fc777295907655eb996df78753b4b1ede8d"
+  },
+  "release_signed": false,
+  "bootable_image": false
+}

@@ -1,0 +1,7 @@
+{
+  "file": "mainframeos-builder.oci.tar",
+  "bytes": 2444218368,
+  "sha256": "fb17536d941019eda2b71674c04eb2deed0f91e327c9a8dc0964b2b7267157bd",
+  "image_id": "sha256:33570228a71854135cddf1ea0b772f6d969808cd96fcd78dfb6352c886529633",
+  "storage": "local build cache only; durable remote storage not yet configured"
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source_commit": "8a4f6449525101e3445d33d642d6b1927f2fba3b",
+  "source_sha256": "e952fa21129b5660b26373dcc9b13d08c049d00c626084e1deb5b18b75a33361",
+  "builder": {
+    "schema_version": 1,
+    "image": "sha256:33570228a71854135cddf1ea0b772f6d969808cd96fcd78dfb6352c886529633",
+    "bootstrap_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+    "package_inventory_sha256": "7e2445a974c9cefae0a424c80140bee6add8df60d636db7afa5cbab99f0b74a6",
+    "containerfile_sha256": "77161254753abc3010495ddf4ec1c4b59a96a506ee679f24c58324f75448443b"
+  },
+  "target": "qcom/x1p42100-hp-omnibook-5.dtb",
+  "dtb_sha256": "5b126e0840e37963f4b207cac3817823ca986f3797c32d78535c03e3312700a3",
+  "config_sha256": "2ec11a6ebd7f5c5f93f52fc376cc764e6cce8e870ecf7234b19654a8118acf12",
+  "configuration": "upstream arm64 defconfig; not recovered installed kernel config",
+  "boot_tested": false,
+  "release_ready": false,
+  "scope": "device-tree compiler and candidate DTB compilation only; no kernel Image or modules"
+}

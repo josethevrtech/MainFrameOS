@@ -1,6 +1,6 @@
 # Roadmap and initial backlog
 
-Milestones are ordered by dependency, not calendar promises. No build milestone is complete at project initialization.
+Milestones are ordered by dependency, not calendar promises. Package-build infrastructure and candidate DTB compilation are now implemented. No bootable-image milestone is complete.
 
 ## M0 — Capture the reference platform
 
@@ -15,7 +15,7 @@ Milestones are ordered by dependency, not calendar promises. No build milestone 
 
 ## M1 — Arch Linux ARM desktop prototype
 
-- [ ] Establish a consistent ARM64 package source and build environment.
+- [x] Establish an isolated Arch Linux ARM build environment with signed bootstrap and recorded toolchain inventory.
 - [ ] Package the board's required kernel, audio, firmware integration and power configuration.
 - [ ] Assemble a model-specific development image.
 - [ ] Boot into accelerated Plasma Wayland.
@@ -78,3 +78,13 @@ Evaluate each new platform independently. Headsets need a boot/recovery and trac
 | MF-007 | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |
 
 These identifiers are backlog references, not GitHub issue numbers.
+
+## Engineering bootstrap completed
+
+- Verified ALARM bootstrap and isolated package compilation.
+- MainFrameOS support package and strict device profile.
+- Collabora source recipe compilation with upstream tests.
+- Pinned candidate kernel source and device-tree build.
+- Contract/unit CI, manual ARM64 builds, upstream drift reports and repository maintenance policies.
+
+See [Build evidence](BUILD-EVIDENCE.md). These results do not mark M1 hardware/image acceptance complete.

@@ -1,0 +1,32 @@
+name: ARM64 package build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: arm64-packages
+  cancel-in-progress: false
+jobs:
+  packages:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Host build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman uidmap gnupg make
+      - run: make check bootstrap package-support package-canary kernel-dtb
+      - name: Preserve build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: mainframeos-development-packages
+          path: |
+            out/
+            build/builder.json
+            build/builder-packages.txt
+          retention-days: 14
+          if-no-files-found: warn

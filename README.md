@@ -6,7 +6,7 @@ Developed by **josethevrtech**, MainFrameOS is intended to unify computers and X
 
 MainFrameOS aims to combine a polished, integrated desktop with current software, dependable recovery, and native Linux, Android, and selected Windows applications. Large screens, keyboard and mouse workflows, docking, and everyday productivity come first. Gaming is optional.
 
-**Status: design and hardware-baseline stage. No MainFrameOS installer or release image exists yet.** The current reference machine runs a custom experimental ARM SteamOS port. Its successful hardware work informs this project; it is not a MainFrameOS release.
+**Status: engineering bootstrap — isolated Arch Linux ARM package builds and a candidate device-tree build are implemented. No MainFrameOS installer or release image exists yet.** The current reference machine runs a custom experimental ARM SteamOS port. Its successful hardware work informs this project; it is not a MainFrameOS release.
 
 ## Initial hardware focus
 
@@ -15,6 +15,20 @@ The first target is the **HP OmniBook 5 Laptop 16-bf0xxx, board 8E33**. The insp
 Initial expansion is limited to closely related Snapdragon laptops after individual validation. Matching a chip family is insufficient for support: boot firmware, device trees, displays, audio wiring, embedded controllers and power behavior can differ.
 
 Snapdragon PCs and standalone VR headsets remain part of the longer-term vision. They are outside the first release's support commitment.
+
+## Build and maintenance
+
+The product base is **Arch Linux ARM**, independent of SteamOS. Collabora's preview is integrated selectively as pinned source recipes rebuilt in the ALARM toolchain.
+
+```sh
+make check             # Offline contract and unit checks
+make bootstrap         # Native ARM64; verified ALARM bootstrap + rootless Podman builder
+make package-support   # Build MainFrameOS hardware identification package
+make package-canary    # Compile/test the imported Collabora json-c recipe
+make kernel-dtb        # Compile candidate OmniBook device tree; does not install it
+```
+
+See [Build instructions](docs/BUILD-AND-PACKAGING.md), [Engineering contract](docs/ENGINEERING.md), [Collabora integration](docs/COLLABORA-INTEGRATION.md), [Build evidence](docs/BUILD-EVIDENCE.md), [Support](SUPPORT.md), and [Security](SECURITY.md). Builds are isolated from the running OS. Generated packages are unsigned development artifacts.
 
 ## Proposed experience
 
