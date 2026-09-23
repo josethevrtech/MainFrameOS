@@ -29,7 +29,7 @@ Generated files remain under local `out/`; no unsigned package or candidate DTB 
 - [Repeat-build comparison](evidence/2026-09-23/rebuild-comparison.json)
 - [Frozen builder archive](evidence/2026-09-23/builder-archive.json) — saved and hashed locally; remote retention remains pending
 
-Manifests accurately record that these initial builds were made from a working tree with uncommitted engineering changes, based on the initial documentation commit. They are development evidence, not signed release attestations. Source hashes and the frozen toolchain are recorded; subsequent release builds must use a clean committed tree.
+The package manifests record clean committed input `e2cfe78802cb76d4d0dd773ce4eb2fe2d3a8af8a`; those builds also matched the earlier package hashes. The candidate DTB manifest records the earlier development working tree. These are development evidence, not signed release attestations. Source hashes and the frozen toolchain are recorded; release builds must use a clean committed tree. GitHub contract/test CI also passed for the engineering pull request.
 
 ## Issues found and resolved during bootstrap
 

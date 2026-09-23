@@ -21,8 +21,8 @@
     "REUSE.toml": "e8a26e1b7d867311586d77986415f73b70e8aa3760d24591d61e88d024ee37d4"
   },
   "build_script_sha256": "6c8726cb3a278695cf9cba9b1d412fab16589fb9b400fe804c3dfd6ee5b1308f",
-  "git_commit": "9e06a818e931838fc44481d811c52ba6d545f89b",
-  "working_tree_dirty": true,
+  "git_commit": "e2cfe78802cb76d4d0dd773ce4eb2fe2d3a8af8a",
+  "working_tree_dirty": false,
   "artifacts": {
     "json-c-0.18-2-aarch64.pkg.tar.xz": "696e958e8338c34d060f4c6e55c7248ee8d147f332f9e6d4f511eb8a6bce81c6"
   },

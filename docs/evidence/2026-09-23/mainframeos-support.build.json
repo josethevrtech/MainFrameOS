@@ -19,8 +19,8 @@
     "mainframeos-support": "1ba87a99d4ef0d5e572f69822e9904a9d9d5d169fd9cb4d835ab7d9a79e05f36"
   },
   "build_script_sha256": "6c8726cb3a278695cf9cba9b1d412fab16589fb9b400fe804c3dfd6ee5b1308f",
-  "git_commit": "9e06a818e931838fc44481d811c52ba6d545f89b",
-  "working_tree_dirty": true,
+  "git_commit": "e2cfe78802cb76d4d0dd773ce4eb2fe2d3a8af8a",
+  "working_tree_dirty": false,
   "artifacts": {
     "mainframeos-support-0.1.0-1-any.pkg.tar.xz": "97726b2349562d0af45ab4c6f0298fc777295907655eb996df78753b4b1ede8d"
   },

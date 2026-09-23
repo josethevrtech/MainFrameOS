@@ -69,15 +69,15 @@ Evaluate each new platform independently. Headsets need a boot/recovery and trac
 
 | ID | Work item | Completion evidence |
 | --- | --- | --- |
-| MF-001 | Reconstruct reference kernel and DTB provenance | Source commit, patch series, config and boot artifact mapping |
-| MF-002 | Package OmniBook audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
-| MF-003 | Package power and platform services | Service ownership, profile behavior, charge limit and energy measurements |
-| MF-004 | Build minimal ARM64 desktop image | Clean build manifest and physical boot result |
-| MF-005 | Validate Android runtime | Exact image/kernel prerequisites and completed Android workflow |
-| MF-006 | Validate Wine/FEX runtime | Reproducible packages and completed Windows workflow |
-| MF-007 | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |
+| [MF-001](https://github.com/josethevrtech/MainFrameOS/issues/2) | Reconstruct reference kernel and DTB provenance | Source commit, patch series, config and boot artifact mapping |
+| [MF-002](https://github.com/josethevrtech/MainFrameOS/issues/3) | Package OmniBook audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
+| [MF-003](https://github.com/josethevrtech/MainFrameOS/issues/4) | Package power and platform services | Service ownership, profile behavior, charge limit and energy measurements |
+| [MF-004](https://github.com/josethevrtech/MainFrameOS/issues/5) | Build minimal ARM64 desktop image | Clean build manifest and physical boot result |
+| [MF-005](https://github.com/josethevrtech/MainFrameOS/issues/6) | Validate Android runtime | Exact image/kernel prerequisites and completed Android workflow |
+| [MF-006](https://github.com/josethevrtech/MainFrameOS/issues/7) | Validate Wine/FEX runtime | Reproducible packages and completed Windows workflow |
+| [MF-007](https://github.com/josethevrtech/MainFrameOS/issues/8) | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |
 
-These identifiers are backlog references, not GitHub issue numbers.
+Each work item links to a GitHub issue with acceptance criteria. The MF identifiers remain stable roadmap references.
 
 ## Engineering bootstrap completed
 

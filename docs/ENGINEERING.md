@@ -26,7 +26,7 @@ These are implemented controls, not a certification. Read the latest [build evid
 | Update/recovery | Failed-update and boot-fallback tests on hardware | Design only |
 | Supply-chain publication | Release signatures, provenance and inventory tied to final artifacts | Development hashes only |
 | Support staffing | Named backup maintainer/tester and response process | Owner assigned; backup not assigned |
-| Repository enforcement | Required checks and protected release branches configured in GitHub | Verify separately; files alone do not enforce settings |
+| Repository enforcement | Required checks and protected release branches configured in GitHub | `main` protected with required CI; release controls pending; see [verified settings](REPOSITORY-SETTINGS.md) |
 
 ## Maintenance responsibilities
 

@@ -24,4 +24,8 @@ This checklist is not a claim that those server settings are enabled. The initia
 - Workflows creating/approving pull requests: disabled, verified.
 - External contributor workflow approval: required for all outside collaborators.
 
-Branch protection is tracked separately while the first engineering pull request and required check are established.
+- `main` branch protection: pull request required; `contracts-and-tests` required; branch must be up to date; conversations must be resolved.
+- Force pushes and branch deletion: blocked. Administrator bypass: disabled.
+- Independent approval count: not required while the project has one maintainer; enable code-owner review when a second active maintainer is available.
+
+Release-tag protection and an approved signing/publishing environment remain pending before release publication.
