@@ -14,11 +14,13 @@ The kernel configuration is a new development configuration, not a recovered cop
 
 Use the [foundation build requirements](BUILD-AND-PACKAGING.md), then prepare the verified builder, support package and source with `make bootstrap package-support kernel-dtb`. Existing kernel source extraction directories must be moved aside before rerunning the DTB extraction step.
 
-Run `python3 scripts/build-usb.py --firmware-directory /path/to/personally/provisioned/device/firmware` on the initial AArch64 test platform. The script creates isolated tool and desktop images, compiles the kernel, stages the firmware and assembles a regular disk image under `out/`. It never writes a physical drive. Kernel compilation uses four CPUs and a 3 GiB memory limit. Move previous USB staging/assembly directories and output images aside before a fresh image build.
+Run `python3 scripts/build-usb.py --firmware-directory /path/to/personally/provisioned/device/firmware --firmware-provenance /path/to/firmware-inputs.json` on the initial AArch64 test platform. The script creates isolated tool and desktop images, compiles the kernel, stages the firmware and assembles a regular disk image under `out/`. It never writes a physical drive. Kernel compilation uses four CPUs and a 3 GiB memory limit. Move previous USB staging/assembly directories and output images aside before a fresh image build.
 
-The tool and desktop builders record their image IDs and recipe hashes under `build/usb-tools` and `build/usb-desktop`. Move the respective directory aside to rebuild after a recipe change. Their initial ALARM package resolution uses rolling repositories; retain the resulting images and package inventory for replay.
+The firmware provenance JSON must contain nonempty `origin`, `device_profile`, `revision` and `license_status` strings, `redistribution_allowed: false`, and a `files` object mapping every relative firmware path to its SHA256. The build rejects missing provenance or differing file hashes. Keep this local record with the private image.
 
-`python3 scripts/smoke-usb.py` boots the generated image in a network-isolated QEMU ARM machine with temporary disk writes. It checks the kernel, initramfs and real root filesystem, then shuts down. It does not emulate the laptop's GPU, firmware, audio, USB controller or EFI implementation.
+The tool and desktop builders record their image IDs, recipe hashes, bootstrap digest and base image identity under `build/usb-tools` and `build/usb-desktop`. Move the respective directory aside to rebuild after a recipe change. Their initial ALARM package resolution uses rolling repositories; retain the resulting images and package inventory for replay.
+
+`python3 scripts/smoke-usb.py` boots the generated image in a network-isolated QEMU ARM machine with temporary disk writes. It first verifies the image checksum and GPT checksums, extracts the kernel and initramfs from the finished image EFI partition, then checks the kernel, initramfs and real root filesystem, then shuts down. It does not emulate the laptop's GPU, firmware, audio, USB controller or EFI implementation.
 
 ## Test session
 

@@ -4,7 +4,8 @@ import json
 import shutil
 import re
 from pathlib import Path
-from build import ROOT, BUILD, OUT, LOCK, container, digest
+from build import ROOT, BUILD, OUT, LOCK, container, digest, validate_builder
+from usb_support import cache_inputs, verify_cache
 
 lock = json.loads(LOCK.read_text())
 source = BUILD / 'kernel-candidate' / ('linux_ms_dev_kit-' + lock['kernel_candidate']['commit'])
@@ -13,7 +14,9 @@ if not source.is_dir():
 archive = BUILD / 'downloads' / lock['kernel_candidate']['filename']
 if digest(archive) != lock['kernel_candidate']['sha256']:
     raise SystemExit('Kernel source archive does not match its lock')
-image = (BUILD / 'usb-tools/image-id').read_text().strip()
+base = validate_builder(lock)
+expected = cache_inputs(ROOT/'images/usb/Tools.Containerfile',lock['bootstrap']['sha256'],base['image'])
+image = verify_cache(BUILD/'usb-tools',expected)['image']
 obj, dest = BUILD / 'usb-kernel', OUT / 'usb-kernel'
 obj.mkdir(exist_ok=True)
 dest.mkdir(exist_ok=True)
