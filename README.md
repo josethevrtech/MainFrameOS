@@ -1,12 +1,12 @@
 # MainFrameOS
 
-**A productivity-first Arch Linux ARM distribution for Snapdragon laptops and headsets.**
+**Arch Linux ARM for productivity on Snapdragon laptops and headsets.**
 
-Developed by **josethevrtech**, MainFrameOS aims to deliver one distribution and one installer experience across supported Snapdragon laptops and headsets.
+MainFrameOS is being developed by **josethevrtech** for Snapdragon laptops and headsets, with one installer that configures the system for supported hardware.
 
-MainFrameOS aims to combine a polished, integrated desktop with current software, dependable recovery, and native Linux, Android, and selected Windows applications. Large screens, keyboard and mouse workflows, docking, and everyday productivity come first. Gaming is optional.
+The goal is a desktop for everyday work, with current software, reliable recovery and support for native Linux, Android and selected Windows applications. The focus is large screens, keyboard and mouse use, docking and productivity. Gaming is optional.
 
-**Status: engineering bootstrap — isolated Arch Linux ARM package builds and a candidate device-tree build are implemented. No MainFrameOS installer or release image exists yet.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
+**Status: early development. Isolated Arch Linux ARM package builds and a candidate device tree build are implemented. No MainFrameOS installer or release image exists yet.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
 
 ## One installer for Snapdragon laptops and headsets
 
@@ -14,7 +14,7 @@ The goal is a shared ARM64 installer that detects supported hardware and selects
 
 Snapdragon generations and manufacturers are candidates according to upstream Linux support, boot access and available testing. The developer's current laptop is the first test platform, not an exclusive target or a requirement for contributors.
 
-Headsets share the same product and installation framework, with platform-specific boot/recovery adapters and an XR session where needed. A common installer does not imply that every headset can boot a USB image or use a laptop's partition layout. No device has release-certified MainFrameOS support yet.
+Headsets share the same product and installation framework, with boot and recovery adapters for each platform and an XR session where needed. A common installer does not imply that every headset can boot a USB image or use a laptop's partition layout. No device has certified support in a MainFrameOS release yet.
 
 See the [unified installer design](docs/INSTALLER.md), [hardware support policy](docs/HARDWARE-SUPPORT.md) and [Qualcomm Linux enablement tracking](docs/QUALCOMM-LINUX.md).
 
