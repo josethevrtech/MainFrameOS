@@ -6,7 +6,7 @@ MainFrameOS is being developed by **josethevrtech** for Snapdragon laptops and h
 
 The goal is a desktop for everyday work, with current software, reliable recovery and support for native Linux, Android and selected Windows applications. The focus is large screens, keyboard and mouse use, docking and productivity. Gaming is optional.
 
-**Status: early development. Isolated Arch Linux ARM package builds and a candidate device tree build are implemented. No MainFrameOS installer or release image exists yet.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
+**Status: early development. A personal USB desktop preview has been built and passed an ARM virtual boot test. Physical hardware validation is pending. A general installer and public release are not yet available.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
 
 ## One installer for Snapdragon laptops and headsets
 
@@ -17,6 +17,8 @@ Snapdragon generations and manufacturers are candidates according to upstream Li
 Headsets share the same product and installation framework, with boot and recovery adapters for each platform and an XR session where needed. A common installer does not imply that every headset can boot a USB image or use a laptop's partition layout. No device has certified support in a MainFrameOS release yet.
 
 See the [unified installer design](docs/INSTALLER.md), [hardware support policy](docs/HARDWARE-SUPPORT.md) and [Qualcomm Linux enablement tracking](docs/QUALCOMM-LINUX.md).
+
+See [USB preview instructions and limitations](docs/USB-PREVIEW.md) for the current test build.
 
 ## Build and maintenance
 

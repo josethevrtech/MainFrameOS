@@ -29,3 +29,7 @@ After the image has been verified, confirm the exact USB drive before erasing it
 Choose the MainFrameOS USB preview entry. If graphical startup fails, use the troubleshooting console entry. Test display, keyboard, touchpad and networking first, then peripherals and power behavior. Save results with the build ID. Shut down and remove the USB to return to the internal installation.
 
 Android and Windows application integration, internal audio routing, hardware video decoding, an internal disk installer, signed releases and recovery updates remain unfinished. The compiled kernel is staged by the development image builder; production kernel packaging and update integration remain required before a supported release. Do not treat the USB as a daily use installation.
+
+## Recorded build result
+
+The kernel, modules, device tree and 16 GiB disk image were built successfully on 2026-09-23. GRUB configuration, GPT structure, ext4 consistency and required early boot files passed inspection. The isolated ARM virtual machine mounted the actual image root, passed its system check and powered off cleanly. Physical laptop boot remains untested. See the [build record](evidence/2026-09-23/usb-preview.json).

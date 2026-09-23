@@ -19,7 +19,7 @@ These are implemented controls, not a certification. Read the latest [build evid
 | Requirement | Acceptance evidence | Current state |
 | --- | --- | --- |
 | Source provenance | Kernel commit, patches, config, firmware manifest and licenses | Partial; candidate source identified |
-| Complete image | Clean installation with correct identity, boot artifacts and package manifest | Not implemented |
+| Complete image | Clean installation with correct identity, boot artifacts and package manifest | Personal USB preview assembled and virtually booted; physical validation and general installer pending |
 | Hardware reliability | Reference-board test matrix, repeated suspend/dock tests | Baseline evidence only |
 | Application promises | Completed native/Flatpak, Android and Windows workflows | Pending on MainFrameOS |
 | Rebuildability | Archived builder + package/source inputs, independent rebuild result | Package-level work started |
