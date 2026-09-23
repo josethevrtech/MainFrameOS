@@ -23,7 +23,7 @@
     "physical_boot_tested": false
   },
   "physical_boot_tested": false,
-  "usb_write_status": "awaiting owner confirmation",
+  "usb_write_status": "written and verified after owner approval",
   "public_release": false,
   "redistribution_status": "personal firmware provisioned; not cleared for redistribution",
   "limitations": [
@@ -33,5 +33,16 @@
     "unsigned preview",
     "kernel update packaging pending"
   ],
-  "integrity_regression_tests_passed": 19
+  "integrity_regression_tests_passed": 19,
+  "usb_verification": {
+    "device": "/dev/sda",
+    "device_size": 62914560000,
+    "verified_image_bytes": 17179869184,
+    "image_sha256": "9b1f53c2480d2ee19f52f16833fb9aa57e39a85d7bb8dd2ea6a220c5a3ea2cae",
+    "full_image_readback_before_gpt_relocation": true,
+    "gpt_backup_relocated_to_device_end": true,
+    "gpt_validated": true,
+    "root_filesystem_readonly_check_passed": true,
+    "physical_boot_tested": false
+  }
 }

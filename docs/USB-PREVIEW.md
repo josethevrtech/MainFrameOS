@@ -35,3 +35,5 @@ Android and Windows application integration, internal audio routing, hardware vi
 ## Recorded build result
 
 The kernel, modules, device tree and 16 GiB disk image were built successfully on 2026-09-23. GRUB configuration, GPT structure, ext4 consistency and required early boot files passed inspection. The isolated ARM virtual machine mounted the actual image root, passed its system check and powered off cleanly. Physical laptop boot remains untested. See the [build record](evidence/2026-09-23/usb-preview.json).
+
+The approved 58.6 GiB USB was written and all 16 GiB read back directly from the device with a matching SHA256. The backup GPT was then relocated to the end of the larger drive, and partition and root filesystem checks passed. The remaining drive space is unallocated. Physical boot is the next validation step.
