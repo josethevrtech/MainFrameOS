@@ -1,6 +1,37 @@
 # Build and packaging plan
 
-There are no functioning build or installation scripts in this repository yet. This document defines the intended work and avoids placeholder commands that could be mistaken for a usable installer.
+The repository now contains a verified ALARM bootstrap, rootless package builder, support package, source-recipe compatibility build and candidate device-tree build. Image installation and OS update tooling remain unimplemented.
+
+## Running the current pipeline
+
+Requirements: native AArch64 Linux, Python 3.12 or later, Git, GNU Make, GnuPG, rootless Podman with working subordinate UID/GID mappings, network access and approximately 15 GiB free for builder/source caches. No host package installation or boot modification occurs in these commands.
+
+```sh
+make check
+make bootstrap
+make package-support
+make package-canary
+make kernel-dtb
+```
+
+Run as a normal user. `make bootstrap` downloads an upstream-signed root filesystem, checks locked SHA-256 values and the pinned signer fingerprint, imports it into Podman, and builds a fully updated ALARM toolchain. Package builds use the resulting immutable local image ID. The only mount inputs are task-owned build/output directories.
+
+`build/` holds caches, sources, logs and the builder state. `out/` contains packages and manifests; `out/kernel-candidate/` contains the compiled DTB/configuration and its report. Nothing here is a bootable image. No package is automatically installed on the host.
+
+A repeated `kernel-dtb` build requires moving its existing `build/kernel-candidate` directory aside first; extraction fails closed on an existing source tree. The kernel archive's Ubuntu packaging directories are omitted because an absolute symlink there is unnecessary for upstream Kbuild. Safe archive filtering remains enabled.
+
+The imported json-c recipe is a compilation/integration test, not a product dependency selection. It retains upstream source checksum checks and runs all upstream tests. MainFrameOS support inputs have explicit SHA-256 checksums; update them deliberately with `python3 scripts/update-package-checksums.py` after editing their sources.
+
+## Updating locked inputs
+
+Review the new upstream revision and license changes, download and authenticate it, update `upstream/sources.lock.json`, run contract/tests, rebuild in a fresh environment and record hardware impact. A mutable upstream `latest` URL changing causes verification to fail; do not bypass the check. Keep the verified tarball and frozen builder in durable artifact storage before a production release.
+
+The weekly upstream workflow reports source drift without updating locks. Dependabot proposes GitHub Actions updates; it does not monitor the entire OS package graph or merge updates automatically. ALARM security/package review remains a maintainer responsibility.
+
+## Preserving and replaying the toolchain
+
+`build/builder.json` records the immutable local image ID and package inventory hash. Preserve that image with `podman save --format oci-archive`, the inventory, verified bootstrap archive and source caches. Record the archive's SHA-256. Load it with `podman load` for replay; verify the expected image ID before building. Fresh `make bootstrap` uses current rolling repositories, so it is not a historical replay mechanism. See [Engineering limitations](ENGINEERING.md).
+
 
 ## Proposed source layout as implementation begins
 
@@ -51,4 +82,4 @@ Keep signing and release publishing separate from untrusted contribution builds.
 
 ## Source and redistribution inventory
 
-For each component retain upstream URL, revision, license, patch origin, hash and maintainer notes. Existing SteamOS branding, proprietary firmware, vendor applications and binary components must not be copied into a new image merely because they exist on the reference laptop. Preserve required notices and source availability for redistributed components. Project-wide licensing remains an explicit maintainer decision.
+For each component retain upstream URL, revision, license, patch origin, hash and maintainer notes. Existing SteamOS branding, proprietary firmware, vendor applications and binary components must not be copied into a new image merely because they exist on the reference laptop. Preserve required notices and source availability for redistributed components. Original MainFrameOS code/documentation is MIT licensed; imported material retains its own license.

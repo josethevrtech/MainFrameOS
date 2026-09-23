@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: MIT
+pkgname=mainframeos-support
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Read-only hardware profile identification for MainFrameOS development'
+arch=('any')
+url='https://github.com/josethevrtech/MainFrameOS'
+license=('MIT')
+depends=('python')
+source=('mainframeos-support' 'LICENSE' 'hp-omnibook5-8e33.json')
+# Checksums are maintained by scripts/update-package-checksums.py.
+sha256sums=(
+  '1ba87a99d4ef0d5e572f69822e9904a9d9d5d169fd9cb4d835ab7d9a79e05f36'
+  '9255078b658e379b9365ca8f540d2a09b3e59da1aba700348611fbe0581445ac'
+  'fb18ab58bca710e38bd2c16464cc413518964e1a2153cbd0ae483bd042b502d0'
+)
+package() {
+  install -Dm755 "$srcdir/mainframeos-support" "$pkgdir/usr/bin/mainframeos-support"
+  install -Dm644 "$srcdir/hp-omnibook5-8e33.json" "$pkgdir/usr/share/mainframeos/devices/hp-omnibook5-8e33.json"
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

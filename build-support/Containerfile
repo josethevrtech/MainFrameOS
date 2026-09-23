@@ -1,0 +1,13 @@
+ARG BASE
+FROM ${BASE}
+# This is an isolated Arch Linux ARM build environment, never the host OS.
+RUN printf 'Server = https://fl.us.mirror.archlinuxarm.org/$arch/$repo\n' > /etc/pacman.d/mirrorlist && \
+    pacman-key --init && pacman-key --populate archlinuxarm && \
+    pacman -Syu --disable-sandbox-filesystem --noconfirm --needed base-devel cmake ninja git python && \
+    usermod -l builder -d /home/builder -m alarm && \
+    passwd -l builder && passwd -l root && \
+    mkdir -p /usr/share/mainframeos-build && \
+    pacman -Q > /usr/share/mainframeos-build/packages.txt && \
+    printf '\nMAKEFLAGS="-j2"\nPACKAGER="MainFrameOS build pipeline"\n' >> /etc/makepkg.conf
+WORKDIR /work
+CMD ["/bin/bash"]

@@ -1,0 +1,15 @@
+{
+  "scope": "two clean package builds with the same frozen local toolchain; not an independent builder or whole-OS reproducibility proof",
+  "packages": {
+    "mainframeos-support-0.1.0-1-any.pkg.tar.xz": {
+      "first_sha256": "97726b2349562d0af45ab4c6f0298fc777295907655eb996df78753b4b1ede8d",
+      "second_sha256": "97726b2349562d0af45ab4c6f0298fc777295907655eb996df78753b4b1ede8d",
+      "identical": true
+    },
+    "json-c-0.18-2-aarch64.pkg.tar.xz": {
+      "first_sha256": "696e958e8338c34d060f4c6e55c7248ee8d147f332f9e6d4f511eb8a6bce81c6",
+      "second_sha256": "696e958e8338c34d060f4c6e55c7248ee8d147f332f9e6d4f511eb8a6bce81c6",
+      "identical": true
+    }
+  }
+}

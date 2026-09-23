@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "hp-omnibook5-8e33",
+  "status": "bring-up",
+  "architecture": "aarch64",
+  "match": {
+    "sys_vendor": "HP",
+    "product_name": "HP OmniBook 5 Laptop 16-bf0xxx",
+    "board_name": "8E33",
+    "compatible": "hp,omnibook-5"
+  },
+  "kernel": {"source_commit": null, "config_sha256": null, "dtb_sha256": null},
+  "firmware": {"redistribution_review_complete": false},
+  "release_ready": false,
+  "blockers": [
+    "Reconstruct exact kernel source, configuration and device-tree provenance",
+    "Inventory and review firmware redistribution",
+    "Validate audio, dock, repeated suspend and recovery on MainFrameOS",
+    "Build and physically validate a bootable MainFrameOS image"
+  ]
+}

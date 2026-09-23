@@ -1,6 +1,6 @@
 # Roadmap and initial backlog
 
-Milestones are ordered by dependency, not calendar promises. No build milestone is complete at project initialization.
+Milestones are ordered by dependency, not calendar promises. Package-build infrastructure and candidate DTB compilation are now implemented. No bootable-image milestone is complete.
 
 ## M0 — Capture the reference platform
 
@@ -15,7 +15,7 @@ Milestones are ordered by dependency, not calendar promises. No build milestone 
 
 ## M1 — Arch Linux ARM desktop prototype
 
-- [ ] Establish a consistent ARM64 package source and build environment.
+- [x] Establish an isolated Arch Linux ARM build environment with signed bootstrap and recorded toolchain inventory.
 - [ ] Package the board's required kernel, audio, firmware integration and power configuration.
 - [ ] Assemble a model-specific development image.
 - [ ] Boot into accelerated Plasma Wayland.
@@ -69,12 +69,22 @@ Evaluate each new platform independently. Headsets need a boot/recovery and trac
 
 | ID | Work item | Completion evidence |
 | --- | --- | --- |
-| MF-001 | Reconstruct reference kernel and DTB provenance | Source commit, patch series, config and boot artifact mapping |
-| MF-002 | Package OmniBook audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
-| MF-003 | Package power and platform services | Service ownership, profile behavior, charge limit and energy measurements |
-| MF-004 | Build minimal ARM64 desktop image | Clean build manifest and physical boot result |
-| MF-005 | Validate Android runtime | Exact image/kernel prerequisites and completed Android workflow |
-| MF-006 | Validate Wine/FEX runtime | Reproducible packages and completed Windows workflow |
-| MF-007 | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |
+| [MF-001](https://github.com/josethevrtech/MainFrameOS/issues/2) | Reconstruct reference kernel and DTB provenance | Source commit, patch series, config and boot artifact mapping |
+| [MF-002](https://github.com/josethevrtech/MainFrameOS/issues/3) | Package OmniBook audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
+| [MF-003](https://github.com/josethevrtech/MainFrameOS/issues/4) | Package power and platform services | Service ownership, profile behavior, charge limit and energy measurements |
+| [MF-004](https://github.com/josethevrtech/MainFrameOS/issues/5) | Build minimal ARM64 desktop image | Clean build manifest and physical boot result |
+| [MF-005](https://github.com/josethevrtech/MainFrameOS/issues/6) | Validate Android runtime | Exact image/kernel prerequisites and completed Android workflow |
+| [MF-006](https://github.com/josethevrtech/MainFrameOS/issues/7) | Validate Wine/FEX runtime | Reproducible packages and completed Windows workflow |
+| [MF-007](https://github.com/josethevrtech/MainFrameOS/issues/8) | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |
 
-These identifiers are backlog references, not GitHub issue numbers.
+Each work item links to a GitHub issue with acceptance criteria. The MF identifiers remain stable roadmap references.
+
+## Engineering bootstrap completed
+
+- Verified ALARM bootstrap and isolated package compilation.
+- MainFrameOS support package and strict device profile.
+- Collabora source recipe compilation with upstream tests.
+- Pinned candidate kernel source and device-tree build.
+- Contract/unit CI, manual ARM64 builds, upstream drift reports and repository maintenance policies.
+
+See [Build evidence](BUILD-EVIDENCE.md). These results do not mark M1 hardware/image acceptance complete.

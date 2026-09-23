@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "base": "archlinuxarm",
+  "architecture": "aarch64",
+  "source_date_epoch": 1790121600,
+  "bootstrap": {
+    "filename": "ArchLinuxARM-aarch64-latest.tar.gz",
+    "url": "https://fl.us.mirror.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz",
+    "sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+    "signature_url": "https://fl.us.mirror.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz.sig",
+    "signature_sha256": "0157d8cd6261c85205931c766b754d6d56112b28800666fb64add1de192ebe11",
+    "signer_fingerprint": "68B3537F39A313B3E574D06777193F152BDBE6A6",
+    "key_file": "upstream/keys/alarm-builder.asc",
+    "signature_date": "2026-08-05",
+    "identity_source": "https://archlinuxarm.org/about/downloads"
+  },
+  "collabora": {
+    "repository": "https://gitlab.steamos.cloud/holo/holo-core-aarch64-preview.git",
+    "commit": "67f0d559c82cdc5c94317bad53ae45409720ef59",
+    "path": "core-aarch64/j/json-c/0.18-2",
+    "files": {
+      "REUSE.toml": "e8a26e1b7d867311586d77986415f73b70e8aa3760d24591d61e88d024ee37d4",
+      "PKGBUILD": "cb359cac686e4d7ea753c1e9700671fa5bd5695185186cce6d27083260761c18",
+      ".SRCINFO": "5c8953043d3d1743072f465020cac0a533f88c0aa4d45d410e2bf25df0beeeb6",
+      "LICENSE": "7056c04df17a4e0f0bac9f787f347c9cd892cee6323d1c89528090afd0b934a3",
+      ".nvchecker.toml": "472270085f2d84d273bcb2dffc214f7330df8aa3cafb908b889a822cbd4b95e0",
+      "LICENSES/0BSD.txt": "7056c04df17a4e0f0bac9f787f347c9cd892cee6323d1c89528090afd0b934a3"
+    },
+    "purpose": "source-recipe compatibility canary; not a binary repository or base OS"
+  },
+  "kernel_candidate": {
+    "repository": "https://github.com/jglathe/linux_ms_dev_kit",
+    "commit": "8a4f6449525101e3445d33d642d6b1927f2fba3b",
+    "tag": "jg/ubuntu-qcom-x1e-7.1.13-jg-0",
+    "url": "https://codeload.github.com/jglathe/linux_ms_dev_kit/tar.gz/8a4f6449525101e3445d33d642d6b1927f2fba3b",
+    "filename": "linux-omnibook-candidate.tar.gz",
+    "sha256": "e952fa21129b5660b26373dcc9b13d08c049d00c626084e1deb5b18b75a33361",
+    "dtb_target": "qcom/x1p42100-hp-omnibook-5.dtb",
+    "status": "candidate source; not proven identical to installed kernel or DTB"
+  }
+}
