@@ -31,6 +31,12 @@ Generated files remain under local `out/`; no unsigned package or candidate DTB 
 
 The package manifests record clean committed input `e2cfe78802cb76d4d0dd773ce4eb2fe2d3a8af8a`; those builds also matched the earlier package hashes. The candidate DTB manifest records the earlier development working tree. These are development evidence, not signed release attestations. Source hashes and the frozen toolchain are recorded; release builds must use a clean committed tree. GitHub contract/test CI also passed for the engineering pull request.
 
+## Fresh hosted ARM64 build
+
+[GitHub Actions run 35925713854](https://github.com/josethevrtech/MainFrameOS/actions/runs/35925713854) completed successfully from merged commit `5abe9aeb844977d7bf3812aa315ea2971c392b62` on a fresh `ubuntu-24.04-arm` runner. It verified the bootstrap, created a new rootless builder, passed 15 regression tests and 25 upstream json-c tests, built both packages and the candidate DTB, and uploaded development artifacts.
+
+Both package SHA-256 values, the DTB SHA-256 and the installed-package inventory hash match the local results. This establishes matching results on two separate ARM64 hosts for these specific inputs, not whole-OS reproducibility or future replay of rolling repositories. See the [hosted manifests and artifact record](evidence/2026-09-23/hosted-build.json). The downloadable workflow artifact expires on 2026-10-07; permanent release retention remains pending.
+
 ## Issues found and resolved during bootstrap
 
 - The generic download hostname's HTTPS certificate did not match. Used an ALARM mirror with valid TLS, then verified the upstream signature and pinned hashes.

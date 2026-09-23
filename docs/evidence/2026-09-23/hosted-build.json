@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "run_url": "https://github.com/josethevrtech/MainFrameOS/actions/runs/35925713854",
+  "job_id": 107400208034,
+  "git_commit": "5abe9aeb844977d7bf3812aa315ea2971c392b62",
+  "runner": "ubuntu-24.04-arm",
+  "conclusion": "success",
+  "unit_tests_passed": 15,
+  "upstream_tests_passed": 25,
+  "package_hashes_match_local": true,
+  "dtb_hash_matches_local": true,
+  "package_inventory_matches_local": true,
+  "limits": "Two-host package/DTB evidence only; no bootable image, hardware validation or historical repository snapshot.",
+  "artifact": {
+    "id": 10778639433,
+    "name": "mainframeos-development-packages",
+    "size_in_bytes": 174384,
+    "url": "https://api.github.com/repos/josethevrtech/MainFrameOS/actions/artifacts/10778639433",
+    "archive_download_url": "https://api.github.com/repos/josethevrtech/MainFrameOS/actions/artifacts/10778639433/zip",
+    "expired": false,
+    "created_at": "2026-09-23T22:03:41Z",
+    "expires_at": "2026-10-07T22:03:40Z",
+    "updated_at": "2026-09-23T22:03:41Z",
+    "digest": "sha256:bfdf8e0e42f83c5a8938b95d819fefefba23d153ccf936aa9e11a4e2f0fa5c8d",
+    "workflow_run": {
+      "id": 35925713854,
+      "repository_id": 1384219535,
+      "head_repository_id": 1384219535,
+      "head_branch": "main",
+      "head_sha": "5abe9aeb844977d7bf3812aa315ea2971c392b62"
+    }
+  },
+  "reports": [
+    {
+      "schema_version": 1,
+      "package_recipe": "mainframeos-support",
+      "architecture": "aarch64",
+      "builder": {
+        "schema_version": 1,
+        "image": "sha256:22ea0c3c13c72ad3beca9c282872f83840e07778577bfcd96a5a2b7ead8aa279",
+        "bootstrap_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+        "package_inventory_sha256": "7e2445a974c9cefae0a424c80140bee6add8df60d636db7afa5cbab99f0b74a6",
+        "containerfile_sha256": "77161254753abc3010495ddf4ec1c4b59a96a506ee679f24c58324f75448443b"
+      },
+      "source_lock_sha256": "644f943a35bfd59d88ad2f4b3a29beb7bb96330c321a00606489bb0194cd1314",
+      "source_date_epoch": 1790121600,
+      "recipe_sha256": "1999dbf093e36fa32d36c81d045a21775a777968cf3f19530127b8c0cec9ee9b",
+      "recipe_inputs": {
+        "LICENSE": "9255078b658e379b9365ca8f540d2a09b3e59da1aba700348611fbe0581445ac",
+        "PKGBUILD": "1999dbf093e36fa32d36c81d045a21775a777968cf3f19530127b8c0cec9ee9b",
+        "hp-omnibook5-8e33.json": "fb18ab58bca710e38bd2c16464cc413518964e1a2153cbd0ae483bd042b502d0",
+        "mainframeos-support": "1ba87a99d4ef0d5e572f69822e9904a9d9d5d169fd9cb4d835ab7d9a79e05f36"
+      },
+      "build_script_sha256": "285a420475e196ad60cb98a526412e51a8f638bf53e89c5156986756f007e56c",
+      "git_commit": "5abe9aeb844977d7bf3812aa315ea2971c392b62",
+      "working_tree_dirty": false,
+      "artifacts": {
+        "mainframeos-support-0.1.0-1-any.pkg.tar.xz": "97726b2349562d0af45ab4c6f0298fc777295907655eb996df78753b4b1ede8d"
+      },
+      "release_signed": false,
+      "bootable_image": false
+    },
+    {
+      "schema_version": 1,
+      "package_recipe": "compat-json-c",
+      "architecture": "aarch64",
+      "builder": {
+        "schema_version": 1,
+        "image": "sha256:22ea0c3c13c72ad3beca9c282872f83840e07778577bfcd96a5a2b7ead8aa279",
+        "bootstrap_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+        "package_inventory_sha256": "7e2445a974c9cefae0a424c80140bee6add8df60d636db7afa5cbab99f0b74a6",
+        "containerfile_sha256": "77161254753abc3010495ddf4ec1c4b59a96a506ee679f24c58324f75448443b"
+      },
+      "source_lock_sha256": "644f943a35bfd59d88ad2f4b3a29beb7bb96330c321a00606489bb0194cd1314",
+      "source_date_epoch": 1790121600,
+      "recipe_sha256": "cb359cac686e4d7ea753c1e9700671fa5bd5695185186cce6d27083260761c18",
+      "recipe_inputs": {
+        ".SRCINFO": "5c8953043d3d1743072f465020cac0a533f88c0aa4d45d410e2bf25df0beeeb6",
+        ".nvchecker.toml": "472270085f2d84d273bcb2dffc214f7330df8aa3cafb908b889a822cbd4b95e0",
+        "LICENSE": "7056c04df17a4e0f0bac9f787f347c9cd892cee6323d1c89528090afd0b934a3",
+        "LICENSES/0BSD.txt": "7056c04df17a4e0f0bac9f787f347c9cd892cee6323d1c89528090afd0b934a3",
+        "PKGBUILD": "cb359cac686e4d7ea753c1e9700671fa5bd5695185186cce6d27083260761c18",
+        "REUSE.toml": "e8a26e1b7d867311586d77986415f73b70e8aa3760d24591d61e88d024ee37d4"
+      },
+      "build_script_sha256": "285a420475e196ad60cb98a526412e51a8f638bf53e89c5156986756f007e56c",
+      "git_commit": "5abe9aeb844977d7bf3812aa315ea2971c392b62",
+      "working_tree_dirty": false,
+      "artifacts": {
+        "json-c-0.18-2-aarch64.pkg.tar.xz": "696e958e8338c34d060f4c6e55c7248ee8d147f332f9e6d4f511eb8a6bce81c6"
+      },
+      "release_signed": false,
+      "bootable_image": false
+    },
+    {
+      "schema_version": 1,
+      "source_commit": "8a4f6449525101e3445d33d642d6b1927f2fba3b",
+      "source_sha256": "e952fa21129b5660b26373dcc9b13d08c049d00c626084e1deb5b18b75a33361",
+      "builder": {
+        "schema_version": 1,
+        "image": "sha256:22ea0c3c13c72ad3beca9c282872f83840e07778577bfcd96a5a2b7ead8aa279",
+        "bootstrap_sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+        "package_inventory_sha256": "7e2445a974c9cefae0a424c80140bee6add8df60d636db7afa5cbab99f0b74a6",
+        "containerfile_sha256": "77161254753abc3010495ddf4ec1c4b59a96a506ee679f24c58324f75448443b"
+      },
+      "target": "qcom/x1p42100-hp-omnibook-5.dtb",
+      "dtb_sha256": "5b126e0840e37963f4b207cac3817823ca986f3797c32d78535c03e3312700a3",
+      "config_sha256": "2ec11a6ebd7f5c5f93f52fc376cc764e6cce8e870ecf7234b19654a8118acf12",
+      "configuration": "upstream arm64 defconfig; not recovered installed kernel config",
+      "boot_tested": false,
+      "release_ready": false,
+      "scope": "device-tree compiler and candidate DTB compilation only; no kernel Image or modules"
+    }
+  ]
+}
