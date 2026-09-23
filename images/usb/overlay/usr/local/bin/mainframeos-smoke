@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+. /etc/os-release
+[ "$ID" = mainframeos ]
+[ -x /usr/bin/startplasma-wayland ]
+[ -d /usr/lib/modules/"$(uname -r)" ]
+findmnt --noheadings /
+printf '\nMAINFRAMEOS_BOOT_SMOKE_PASS kernel=%s system=%s\n' "$(uname -r)" "$PRETTY_NAME"
+systemctl --no-block poweroff

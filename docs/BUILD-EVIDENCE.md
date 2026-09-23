@@ -50,4 +50,4 @@ The automated PR review identified stale package staging files and a missing boo
 
 ## What this does not establish
 
-No kernel Image/modules, bootable disk image, installer, Android runtime integration, Windows runtime integration, image updater, release signatures or hardware-certified MainFrameOS release has been produced. The DTB is unbooted and must not replace the current working one based on compilation alone. Repeat builds on one frozen builder are narrower evidence than independent reproducibility.
+At the package-bootstrap milestone, no kernel Image/modules or disk image had been produced. The subsequent [USB preview](USB-PREVIEW.md) adds a compiled kernel and a disk image with a passing virtual boot test. A general installer, Android runtime integration, Windows runtime integration, image updater, release signatures and a hardware-certified MainFrameOS release remain pending. The DTB is unbooted and must not replace the current working one based on compilation alone. Repeat builds on one frozen builder are narrower evidence than independent reproducibility.

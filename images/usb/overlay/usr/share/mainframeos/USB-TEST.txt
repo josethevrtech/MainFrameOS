@@ -1,0 +1,23 @@
+MainFrameOS USB development preview
+
+This image is for local testing on the initial development laptop.
+It uses Arch Linux ARM and a newly compiled MainFrameOS kernel.
+It has not yet passed physical hardware acceptance.
+
+The desktop signs in as mainframe. Console login is mainframe with password mainframe.
+Local administrative commands use sudo.
+Remote SSH login is disabled. This is a test session, not a secured daily use installation.
+Changes and files saved on this USB persist. Do not store sensitive data on it.
+
+First check the internal display, keyboard, touchpad, Wi-Fi and audio.
+Then test external displays, Bluetooth, camera and suspend/resume.
+Internal audio routing and hardware video decoding are not yet carried over from the existing installation.
+Record failures with the image build ID and kernel version.
+Android and Windows application integration are not included in this preview.
+
+This image contains no automatic internal disk installer.
+The internal installation remains in place. Do not format or mount internal partitions
+for writing during the first hardware test. Shut down and remove the USB to return.
+
+Some firmware in this personal test image was provisioned from the same device.
+Do not redistribute this image until firmware redistribution terms are established.

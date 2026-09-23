@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-23",
+  "image": "MainFrameOS-0.1-dev-aarch64-usb.img",
+  "sha256": "9b1f53c2480d2ee19f52f16833fb9aa57e39a85d7bb8dd2ea6a220c5a3ea2cae",
+  "size": 17179869184,
+  "kernelrelease": "7.1.13-mainframeos-preview1",
+  "source_commit": "8a4f6449525101e3445d33d642d6b1927f2fba3b",
+  "source_archive_sha256": "e952fa21129b5660b26373dcc9b13d08c049d00c626084e1deb5b18b75a33361",
+  "kernel_config_sha256": "4ae62dfa28f9e9020cd8011cafa7bbceca3e67295dff8e7c6ef0e5bb09bb9a77",
+  "kernel_image_sha256": "69ffd36570a6e2b791ea0fc2333073cdd188b8cd25e44dc6b39a7f444ac97fd3",
+  "dtb_sha256": "5b126e0840e37963f4b207cac3817823ca986f3797c32d78535c03e3312700a3",
+  "kernel_builder": "sha256:a9df0a611aae31afe143da263823f27a76f822b4dec49e05c3771b759079bf8b",
+  "desktop_image": "sha256:c2c73e753d0c41b2f72f7e552a0a74eb6319a8f1fbd3a691061b393b003930c3",
+  "partition_table_verified": true,
+  "ext4_readonly_check_passed": true,
+  "grub_syntax_check_passed": true,
+  "initramfs_required_modules_and_firmware_present": true,
+  "virtual_boot": {
+    "passed": true,
+    "scope": "QEMU virt kernel, initramfs and root filesystem boot; not laptop hardware or EFI validation",
+    "image_sha256": "9b1f53c2480d2ee19f52f16833fb9aa57e39a85d7bb8dd2ea6a220c5a3ea2cae",
+    "boot_files_from_image_esp": true,
+    "physical_boot_tested": false
+  },
+  "physical_boot_tested": false,
+  "usb_write_status": "written and verified after owner approval",
+  "public_release": false,
+  "redistribution_status": "personal firmware provisioned; not cleared for redistribution",
+  "limitations": [
+    "no internal disk installer",
+    "internal audio routing and hardware video decoding pending integration",
+    "Android and Windows runtimes pending",
+    "unsigned preview",
+    "kernel update packaging pending"
+  ],
+  "integrity_regression_tests_passed": 19,
+  "usb_verification": {
+    "device": "/dev/sda",
+    "device_size": 62914560000,
+    "verified_image_bytes": 17179869184,
+    "image_sha256": "9b1f53c2480d2ee19f52f16833fb9aa57e39a85d7bb8dd2ea6a220c5a3ea2cae",
+    "full_image_readback_before_gpt_relocation": true,
+    "gpt_backup_relocated_to_device_end": true,
+    "gpt_validated": true,
+    "root_filesystem_readonly_check_passed": true,
+    "physical_boot_tested": false
+  }
+}
