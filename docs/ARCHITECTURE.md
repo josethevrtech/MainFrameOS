@@ -4,7 +4,9 @@ Status: proposed implementation choices unless marked as observed or confirmed i
 
 ```mermaid
 flowchart TB
-  Desktop[Plasma Wayland desktop]
+  Installer[Shared Snapdragon installer] --> Detection[Hardware detection and boot adapter]
+  Detection --> Profile
+  Desktop[Plasma Wayland desktop / headset XR session]
   Desktop --> Native[ARM64 native apps and Flatpaks]
   Desktop --> Android[Waydroid ARM64 Android environment]
   Desktop --> Windows[Wine with FEX for selected Windows apps]
@@ -13,7 +15,7 @@ flowchart TB
   Windows --> Base
   Base --> Profile[Model-specific hardware profile]
   Profile --> Stack[Kernel, device tree, firmware and Mesa]
-  Stack --> Hardware[Validated Snapdragon computer]
+  Stack --> Hardware[Supported Snapdragon laptop or headset]
 ```
 
 ## Base system
@@ -27,6 +29,10 @@ Build against one consistent repository snapshot. Avoid combining SteamOS and Ar
 Prefer upstream Linux support. Carry only required patches, each with its origin, target kernel, reason, test coverage and upstream/removal status. Initially evaluate the existing working kernel as a hardware baseline; do not assume its version string provides reproducible source provenance.
 
 Keep each device's kernel, device tree, modules, initramfs and required firmware compatible. Use Mesa Freedreno/Turnip where the GPU is supported. Verify the exact GPU and feature requirements against current driver support, not only an Adreno family label.
+
+## Shared installer
+
+One installer orchestrates platform detection, compatibility checks, storage choice, shared system deployment and recovery setup. Laptop and headset boot adapters handle different entry and installation paths. See [Installer design](INSTALLER.md); this architecture is a target, not an implemented installer.
 
 ## Hardware profiles
 
@@ -48,4 +54,4 @@ Wine prefixes are configuration separation, not security sandboxes. Define expli
 
 ## Production image
 
-Prototype with a writable developer installation. Design the public edition around a managed base image, persistent user data and a known-good fallback. Select the deployment mechanism only after the OmniBook boot path and recovery behavior are understood. See [Updates and recovery](UPDATES-AND-RECOVERY.md).
+Prototype with a writable developer installation. Design the public edition around a managed base image, persistent user data and a known-good fallback. Select the deployment mechanism after boot paths and recovery behavior have been tested across the supported platform adapters. See [Updates and recovery](UPDATES-AND-RECOVERY.md).

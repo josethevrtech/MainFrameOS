@@ -31,7 +31,7 @@ Evaluate A/B root deployments or another image-based mechanism against the actua
 5. Mark success only after defined boot/session health checks.
 6. Return to the prior deployment after failed trials or allow explicit selection from recovery.
 
-The exact boot-counting and fallback mechanism must be proven on the OmniBook. Automatic fallback is a requirement to evaluate and implement, not a current capability.
+The exact boot-counting and fallback mechanism must be proven for each supported boot adapter and hardware configuration. Automatic fallback is a requirement to evaluate and implement, not a current capability.
 
 ## Persistent state
 

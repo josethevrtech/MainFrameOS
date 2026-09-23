@@ -3,6 +3,7 @@
 - Product base: Arch Linux ARM AArch64. Never add SteamOS/Holo binary repositories or use the developer's installed OS as the root filesystem input.
 - Keep third-party source origin, immutable revision, hashes and licenses with each import. Change lock files deliberately; never disable source/package verification to make a build pass.
 - Run `make check` and the affected isolated package/kernel build. Do not install development packages or replace host boot artifacts as part of a build.
+- Product scope: one installer and shared distribution for Snapdragon laptops and headsets. The first test laptop does not define eligible brands or generations. Keep exact model names in technical profiles and evidence where necessary.
 - Keep model matching strict. Mark hardware as supported only with release-specific physical test evidence.
 - Distinguish compiled packages, compiled DTBs, bootable images and physically validated releases. Never equate one with another.
 - Preserve `sources/` reference files if working from a ChatGPT project mirror.

@@ -2,7 +2,7 @@
 
 **Current support level: development / bring-up. There is no supported MainFrameOS OS image yet.**
 
-The first target is HP OmniBook 5 16-bf0xxx, board 8E33. Similar hardware is a candidate until it passes its own published tests. Android and Windows application compatibility is version/workflow specific.
+The product scope is Snapdragon laptops and headsets across manufacturers and configurations, through one shared installer. The available developer laptop is the first test machine. Each configuration remains a candidate until it passes its own published tests. Android and Windows application compatibility is version/workflow specific.
 
 Use repository bug or device templates for reproducible issues. Include build ID, board, relevant runtime versions, reproduction and redacted evidence. The `mainframeos-support` utility reports only a small allowlist of model identifiers; it does not collect serial numbers, network configuration or personal logs.
 

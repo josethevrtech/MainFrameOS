@@ -2,7 +2,7 @@
 
 Milestones are ordered by dependency, not calendar promises. Package-build infrastructure and candidate DTB compilation are now implemented. No bootable-image milestone is complete.
 
-## M0 — Capture the reference platform
+## M0 — Capture the initial test platform
 
 - [x] Define product scope and identify the reference laptop.
 - [x] Record a sanitized summary of the existing hardware evidence.
@@ -13,11 +13,13 @@ Milestones are ordered by dependency, not calendar promises. Package-build infra
 
 **Exit:** another developer can explain how this board boots and which changes its working hardware needs, using recorded sources and configuration.
 
-## M1 — Arch Linux ARM desktop prototype
+## M1 — Shared installer and Arch Linux ARM desktop prototype
 
 - [x] Establish an isolated Arch Linux ARM build environment with signed bootstrap and recorded toolchain inventory.
 - [ ] Package the board's required kernel, audio, firmware integration and power configuration.
-- [ ] Assemble a model-specific development image.
+- [ ] Implement the [shared installer design](INSTALLER.md): detection, compatibility report and boot adapters.
+- [ ] Assemble a common system payload with versioned configuration profiles.
+- [ ] Exercise the installer end to end on the initial test laptop.
 - [ ] Boot into accelerated Plasma Wayland.
 - [ ] Complete core input, storage, network, audio and display checks.
 
@@ -41,7 +43,7 @@ Milestones are ordered by dependency, not calendar promises. Package-build infra
 - [ ] Package branding, desktop defaults and app launch integration.
 - [ ] Publish the image only after its support status and known issues are explicit.
 
-**Exit:** an experimental, reproducibly configured preview is available for the named reference profile. It is not a promise of broad device support or production reliability.
+**Exit:** an experimental shared-installer preview is available with an explicit list of tested configurations. It is not a promise of broad device support or production reliability.
 
 ## M4 — Reliable update foundation
 
@@ -55,24 +57,24 @@ Milestones are ordered by dependency, not calendar promises. Package-build infra
 
 ## M5 — Closely related device
 
-- [ ] Select a second actual board with a tester and viable upstream support.
+- [ ] Select another Snapdragon laptop configuration with a tester and viable upstream support; no brand relationship is required.
 - [ ] Add its distinct hardware profile.
 - [ ] Re-run complete acceptance checks and publish limitations.
 
-**Exit:** shared components demonstrably support two validated profiles without assuming they are interchangeable.
+**Exit:** the same installer demonstrably handles two validated configurations and selects their correct profiles.
 
-## Later — Snapdragon PCs and VR
+## Headsets — Shared platform, distinct boot and XR requirements
 
-Evaluate each new platform independently. Headsets need a boot/recovery and tracking feasibility study before promises of a standalone MainFrameOS edition. Keep laptop reliability ahead of expansion.
+Headsets are part of the product scope. Develop their boot/recovery adapters and XR session within the same installation framework. Validate graphics, tracking and input on accessible hardware before claiming a supported headset. Laptop-first testing does not require a separate headset distribution.
 
 ## First implementation work items
 
 | ID | Work item | Completion evidence |
 | --- | --- | --- |
 | [MF-001](https://github.com/josethevrtech/MainFrameOS/issues/2) | Reconstruct reference kernel and DTB provenance | Source commit, patch series, config and boot artifact mapping |
-| [MF-002](https://github.com/josethevrtech/MainFrameOS/issues/3) | Package OmniBook audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
+| [MF-002](https://github.com/josethevrtech/MainFrameOS/issues/3) | Package detected platform audio integration | Clean package install, outputs/mic and repeated hotplug/suspend tests |
 | [MF-003](https://github.com/josethevrtech/MainFrameOS/issues/4) | Package power and platform services | Service ownership, profile behavior, charge limit and energy measurements |
-| [MF-004](https://github.com/josethevrtech/MainFrameOS/issues/5) | Build minimal ARM64 desktop image | Clean build manifest and physical boot result |
+| [MF-004](https://github.com/josethevrtech/MainFrameOS/issues/5) | Build shared Snapdragon installer and desktop payload | Clean build manifest and physical boot result |
 | [MF-005](https://github.com/josethevrtech/MainFrameOS/issues/6) | Validate Android runtime | Exact image/kernel prerequisites and completed Android workflow |
 | [MF-006](https://github.com/josethevrtech/MainFrameOS/issues/7) | Validate Wine/FEX runtime | Reproducible packages and completed Windows workflow |
 | [MF-007](https://github.com/josethevrtech/MainFrameOS/issues/8) | Design recovery/update prototype | Written boot-state model and tested failure/fallback cases |

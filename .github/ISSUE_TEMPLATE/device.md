@@ -1,6 +1,6 @@
 ---
 name: Device support request
-about: Propose a closely related Snapdragon device
+about: Propose a Snapdragon laptop or headset configuration
 title: 'Device: '
 labels: ''
 assignees: ''
@@ -16,4 +16,4 @@ Boot access, kernel/device tree, firmware sources, working and missing functions
 Who can physically test? How can a failed installation be recovered?
 
 ### Scope
-Explain the relationship to the reference OmniBook. A shared SoC is not proof of compatibility.
+Identify laptop or headset use, relevant upstream Linux support and the proposed installer/boot path. No relationship to the initial test laptop is required. A shared SoC alone is not proof of compatibility.
