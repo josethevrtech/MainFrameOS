@@ -1,0 +1,14 @@
+[Unit]
+Description=MainFrameOS local audio diagnostics
+After=wireplumber.service
+Wants=wireplumber.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/sleep 30
+ExecStart=/usr/local/bin/mainframeos-audio-diagnostics
+TimeoutStartSec=150
+UMask=0077
+
+[Install]
+WantedBy=default.target

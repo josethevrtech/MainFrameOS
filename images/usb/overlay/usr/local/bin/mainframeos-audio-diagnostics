@@ -1,0 +1,23 @@
+#!/bin/bash
+# Read only device inspection. Keep the latest report private and local.
+set -u
+umask 077
+report="${XDG_STATE_HOME:-$HOME/.local/state}/mainframeos/audio"
+mkdir -p "$report"
+capture() {
+    local name="$1"
+    shift
+    timeout 8s "$@" > "$report/$name" 2>&1
+    printf '\nexit_status=%s\n' "$?" >> "$report/$name"
+}
+capture boot.txt cat /proc/sys/kernel/random/boot_id
+capture cards.txt cat /proc/asound/cards
+capture pcm.txt cat /proc/asound/pcm
+capture permissions.txt ls -l /dev/snd
+capture identity.txt id
+capture status.txt wpctl status
+capture graph.txt pw-dump
+capture playback.txt aplay -l
+capture capture.txt arecord -l
+capture services.txt systemctl --user status pipewire pipewire-pulse wireplumber --no-pager
+capture journal.txt journalctl --user -b -u wireplumber -u pipewire -u pipewire-pulse -n 1500 --no-pager

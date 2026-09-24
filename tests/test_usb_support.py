@@ -8,7 +8,7 @@ import zlib
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from build import digest
-from usb_support import verify_image, esp_offset, cache_inputs, verify_cache, verify_firmware_provenance, verify_boot_listing
+from usb_support import verify_image, esp_offset, cache_inputs, verify_cache, verify_firmware_provenance, verify_boot_listing, verify_wireless_set
 
 class USBIntegrityTests(unittest.TestCase):
     def test_modified_image_is_rejected(self):
@@ -66,3 +66,15 @@ class USBIntegrityTests(unittest.TestCase):
         for entry in entries:
             with self.assertRaises(ValueError):
                 verify_boot_listing('\n'.join(e for e in entries if e != entry))
+
+    def test_wireless_set_rejects_board_only_and_mixed_files(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            (root/'board-2.bin').write_bytes(b'bus=pci,vendor=17cb,device=1103,subsystem-vendor=103c,subsystem-device=8d9a,qmi-chip-id=18,qmi-board-id=255')
+            meta=dict(origin='test',device_profile='initial',revision='set-a',license_status='private',redistribution_allowed=False)
+            with self.assertRaises(ValueError): verify_wireless_set(root,meta)
+            for name in ('amss.bin','m3.bin','regdb.bin'): (root/name).write_bytes(b'set-a')
+            meta['files']={p.name:digest(p) for p in root.iterdir()}
+            verify_wireless_set(root,meta)
+            (root/'amss.bin').write_bytes(b'other-release')
+            with self.assertRaises(ValueError): verify_wireless_set(root,meta)

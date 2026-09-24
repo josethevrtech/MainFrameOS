@@ -82,3 +82,16 @@ def verify_boot_listing(listing):
     for module in ('i2c-qcom-geni', 'gpio-sbu-mux'):
         if not any(path.endswith('/'+module+'.ko'+suffix) for path in paths for suffix in ('', '.zst', '.xz', '.gz')):
             raise ValueError('Missing early boot module: '+module)
+
+
+def verify_wireless_set(directory, provenance):
+    names=('board-2.bin','amss.bin','m3.bin','regdb.bin')
+    missing=[name for name in names if not (directory/name).is_file()]
+    if missing:
+        raise ValueError('Incomplete wireless firmware set: '+', '.join(missing))
+    files={name:digest(directory/name) for name in names}
+    verify_firmware_provenance(provenance,files)
+    key=b'bus=pci,vendor=17cb,device=1103,subsystem-vendor=103c,subsystem-device=8d9a,qmi-chip-id=18,qmi-board-id=255'
+    if key not in (directory/'board-2.bin').read_bytes():
+        raise ValueError('Wireless calibration database lacks the initial profile exact key')
+    return files

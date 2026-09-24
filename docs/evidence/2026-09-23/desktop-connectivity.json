@@ -20,12 +20,14 @@
   },
   "wireless_board_sha256": "6c46161002b0c3cec8a209ea5f4beb149b1ca00d9343f5e8cbcb912c9da7744c",
   "wireless_board_redistribution_cleared": false,
-  "wireless_retest_pending": true,
-  "headphones_and_microphones_retest_pending": true,
+  "wireless_retest_pending": false,
+  "headphones_and_microphones_retest_pending": false,
   "internal_speakers_enabled": false,
   "physical_desktop_boot_confirmed": true,
   "audio_topology_matches_working_host": true,
   "audio_profiles_parse_without_hardware": true,
   "fastfetch_konsole_image_protocol_verified": true,
-  "added_package_file_checks_passed": true
+  "added_package_file_checks_passed": true,
+  "wireless_retest_result": "Firmware crashed during startup with the older packaged runtime.",
+  "audio_retest_result": "Owner reports no desktop audio devices. Kernel card and UCM routes loaded."
 }

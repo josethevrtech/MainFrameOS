@@ -7,6 +7,9 @@ COPY platform-inputs/ /opt/platform-inputs/
 COPY mkinitcpio.conf /etc/mkinitcpio-mainframeos.conf
 COPY support.pkg.tar.xz /tmp/support.pkg.tar.xz
 RUN install -Dm644 /opt/platform-inputs/board-2.bin /usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/board-2.bin && \
+    install -Dm644 /opt/platform-inputs/amss.bin /usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/amss.bin && \
+    install -Dm644 /opt/platform-inputs/m3.bin /usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/m3.bin && \
+    install -Dm644 /opt/platform-inputs/regdb.bin /usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/regdb.bin && \
     install -Dm644 /opt/platform-inputs/X1P42100-HP-OMNIBOOK-5-tplg.bin /usr/lib/firmware/qcom/x1e80100/X1P42100-HP-OMNIBOOK-5-tplg.bin && \
     install -Dm644 /opt/platform-inputs/build.json /usr/share/mainframeos/platform-inputs.json && \
     install -Dm644 /opt/platform-inputs/LICENSE.audio /usr/share/licenses/mainframeos-audio/LICENSE && \
@@ -21,6 +24,7 @@ RUN install -Dm644 /opt/platform-inputs/board-2.bin /usr/lib/firmware/updates/at
     depmod "$(cat /opt/mainframeos-kernel/kernelrelease)" && \
     mkinitcpio -k "$(cat /opt/mainframeos-kernel/kernelrelease)" -c /etc/mkinitcpio-mainframeos.conf -g /boot/initramfs-mainframeos.img && \
     systemctl enable mainframeos-smoke.service && \
+    systemctl --global enable mainframeos-audio-diagnostics.service && \
     systemctl set-default graphical.target && \
     pacman -Q > /usr/share/mainframeos/packages.txt && \
     rm -rf /opt/mainframeos-kernel
