@@ -34,6 +34,20 @@ Android and Windows application integration, internal audio routing, hardware vi
 
 ## Recorded build result
 
-The kernel, modules, device tree and 16 GiB disk image were built successfully on 2026-09-23. GRUB configuration, GPT structure, ext4 consistency and required early boot files passed inspection. The isolated ARM virtual machine mounted the actual image root, passed its system check and powered off cleanly. Physical laptop boot remains untested. See the [build record](evidence/2026-09-23/usb-preview.json).
+The kernel, modules, device tree and 16 GiB disk image were built successfully on 2026-09-23. GRUB configuration, GPT structure, ext4 consistency and required early boot files passed inspection. The isolated ARM virtual machine mounted the actual image root, passed its system check and powered off cleanly. The first physical attempt reached GRUB and then a black screen without a desktop. See the [build record](evidence/2026-09-23/usb-preview.json).
 
-The approved 58.6 GiB USB was written and all 16 GiB read back directly from the device with a matching SHA256. The backup GPT was then relocated to the end of the larger drive, and partition and root filesystem checks passed. The remaining drive space is unallocated. Physical boot is the next validation step.
+The approved 58.6 GiB USB was written and all 16 GiB read back directly from the device with a matching SHA256. The backup GPT was then relocated to the end of the larger drive, and partition and root filesystem checks passed. The remaining drive space is unallocated. The first physical boot attempt failed after selecting the GRUB entry.
+
+## First physical failure and correction
+
+The owner reported a black screen after selecting MainFrameOS in GRUB. Offline inspection found no persistent journal and a root filesystem mount count of zero. This does not establish a Plasma failure; the kernel and early hardware startup remain under investigation.
+
+The original package list omitted `linux-firmware-qcom`. The GPU firmware files `gen71500_sqe.fw`, `gen71500_gmu.bin` and `x1p42100/gen71500_zap.mbn` were absent from both the root and initramfs. The corrected recipe explicitly installs the signed ALARM package and requires these files in early boot. It also includes the Qualcomm I2C driver and USB sideband mux driver before mounting root. A new validation check rejects the original image and any initramfs missing these requirements.
+
+The preview entry now shows startup stages and verbose kernel messages. If it still goes black, try **MainFrameOS USB basic display diagnostic**, which disables the accelerated MSM driver and targets a text console. This diagnostic mode is not expected to start Plasma. Persistent journal storage is explicit with a short synchronization interval, so failures after root mount can leave useful logs.
+
+The owner also reported an apparent Secure Boot change. Read-only inspection after returning to the internal OS reported `SecureBoot=0` and `SetupMode=0`. No cause for the reported change has been established. Neither the build nor repair writes EFI variables or changes firmware settings; the preview remains unsigned. Do not clear firmware keys or reset BIOS defaults as a troubleshooting shortcut.
+
+The replacement build has its own [verification record](evidence/2026-09-23/usb-repair.json); the original record is retained as failure evidence.
+
+The replacement was written to the same approved USB, read back in full with a matching image SHA256, and passed partition, FAT and ext4 checks. Its laptop boot result is still pending.

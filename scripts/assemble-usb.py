@@ -28,15 +28,23 @@ set timeout=12
 terminal_output console
 menuentry 'MainFrameOS USB preview' {{
     search --no-floppy --file --set=usb /EFI/MainFrameOS/Image
-    linux ($usb)/EFI/MainFrameOS/Image root=UUID={root_uuid} rw rootwait clk_ignore_unused pd_ignore_unused cma=128M efi=noruntime console=tty0 panic=0 loglevel=4
+    echo 'Loading MainFrameOS kernel...'
+    linux ($usb)/EFI/MainFrameOS/Image root=UUID={root_uuid} rw rootwait clk_ignore_unused pd_ignore_unused cma=128M efi=noruntime console=tty0 panic=0 loglevel=7 systemd.show_status=1
+    echo 'Loading early boot environment...'
     initrd ($usb)/EFI/MainFrameOS/initramfs.img
+    echo 'Loading device tree...'
     devicetree ($usb)/EFI/MainFrameOS/device.dtb
+    echo 'Starting kernel...'
 }}
-menuentry 'MainFrameOS USB troubleshooting console' {{
+menuentry 'MainFrameOS USB basic display diagnostic' {{
     search --no-floppy --file --set=usb /EFI/MainFrameOS/Image
-    linux ($usb)/EFI/MainFrameOS/Image root=UUID={root_uuid} rw rootwait clk_ignore_unused pd_ignore_unused cma=128M efi=noruntime console=tty0 panic=0 loglevel=7 systemd.unit=multi-user.target pcie_aspm=off nvme_core.default_ps_max_latency_us=0
+    echo 'Loading MainFrameOS kernel...'
+    linux ($usb)/EFI/MainFrameOS/Image root=UUID={root_uuid} rw rootwait clk_ignore_unused pd_ignore_unused cma=128M efi=noruntime console=tty0 panic=0 loglevel=7 systemd.unit=multi-user.target nomodeset module_blacklist=msm pcie_aspm=off nvme_core.default_ps_max_latency_us=0
+    echo 'Loading early boot environment...'
     initrd ($usb)/EFI/MainFrameOS/initramfs.img
+    echo 'Loading device tree...'
     devicetree ($usb)/EFI/MainFrameOS/device.dtb
+    echo 'Starting kernel...'
 }}
 '''
 (work / 'grub.cfg').write_text(config)

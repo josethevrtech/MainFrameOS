@@ -70,3 +70,15 @@ def verify_firmware_provenance(provenance, files):
         raise ValueError('This pipeline accepts personally provisioned firmware only')
     if provenance.get('files') != files:
         raise ValueError('Firmware files differ from the supplied provenance manifest')
+
+
+def verify_boot_listing(listing):
+    """Reject missing initial profile firmware and early bus drivers."""
+    paths = set(listing.splitlines())
+    for name in ('qcom/gen71500_sqe.fw', 'qcom/gen71500_gmu.bin',
+                 'qcom/x1p42100/gen71500_zap.mbn'):
+        if not any('usr/lib/firmware/'+name+suffix in paths for suffix in ('', '.zst', '.xz')):
+            raise ValueError('Missing initial profile GPU firmware: '+name)
+    for module in ('i2c-qcom-geni', 'gpio-sbu-mux'):
+        if not any(path.endswith('/'+module+'.ko'+suffix) for path in paths for suffix in ('', '.zst', '.xz', '.gz')):
+            raise ValueError('Missing early boot module: '+module)

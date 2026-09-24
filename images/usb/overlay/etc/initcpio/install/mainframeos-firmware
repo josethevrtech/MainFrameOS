@@ -1,5 +1,20 @@
 #!/bin/bash
 build() {
     add_full_dir /usr/lib/firmware/qcom/x1p42100/hp/omnibook-5
+    local name file found
+    for name in qcom/gen71500_sqe.fw qcom/gen71500_gmu.bin qcom/x1p42100/gen71500_zap.mbn; do
+        found=0
+        for file in "/usr/lib/firmware/$name"{,.zst,.xz}; do
+            if [[ -f "$file" ]]; then
+                add_file "$file"
+                found=1
+                break
+            fi
+        done
+        if (( ! found )); then
+            error "Missing required initial platform GPU firmware: $name"
+            return 1
+        fi
+    done
 }
-help() { echo 'Initial test platform firmware for the local USB preview'; }
+help() { echo 'Initial test platform and GPU firmware for the local USB preview'; }

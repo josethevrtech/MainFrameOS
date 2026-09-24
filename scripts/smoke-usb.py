@@ -4,7 +4,7 @@ import json
 import subprocess
 import tempfile
 from build import BUILD, OUT, container, digest
-from usb_support import verify_image, esp_offset
+from usb_support import verify_image, esp_offset, verify_boot_listing
 
 state=json.loads((OUT/'usb-image.json').read_text())
 image=OUT/state['image']
@@ -22,6 +22,10 @@ for filename in ('Image','initramfs.img','device.dtb','grub.cfg'):
               '-v',f'{OUT}:/artifacts:ro','-v',f'{bootfiles}:/extracted:rw',tools,
               'mcopy','-i',f'/artifacts/{image.name}@@{offset}',
               f'::/EFI/MainFrameOS/{filename}',f'/extracted/{filename}')
+listing=container('run','--rm','--network=none','--cap-drop=ALL','--security-opt=no-new-privileges',
+                  '-v',f'{bootfiles}:/payload:ro',state['desktop_image'],
+                  'lsinitcpio','/payload/initramfs.img',capture_output=True).stdout
+verify_boot_listing(listing)
 for filename, source in [('Image','Image'),('device.dtb','device.dtb')]:
     if digest(bootfiles/filename)!=state['kernel']['files'][source]:
         raise SystemExit('ESP boot payload differs from compiled kernel manifest')
@@ -45,7 +49,7 @@ with log.open('w') as stream:
         raise SystemExit('Virtual boot exceeded five minutes; inspect build/usb-smoke.log')
 passed=result.returncode==0 and 'MAINFRAMEOS_BOOT_SMOKE_PASS' in log.read_text()
 report={'passed':passed,'scope':'QEMU virt kernel, initramfs and root filesystem boot; not laptop hardware or EFI validation',
-        'image_sha256':verified_hash,'boot_files_from_image_esp':True,'physical_boot_tested':False}
+        'image_sha256':verified_hash,'boot_files_from_image_esp':True,'required_gpu_firmware_and_bus_modules_present':True,'physical_boot_tested':False}
 (OUT/'usb-smoke.json').write_text(json.dumps(report,indent=2)+'\n')
 extracted.cleanup()
 print(json.dumps(report,indent=2))
