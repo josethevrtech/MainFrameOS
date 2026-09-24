@@ -8,7 +8,7 @@ import zlib
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from build import digest
-from usb_support import verify_image, esp_offset, cache_inputs, verify_cache, verify_firmware_provenance
+from usb_support import verify_image, esp_offset, cache_inputs, verify_cache, verify_firmware_provenance, verify_boot_listing
 
 class USBIntegrityTests(unittest.TestCase):
     def test_modified_image_is_rejected(self):
@@ -55,3 +55,14 @@ class USBIntegrityTests(unittest.TestCase):
         with self.assertRaises(ValueError): verify_firmware_provenance(state, {'fw':'different'})
         del state['revision']
         with self.assertRaises(ValueError): verify_firmware_provenance(state, {'fw':'sha'})
+
+    def test_missing_gpu_firmware_and_early_bus_driver_rejected(self):
+        entries = ['usr/lib/firmware/qcom/gen71500_sqe.fw.zst',
+                   'usr/lib/firmware/qcom/gen71500_gmu.bin.zst',
+                   'usr/lib/firmware/qcom/x1p42100/gen71500_zap.mbn.zst',
+                   'usr/lib/modules/test/kernel/i2c-qcom-geni.ko',
+                   'usr/lib/modules/test/kernel/gpio-sbu-mux.ko']
+        verify_boot_listing('\n'.join(entries))
+        for entry in entries:
+            with self.assertRaises(ValueError):
+                verify_boot_listing('\n'.join(e for e in entries if e != entry))

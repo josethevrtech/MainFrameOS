@@ -22,7 +22,7 @@
     "boot_files_from_image_esp": true,
     "physical_boot_tested": false
   },
-  "physical_boot_tested": false,
+  "physical_boot_tested": true,
   "usb_write_status": "written and verified after owner approval",
   "public_release": false,
   "redistribution_status": "personal firmware provisioned; not cleared for redistribution",
@@ -44,5 +44,16 @@
     "gpt_validated": true,
     "root_filesystem_readonly_check_passed": true,
     "physical_boot_tested": false
+  },
+  "physical_boot_result": "failed: owner reached GRUB and selected MainFrameOS, then black screen; no desktop",
+  "post_attempt_inspection": {
+    "root_mount_count": 0,
+    "persistent_journal_present": false,
+    "secure_boot_current_value": 0,
+    "secure_boot_change_cause": "not established",
+    "missing_inputs": [
+      "linux-firmware-qcom package including gen71500 GPU firmware",
+      "i2c_qcom_geni and gpio_sbu_mux in initramfs"
+    ]
   }
 }
