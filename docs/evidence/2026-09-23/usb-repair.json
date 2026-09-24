@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-23",
+  "purpose": "Correct missing Qualcomm firmware after first physical black screen",
+  "image": "MainFrameOS-0.1-dev-aarch64-usb.img",
+  "sha256": "c31646d58ad5826ad15dd077b464bac99164540412d612f03430b474a9d591e3",
+  "size": 17179869184,
+  "kernelrelease": "7.1.13-mainframeos-preview1",
+  "parent_final_image": "sha256:c2c73e753d0c41b2f72f7e552a0a74eb6319a8f1fbd3a691061b393b003930c3",
+  "final_image": "sha256:01b98cc67b1038038c4bce05333739bf67b2b8e9847ffb43ae71e4ad125ba3fb",
+  "changes": [
+    "Install signed ALARM linux-firmware-qcom 20260916-1",
+    "Require initial platform GPU firmware in initramfs",
+    "Include Qualcomm GENI I2C and USB sideband mux drivers before root mount",
+    "Verbose boot entries and basic display diagnostic",
+    "Persistent journal storage"
+  ],
+  "virtual_boot": {
+    "passed": true,
+    "scope": "QEMU virt kernel, initramfs and root filesystem boot; not laptop hardware or EFI validation",
+    "image_sha256": "c31646d58ad5826ad15dd077b464bac99164540412d612f03430b474a9d591e3",
+    "boot_files_from_image_esp": true,
+    "required_gpu_firmware_and_bus_modules_present": true,
+    "physical_boot_tested": false
+  },
+  "tests_passed": 20,
+  "physical_boot_tested": false,
+  "physical_boot_result": "replacement requires owner test",
+  "usb_write_status": "written and fully verified",
+  "secure_boot_observation": {
+    "SecureBoot": 0,
+    "SetupMode": 0,
+    "firmware_modified": false,
+    "reported_change_cause": "unknown"
+  },
+  "redistributable": false,
+  "usb_verification": {
+    "device": "/dev/sda",
+    "device_size": 62914560000,
+    "verified_image_bytes": 17179869184,
+    "image_sha256": "c31646d58ad5826ad15dd077b464bac99164540412d612f03430b474a9d591e3",
+    "full_image_readback_before_gpt_relocation": true,
+    "gpt_backup_relocated_to_device_end": true,
+    "gpt_validated": true,
+    "root_filesystem_readonly_check_passed": true,
+    "physical_boot_tested": false,
+    "fat_readonly_check_passed": true
+  }
+}

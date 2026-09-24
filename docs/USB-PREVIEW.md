@@ -47,3 +47,7 @@ The original package list omitted `linux-firmware-qcom`. The GPU firmware files 
 The preview entry now shows startup stages and verbose kernel messages. If it still goes black, try **MainFrameOS USB basic display diagnostic**, which disables the accelerated MSM driver and targets a text console. This diagnostic mode is not expected to start Plasma. Persistent journal storage is explicit with a short synchronization interval, so failures after root mount can leave useful logs.
 
 The owner also reported an apparent Secure Boot change. Read-only inspection after returning to the internal OS reported `SecureBoot=0` and `SetupMode=0`. No cause for the reported change has been established. Neither the build nor repair writes EFI variables or changes firmware settings; the preview remains unsigned. Do not clear firmware keys or reset BIOS defaults as a troubleshooting shortcut.
+
+The replacement build has its own [verification record](evidence/2026-09-23/usb-repair.json); the original record is retained as failure evidence.
+
+The replacement was written to the same approved USB, read back in full with a matching image SHA256, and passed partition, FAT and ext4 checks. Its laptop boot result is still pending.
