@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-23",
+  "base_image_sha256": "c31646d58ad5826ad15dd077b464bac99164540412d612f03430b474a9d591e3",
+  "update_archive_sha256": "b778018bf1fc035d1293cfb69f54511903c094ae17e5b935f70d7ab6fec38299",
+  "verified_files": 143,
+  "filesystem_check_passed": true,
+  "boot_files_changed": false,
+  "user_data_preserved": true,
+  "final_container": "sha256:6e83b297509baf5e6146ad244a58e24edf8502882399c22bc758bc9ded5e8292",
+  "fastfetch_version": "2.68.1",
+  "logo_sha256": "7322b6cd45505a07eac976b945ce632f04f9def16b3dd58c6764019eb8b4063e",
+  "audio_topology_sha256": "aa303397750f883ecaeed874d7547da658500596247676a6d405bf1ec43290b5",
+  "audio_source": {
+    "url": "https://codeload.github.com/jglathe/audioreach-topology/tar.gz/d1d6d8eca32c12e66c5a87211bb3dec1ec92a3e6",
+    "commit": "d1d6d8eca32c12e66c5a87211bb3dec1ec92a3e6",
+    "sha256": "44375e038de2e8df2402697640d6abc851711b309e468de6ddce21dc6a7a177f",
+    "license": "BSD-3-Clause",
+    "input": "X1E80100-LENOVO-Thinkpad-T14s.m4",
+    "note": "Initial profile uses the upstream two speaker WCD938x topology under the model name requested by its pinned machine driver; internal speaker routes are not exposed pending protection integration."
+  },
+  "wireless_board_sha256": "6c46161002b0c3cec8a209ea5f4beb149b1ca00d9343f5e8cbcb912c9da7744c",
+  "wireless_board_redistribution_cleared": false,
+  "wireless_retest_pending": true,
+  "headphones_and_microphones_retest_pending": true,
+  "internal_speakers_enabled": false,
+  "physical_desktop_boot_confirmed": true,
+  "audio_topology_matches_working_host": true,
+  "audio_profiles_parse_without_hardware": true,
+  "fastfetch_konsole_image_protocol_verified": true,
+  "added_package_file_checks_passed": true
+}

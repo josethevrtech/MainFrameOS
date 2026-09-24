@@ -1,0 +1,11 @@
+#!/bin/sh
+# Preserve user arguments and user configuration; brand only the default invocation.
+config_home=${XDG_CONFIG_HOME:-$HOME/.config}
+if [ "$#" -eq 0 ] && [ -t 1 ] && [ ! -e "$config_home/fastfetch/config.jsonc" ] && [ ! -e "$config_home/fastfetch/config.json" ]; then
+    if [ -n "${KONSOLE_VERSION:-}" ]; then
+        exec /usr/bin/fastfetch --logo /usr/share/mainframeos/branding/cube.png --logo-type iterm --logo-width 32 --logo-height 16
+    elif [ -n "${KITTY_WINDOW_ID:-}" ] || [ "${TERM_PROGRAM:-}" = ghostty ]; then
+        exec /usr/bin/fastfetch --logo /usr/share/mainframeos/branding/cube.png --logo-type kitty-direct --logo-width 32 --logo-height 16
+    fi
+fi
+exec /usr/bin/fastfetch "$@"

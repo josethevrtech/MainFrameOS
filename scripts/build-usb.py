@@ -15,6 +15,8 @@ p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--firmware-directory', type=Path, required=True,
                help='Personally provisioned firmware directory for the initial test profile')
 p.add_argument('--firmware-provenance', type=Path, required=True, help='Origin, revision, license status and exact file hashes')
+p.add_argument('--wireless-board',type=Path,required=True)
+p.add_argument('--wireless-provenance',type=Path,required=True)
 a=p.parse_args()
 provenance=json.loads(a.firmware_provenance.read_text())
 firmware_files={str(f.relative_to(a.firmware_directory)):digest(f) for f in sorted(a.firmware_directory.rglob('*')) if f.is_file()}
@@ -42,6 +44,7 @@ for name,base in [('tools',state['image']),('desktop',None)]:
               '-f',str(ROOT/f'images/usb/{name.title()}.Containerfile'),str(ROOT/'images/usb'))
     (state_dir/'inputs.json').write_text(json.dumps({'inputs':expected,'base_image':base,'image':(state_dir/'image-id').read_text().strip()},indent=2)+'\n')
 subprocess.run([sys.executable,str(ROOT/'scripts/build-kernel-image.py')],check=True)
+subprocess.run([sys.executable,str(ROOT/'scripts/build-platform-inputs.py'),'--board',str(a.wireless_board),'--provenance',str(a.wireless_provenance),'--builder',(BUILD/'usb-desktop/image-id').read_text().strip()],check=True)
 stage=BUILD/'usb-stage'
 if stage.exists():
     p.error('Move the previous build/usb-stage aside before a fresh staged build')
@@ -56,6 +59,7 @@ firmware=dict(provenance)
 verify_firmware_provenance(firmware,{str(f.relative_to(stage/'firmware')):digest(f) for f in sorted((stage/'firmware').rglob('*')) if f.is_file()})
 (stage/'firmware-inputs.json').write_text(json.dumps(firmware,indent=2)+'\n')
 shutil.copytree(ROOT/'images/usb/overlay',stage/'overlay')
+shutil.copytree(OUT/'platform-inputs',stage/'platform-inputs')
 shutil.copyfile(ROOT/'images/usb/mkinitcpio.conf',stage/'mkinitcpio.conf')
 shutil.copyfile(OUT/'mainframeos-support-0.1.0-1-any.pkg.tar.xz',stage/'support.pkg.tar.xz')
 final=BUILD/'usb-final';final.mkdir(exist_ok=True)

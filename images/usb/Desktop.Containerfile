@@ -2,7 +2,7 @@ ARG BASE
 FROM ${BASE}
 RUN printf 'Server = https://fl.us.mirror.archlinuxarm.org/$arch/$repo\n' > /etc/pacman.d/mirrorlist && \
     pacman-key --init && pacman-key --populate archlinuxarm && \
-    pacman -Syu --disable-sandbox-filesystem --noconfirm --needed plasma-desktop sddm konsole dolphin kate firefox flatpak discover networkmanager plasma-nm plasma-pa kscreen bluedevil bluez bluez-utils pipewire pipewire-pulse pipewire-alsa wireplumber alsa-utils mesa vulkan-freedreno linux-firmware linux-firmware-qcom sudo grub dosfstools e2fsprogs parted rsync python && \
+    pacman -Syu --disable-sandbox-filesystem --noconfirm --needed plasma-desktop fastfetch m4 wireless-regdb rtkit sddm konsole dolphin kate firefox flatpak discover networkmanager plasma-nm plasma-pa kscreen bluedevil bluez bluez-utils pipewire pipewire-pulse pipewire-alsa wireplumber alsa-utils mesa vulkan-freedreno linux-firmware linux-firmware-qcom sudo grub dosfstools e2fsprogs parted rsync python && \
     usermod -l mainframe -d /home/mainframe -m alarm && passwd -l mainframe && passwd -l root && \
     usermod -aG wheel mainframe && \
     systemctl disable sshd systemd-networkd systemd-resolved && \

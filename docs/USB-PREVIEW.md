@@ -4,7 +4,7 @@ This build targets a personal hardware test on the initial development laptop. T
 
 ## Contents
 
-The image uses the verified Arch Linux ARM bootstrap and ALARM packages. It includes Plasma Wayland, Firefox, Konsole, Dolphin, Kate, Discover, Flatpak, NetworkManager, Bluetooth and PipeWire. Kernel Image, modules and device tree are compiled from the pinned source in `upstream/sources.lock.json`, using ARM64 defconfig and `images/usb/kernel.fragment`. The kernel has its own MainFrameOS version suffix.
+The image uses the verified Arch Linux ARM bootstrap and ALARM packages. It includes Plasma Wayland, Firefox, Fastfetch, Konsole, Dolphin, Kate, Discover, Flatpak, NetworkManager, Bluetooth and PipeWire. Kernel Image, modules and device tree are compiled from the pinned source in `upstream/sources.lock.json`, using ARM64 defconfig and `images/usb/kernel.fragment`. The kernel has its own MainFrameOS version suffix.
 
 The root filesystem comes from ALARM, never from the installed SteamOS system. Only the required, personally provisioned device firmware is taken from the current machine. Firmware hashes are recorded locally. This image must not be redistributed until the relevant redistribution terms are established.
 
@@ -14,7 +14,7 @@ The kernel configuration is a new development configuration, not a recovered cop
 
 Use the [foundation build requirements](BUILD-AND-PACKAGING.md), then prepare the verified builder, support package and source with `make bootstrap package-support kernel-dtb`. Existing kernel source extraction directories must be moved aside before rerunning the DTB extraction step.
 
-Run `python3 scripts/build-usb.py --firmware-directory /path/to/personally/provisioned/device/firmware --firmware-provenance /path/to/firmware-inputs.json` on the initial AArch64 test platform. The script creates isolated tool and desktop images, compiles the kernel, stages the firmware and assembles a regular disk image under `out/`. It never writes a physical drive. Kernel compilation uses four CPUs and a 3 GiB memory limit. Move previous USB staging/assembly directories and output images aside before a fresh image build.
+Run `python3 scripts/build-usb.py --firmware-directory /path/to/personally/provisioned/device/firmware --firmware-provenance /path/to/firmware-inputs.json --wireless-board /path/to/board-2.bin --wireless-provenance /path/to/wireless-provenance.json` on the initial AArch64 test platform. The script creates isolated tool and desktop images, compiles the kernel, stages the firmware and assembles a regular disk image under `out/`. It never writes a physical drive. Kernel compilation uses four CPUs and a 3 GiB memory limit. Move previous USB staging/assembly directories and output images aside before a fresh image build.
 
 The firmware provenance JSON must contain nonempty `origin`, `device_profile`, `revision` and `license_status` strings, `redistribution_allowed: false`, and a `files` object mapping every relative firmware path to its SHA256. The build rejects missing provenance or differing file hashes. Keep this local record with the private image.
 
@@ -51,3 +51,15 @@ The owner also reported an apparent Secure Boot change. Read-only inspection aft
 The replacement build has its own [verification record](evidence/2026-09-23/usb-repair.json); the original record is retained as failure evidence.
 
 The replacement was written to the same approved USB, read back in full with a matching image SHA256, and passed partition, FAT and ext4 checks. Its laptop boot result is still pending.
+
+## Successful desktop boot and peripheral update
+
+The owner confirmed that the corrected image booted successfully into the desktop. Its saved journal shows the Qualcomm wireless driver failing because its exact board calibration entry is absent and the sound card failing because `X1P42100-HP-OMNIBOOK-5-tplg.bin` is missing.
+
+Fastfetch is now preinstalled with a purple cube logo, blue accents and a text fallback. Running `fastfetch` in Konsole uses its image protocol. Explicit arguments and user configuration remain respected. The logo source and generation prompt are recorded in [branding notes](BRANDING.md).
+
+The wireless build input now requires a personally provisioned board database and a provenance JSON using the same required fields as device firmware, with `files` containing the exact `board-2.bin` SHA256. The builder checks the initial hardware calibration key and stages the file in the firmware override directory without replacing the packaged database. `wireless-regdb` is also installed; no country override is selected automatically.
+
+The audio topology is compiled from an immutable BSD licensed source in `upstream/audio-source.lock.json`. The existing upstream two speaker WCD938x topology is installed under the exact name requested by the initial machine driver. The UCM profile matches the initial machine's full ALSA card name and exposes headphones, headset microphone and internal microphones. Internal speaker routes remain disabled because the working local community profile explicitly disables speaker protection and this distribution has no validated protection and calibration implementation. Display audio is also pending the corresponding device tree integration.
+
+The existing USB received a small verified file update rather than a reformat. User data, credentials, network settings, journals and boot artifacts were preserved. The preceding disk image remains the recorded baseline; its SHA256 must not be described as the hash of the modified USB. See the [update manifest](evidence/2026-09-23/desktop-connectivity.json). New clean builds include the same changes. After rebuilding, move prior `build/audio-source` aside along with the USB staging directories. The updated Wi-Fi and audio routes require physical testing.

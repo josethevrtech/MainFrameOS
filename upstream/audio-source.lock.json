@@ -1,0 +1,8 @@
+{
+  "url": "https://codeload.github.com/jglathe/audioreach-topology/tar.gz/d1d6d8eca32c12e66c5a87211bb3dec1ec92a3e6",
+  "commit": "d1d6d8eca32c12e66c5a87211bb3dec1ec92a3e6",
+  "sha256": "44375e038de2e8df2402697640d6abc851711b309e468de6ddce21dc6a7a177f",
+  "license": "BSD-3-Clause",
+  "input": "X1E80100-LENOVO-Thinkpad-T14s.m4",
+  "note": "Initial profile uses the upstream two speaker WCD938x topology under the model name requested by its pinned machine driver; internal speaker routes are not exposed pending protection integration."
+}

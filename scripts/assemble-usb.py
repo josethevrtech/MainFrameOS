@@ -90,6 +90,7 @@ manifest={'schema_version':1,'image':output.name,'sha256':digest(output),'size':
           'root_length':root_sectors*sector,'desktop_image':image_id,'tools_image':tools_id,
           'kernel':json.loads((OUT/'usb-kernel/build.json').read_text()),
           'firmware':json.loads((BUILD/'usb-stage/firmware-inputs.json').read_text()),
+          'platform_inputs':json.loads((OUT/'platform-inputs/build.json').read_text()),
           'physical_boot_tested':False,'redistributable':False,'scope':'personal USB hardware test; no internal disk installer'}
 (OUT/'usb-image.json').write_text(json.dumps(manifest,indent=2)+'\n')
 (OUT/(output.name+'.sha256')).write_text(manifest['sha256']+'  '+output.name+'\n')
