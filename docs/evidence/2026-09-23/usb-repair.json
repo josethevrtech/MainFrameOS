@@ -23,8 +23,8 @@
     "physical_boot_tested": false
   },
   "tests_passed": 20,
-  "physical_boot_tested": false,
-  "physical_boot_result": "replacement requires owner test",
+  "physical_boot_tested": true,
+  "physical_boot_result": "owner confirmed successful desktop boot; wireless and audio initially failed",
   "usb_write_status": "written and fully verified",
   "secure_boot_observation": {
     "SecureBoot": 0,

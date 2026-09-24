@@ -1,0 +1,36 @@
+{
+  "logo": {
+    "type": "file",
+    "source": "/usr/share/mainframeos/branding/cube.txt",
+    "color": {
+      "1": "magenta",
+      "2": "blue"
+    }
+  },
+  "display": {
+    "color": {
+      "keys": "magenta",
+      "title": "blue"
+    }
+  },
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "display",
+    "de",
+    "wm",
+    "terminal",
+    "cpu",
+    "gpu",
+    "memory",
+    "disk",
+    "battery",
+    "break",
+    "colors"
+  ]
+}

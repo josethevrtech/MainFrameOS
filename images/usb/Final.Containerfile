@@ -3,9 +3,15 @@ FROM ${BASE}
 COPY kernel/ /opt/mainframeos-kernel/
 COPY firmware/ /usr/lib/firmware/qcom/x1p42100/hp/omnibook-5/
 COPY overlay/ /
+COPY platform-inputs/ /opt/platform-inputs/
 COPY mkinitcpio.conf /etc/mkinitcpio-mainframeos.conf
 COPY support.pkg.tar.xz /tmp/support.pkg.tar.xz
-RUN printf 'mainframe:mainframe\n' | chpasswd && \
+RUN install -Dm644 /opt/platform-inputs/board-2.bin /usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/board-2.bin && \
+    install -Dm644 /opt/platform-inputs/X1P42100-HP-OMNIBOOK-5-tplg.bin /usr/lib/firmware/qcom/x1e80100/X1P42100-HP-OMNIBOOK-5-tplg.bin && \
+    install -Dm644 /opt/platform-inputs/build.json /usr/share/mainframeos/platform-inputs.json && \
+    install -Dm644 /opt/platform-inputs/LICENSE.audio /usr/share/licenses/mainframeos-audio/LICENSE && \
+    rm -rf /opt/platform-inputs && \
+    printf 'mainframe:mainframe\n' | chpasswd && \
     pacman -U --noconfirm /tmp/support.pkg.tar.xz && rm /tmp/support.pkg.tar.xz && \
     pacman -R --noconfirm linux-aarch64 && \
     cp -a /opt/mainframeos-kernel/lib/modules/* /usr/lib/modules/ && \
