@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-23",
+  "files": {
+    "usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/board-2.bin": "6c46161002b0c3cec8a209ea5f4beb149b1ca00d9343f5e8cbcb912c9da7744c",
+    "usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/amss.bin": "a38983293a2c0b64aee9ba80f3856c7d1e3d2f2e2cb0fde6a889717d1925aa86",
+    "usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/m3.bin": "9be43a8d9dc9454a629d65368df7ccd532d8768a0ac1fd935f57bcd37cbefecd",
+    "usr/lib/firmware/updates/ath11k/WCN6855/hw2.1/regdb.bin": "f3930af4bb8d2e23737a1ba4c68fa297652fd9e256851245f72d0bc660074936",
+    "usr/share/mainframeos/platform-inputs.json": "167a2adc17320b2e9ba42888bf2278025abe328d2dc5f0f284f63e5ae32d9e1f",
+    "usr/local/bin/mainframeos-audio-diagnostics": "f1c74d7f3f6433dedb11d4c3f8e0ce3cd59a5904646288be3584e38cb0614812",
+    "usr/lib/systemd/user/mainframeos-audio-diagnostics.service": "13fd1c94c138d543687a9a8b026046f3a92890d37da657082b59924ee82d4e6e",
+    "etc/systemd/user/wireplumber.service.d/20-mainframeos-diagnostics.conf": "1cf4f92185175884ad85d0810335d91660881fee564f3d16704e49d2c5f2456c"
+  },
+  "symlinks": {
+    "etc/systemd/user/default.target.wants/mainframeos-audio-diagnostics.service": "/usr/lib/systemd/user/mainframeos-audio-diagnostics.service"
+  },
+  "verified_files": 8,
+  "boot_files_changed": false,
+  "user_data_preserved": true,
+  "physical_retest_pending": true,
+  "final_container": "sha256:f6574c11fd1b86397df4241c58ff3539ecec29f514e3e83508fa63bd9157ad5e",
+  "filesystem_check_passed": true,
+  "wireless_firmware_matches_working_local_set": true,
+  "audio_fix_claimed": false,
+  "audio_diagnostics_enabled": true,
+  "internal_speakers_enabled": false,
+  "repository_tests_passed": 21,
+  "isolated_container_build_passed": true,
+  "diagnostic_service_validation_passed": true,
+  "redistributable": false
+}
