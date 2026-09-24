@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-23",
+  "status": "prepared on USB; physical installation and internal boot pending",
+  "allocation_gib": 150,
+  "existing_root_after_shrink_gib": 801.8681640625,
+  "internal_disk_modified": false,
+  "repository_tests_passed": 25,
+  "disposable_loop_disk_integration_passed": true,
+  "integration_checks": [
+    "mounted disk refusal",
+    "filesystem shrink before partition shrink",
+    "partition geometry and existing UUID preservation",
+    "existing file preservation",
+    "root deployment and fstab",
+    "existing EFI loader preservation",
+    "GRUB entry append"
+  ],
+  "usb_files_verified": true,
+  "usb_filesystem_check_passed": true,
+  "usb_unmounted": true,
+  "nvme_and_pcie_phy_modules_in_initramfs": true,
+  "script_sha256": "3ec8e7847bb9121f447a5b61588b8a704fcd266414484ad289b6541be1d6525f",
+  "private_payload_redistributable": false,
+  "machine_specific_preflight_physically_run": false
+}

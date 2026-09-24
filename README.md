@@ -6,7 +6,7 @@ MainFrameOS is being developed by **josethevrtech** for Snapdragon laptops and h
 
 The goal is a desktop for everyday work, with current software, reliable recovery and support for native Linux, Android and selected Windows applications. The focus is large screens, keyboard and mouse use, docking and productivity. Gaming is optional.
 
-**Status: early development. A personal USB desktop preview has been built and passed an ARM virtual boot test. The corrected preview has reached the desktop on the initial laptop. Wireless and audio updates require further physical testing. A general installer and public release are not yet available.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
+**Status: early development. A personal USB desktop preview has been built and passed an ARM virtual boot test. The corrected preview has reached the desktop on the initial laptop. The owner confirmed that wireless is now available. Audio remains under investigation. A general installer and public release are not yet available.** Initial development uses an existing Snapdragon laptop as a test machine; that machine does not define the product scope.
 
 ## One installer for Snapdragon laptops and headsets
 

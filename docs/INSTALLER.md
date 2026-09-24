@@ -1,6 +1,6 @@
 # One installer for Snapdragon laptops and headsets
 
-Status: product requirement and proposed architecture. No installer has been implemented yet.
+Status: product requirement and proposed architecture. A general installer has not been implemented. A separate [personal offline deployment procedure](PERSONAL-INSTALL.md) is available for the reviewed development machine; physical internal boot is pending.
 
 ## User experience
 
