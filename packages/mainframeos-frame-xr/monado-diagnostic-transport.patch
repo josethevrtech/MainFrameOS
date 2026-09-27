@@ -1,0 +1,250 @@
+diff --git a/src/xrt/drivers/remote/r_device.c b/src/xrt/drivers/remote/r_device.c
+index 7bb66b8..252a09a 100644
+--- a/src/xrt/drivers/remote/r_device.c
++++ b/src/xrt/drivers/remote/r_device.c
+@@ -57,7 +57,9 @@ r_device_update_inputs(struct xrt_device *xdev)
+ 	struct r_hub *r = rd->r;
+ 
+ 	uint64_t now = os_monotonic_get_ns();
+-	struct r_remote_controller_data *latest = rd->is_left ? &r->latest.left : &r->latest.right;
++	struct r_remote_data snapshot;
++	r_hub_snapshot(r, &snapshot);
++	struct r_remote_controller_data *latest = rd->is_left ? &snapshot.left : &snapshot.right;
+ 
+ 	// TODO: refactor those loops into one
+ 	if (!latest->active) {
+@@ -112,7 +114,9 @@ r_device_get_tracked_pose(struct xrt_device *xdev,
+ 		return XRT_ERROR_INPUT_UNSUPPORTED;
+ 	}
+ 
+-	struct r_remote_controller_data *latest = rd->is_left ? &r->latest.left : &r->latest.right;
++	struct r_remote_data snapshot;
++	r_hub_snapshot(r, &snapshot);
++	struct r_remote_controller_data *latest = rd->is_left ? &snapshot.left : &snapshot.right;
+ 
+ 	/*
+ 	 * It's easier to reason about angular velocity if it's controlled in
+@@ -152,7 +156,9 @@ r_device_get_hand_tracking(struct xrt_device *xdev,
+ 		return XRT_ERROR_INPUT_UNSUPPORTED;
+ 	}
+ 
+-	struct r_remote_controller_data *latest = rd->is_left ? &r->latest.left : &r->latest.right;
++	struct r_remote_data snapshot;
++	r_hub_snapshot(r, &snapshot);
++	struct r_remote_controller_data *latest = rd->is_left ? &snapshot.left : &snapshot.right;
+ 
+ 	struct u_hand_tracking_curl_values values = {
+ 	    .little = latest->hand_curl[0],
+diff --git a/src/xrt/drivers/remote/r_hmd.c b/src/xrt/drivers/remote/r_hmd.c
+index 1d12936..f25dc67 100644
+--- a/src/xrt/drivers/remote/r_hmd.c
++++ b/src/xrt/drivers/remote/r_hmd.c
+@@ -38,10 +38,10 @@ r_hmd(struct xrt_device *xdev)
+ static inline void
+ copy_head_center_to_relation(struct r_hmd *rh, struct xrt_space_relation *out_relation)
+ {
+-	out_relation->pose = rh->r->latest.head.center;
+-	out_relation->relation_flags = (enum xrt_space_relation_flags)(
+-	    XRT_SPACE_RELATION_ORIENTATION_VALID_BIT | XRT_SPACE_RELATION_POSITION_VALID_BIT |
+-	    XRT_SPACE_RELATION_ORIENTATION_TRACKED_BIT | XRT_SPACE_RELATION_POSITION_TRACKED_BIT);
++ struct r_remote_data snapshot;
++ r_hub_snapshot(rh->r, &snapshot);
++ out_relation->pose = snapshot.head.center;
++ out_relation->relation_flags = (enum xrt_space_relation_flags)snapshot.relation_flags;
+ }
+ 
+ static void
+@@ -86,7 +86,9 @@ r_hmd_get_view_poses(struct xrt_device *xdev,
+ {
+ 	struct r_hmd *rh = r_hmd(xdev);
+ 
+-	if (!rh->r->latest.head.per_view_data_valid) {
++	struct r_remote_data snapshot;
++	r_hub_snapshot(rh->r, &snapshot);
++	if (!snapshot.head.per_view_data_valid) {
+ 		return u_device_get_view_poses( //
+ 		    xdev,                       //
+ 		    default_eye_relation,       //
+@@ -98,13 +100,14 @@ r_hmd_get_view_poses(struct xrt_device *xdev,
+ 		    out_poses);                 //
+ 	}
+ 
+-	assert(view_count <= ARRAY_SIZE(rh->r->latest.head.views));
++	assert(view_count <= ARRAY_SIZE(snapshot.head.views));
+ 
+-	copy_head_center_to_relation(rh, out_head_relation);
++	out_head_relation->pose = snapshot.head.center;
++	out_head_relation->relation_flags = (enum xrt_space_relation_flags)snapshot.relation_flags;
+ 
+ 	for (uint32_t i = 0; i < view_count; i++) {
+-		out_poses[i] = rh->r->latest.head.views[i].pose;
+-		out_fovs[i] = rh->r->latest.head.views[i].fov;
++		out_poses[i] = snapshot.head.views[i].pose;
++		out_fovs[i] = snapshot.head.views[i].fov;
+ 	}
+ 
+ 	return XRT_SUCCESS;
+diff --git a/src/xrt/drivers/remote/r_hub.c b/src/xrt/drivers/remote/r_hub.c
+index 2fc1c8e..6ebbadf 100644
+--- a/src/xrt/drivers/remote/r_hub.c
++++ b/src/xrt/drivers/remote/r_hub.c
+@@ -186,7 +186,7 @@ setup_accept_fd(struct r_hub *r)
+ 	}
+ 
+ 	server_address.sin_family = AF_INET;
+-	server_address.sin_addr.s_addr = htonl(INADDR_ANY);
++	server_address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+ 	server_address.sin_port = htons(r->port);
+ 
+ 	ret = bind(r->accept_fd, (struct sockaddr *)&server_address, sizeof(server_address));
+@@ -335,17 +335,24 @@ run_thread(void *ptr)
+ 		}
+ 
+ 		r_remote_connection_write_one(&r->rc, &r->reset);
+-		r_remote_connection_write_one(&r->rc, &r->latest);
++		struct r_remote_data snapshot;
++		r_hub_snapshot(r, &snapshot);
++		r_remote_connection_write_one(&r->rc, &snapshot);
+ 
+ 		while (true) {
+ 			struct r_remote_data data;
+ 
+ 			ret = read_one(r, &data);
+ 			if (ret < 0) {
++				os_mutex_lock(&r->latest_mutex);
++				r->latest.relation_flags = 0;
++				os_mutex_unlock(&r->latest_mutex);
+ 				break;
+ 			}
+ 
++			os_mutex_lock(&r->latest_mutex);
+ 			r->latest = data;
++			os_mutex_unlock(&r->latest_mutex);
+ 		}
+ 	}
+ 
+@@ -395,6 +402,7 @@ r_hub_system_devices_destroy(struct xrt_system_devices *xsysd)
+ 		r->rc.fd = -1;
+ 	}
+ 
++	os_mutex_destroy(&r->latest_mutex);
+ 	free(r);
+ 
+ #if defined(XRT_OS_WINDOWS)
+@@ -440,7 +448,10 @@ r_create_devices(uint16_t port, uint32_t view_count, struct xrt_system_devices *
+ 	r->reset.right.pose.position.y = 1.3f;
+ 	r->reset.right.pose.position.z = -0.5f;
+ 	r->reset.right.pose.orientation.w = 1.0f;
++	r->reset.left.active = r->reset.right.active = false;
++	r->reset.left.hand_tracking_active = r->reset.right.hand_tracking_active = false;
+ 	r->latest = r->reset;
++	os_mutex_init(&r->latest_mutex);
+ 	r->rc.log_level = debug_get_log_option_remote_log();
+ 	r->gui.hmd = true;
+ 	r->gui.left = true;
+@@ -492,13 +503,8 @@ r_create_devices(uint16_t port, uint32_t view_count, struct xrt_system_devices *
+ 
+ 	u_var_add_root(r, "Remote Hub", true);
+ 	// u_var_add_gui_header(r, &r->gui.hmd, "MHD");
+-	u_var_add_pose(r, &r->latest.head.center, "head.center");
+ 	// u_var_add_gui_header(r, &r->gui.left, "Left");
+-	u_var_add_bool(r, &r->latest.left.active, "left.active");
+-	u_var_add_pose(r, &r->latest.left.pose, "left.pose");
+ 	// u_var_add_gui_header(r, &r->gui.right, "Right");
+-	u_var_add_bool(r, &r->latest.right.active, "right.active");
+-	u_var_add_pose(r, &r->latest.right.pose, "right.pose");
+ 
+ 	/*
+ 	 * Done now.
+diff --git a/src/xrt/drivers/remote/r_interface.h b/src/xrt/drivers/remote/r_interface.h
+index 063bb54..be57ed2 100644
+--- a/src/xrt/drivers/remote/r_interface.h
++++ b/src/xrt/drivers/remote/r_interface.h
+@@ -67,7 +67,7 @@ typedef int r_socket_t;
+  *
+  * @ingroup drv_remote
+  */
+-#define R_HEADER_VALUE (*(uint64_t *)"mndrmt3\0")
++#define R_HEADER_VALUE (*(uint64_t *)"mfpose1\0")
+ 
+ /*!
+  * Data per controller.
+@@ -138,6 +138,10 @@ struct r_head_data
+  */
+ struct r_remote_data
+ {
++	// MainFrameOS diagnostic ABI: same-host monotonic timestamp and explicit quality.
++	uint64_t sample_monotonic_ns;
++	uint32_t relation_flags;
++	uint32_t reserved;
+ 	uint64_t header;
+ 
+ 	struct r_head_data head;
+diff --git a/src/xrt/drivers/remote/r_internal.h b/src/xrt/drivers/remote/r_internal.h
+index b8970d1..9e4c688 100644
+--- a/src/xrt/drivers/remote/r_internal.h
++++ b/src/xrt/drivers/remote/r_internal.h
+@@ -16,6 +16,8 @@
+ #include "xrt/xrt_tracking.h"
+ 
+ #include "os/os_threading.h"
++#include "os/os_time.h"
++#include <math.h>
+ 
+ #include "util/u_hand_tracking.h"
+ 
+@@ -45,6 +47,7 @@ struct r_hub
+ 
+ 	//! The latest data received.
+ 	struct r_remote_data latest;
++	struct os_mutex latest_mutex;
+ 
+ 	//! Incoming connection socket.
+ 	r_socket_t accept_fd;
+@@ -66,6 +69,31 @@ struct r_hub
+ 	} gui;
+ };
+ 
++// Local-only diagnostic wire format; consumers never infer tracking from finite data.
++static inline void
++r_hub_snapshot(struct r_hub *r, struct r_remote_data *out)
++{
++ os_mutex_lock(&r->latest_mutex);
++ *out = r->latest;
++ os_mutex_unlock(&r->latest_mutex);
++ uint64_t now = os_monotonic_get_ns();
++ const struct xrt_pose *p = &out->head.center;
++ double q = (double)p->orientation.x*p->orientation.x + (double)p->orientation.y*p->orientation.y +
++            (double)p->orientation.z*p->orientation.z + (double)p->orientation.w*p->orientation.w;
++ bool fresh = out->sample_monotonic_ns != 0 && out->sample_monotonic_ns <= now &&
++              now-out->sample_monotonic_ns <= 100000000;
++ bool finite_pose = isfinite(p->position.x) && isfinite(p->position.y) && isfinite(p->position.z) &&
++                    isfinite(q) && fabs(q-1.0) < 0.001;
++ if (!fresh || !finite_pose || out->header != R_HEADER_VALUE || out->reserved != 0) {
++  out->relation_flags = 0;
++ }
++ // This development path has no validated tracking-quality source yet.
++ // It may expose estimated poses but must never claim orientation/position TRACKED.
++ out->relation_flags &= XRT_SPACE_RELATION_ORIENTATION_VALID_BIT | XRT_SPACE_RELATION_POSITION_VALID_BIT;
++ out->left.active = out->right.active = false;
++ out->left.hand_tracking_active = out->right.hand_tracking_active = false;
++}
++
+ /*!
+  * HMD
+  *
+diff --git a/src/xrt/targets/common/target_builder_remote.c b/src/xrt/targets/common/target_builder_remote.c
+index f80d1aa..5401832 100644
+--- a/src/xrt/targets/common/target_builder_remote.c
++++ b/src/xrt/targets/common/target_builder_remote.c
+@@ -62,8 +62,8 @@ remote_builder_setup_space_overseer(struct b_space_overseer *bso, struct xrt_sys
+ 	// Set root as stage space.
+ 	xrt_space_reference(&xso->semantic.stage, root);
+ 
+-	// Local 1.6 meters up.
+-	struct xrt_pose local_offset = {XRT_QUAT_IDENTITY, {0.0f, 1.6f, 0.0f}};
++	// Diagnostic local origin: no assumed floor height.
++	struct xrt_pose local_offset = XRT_POSE_IDENTITY;
+ 	b_space_overseer_create_offset_space(bso, root, &local_offset, &xso->semantic.local);
+ 
+ 	// Local floor at the same place as local except at floor height.

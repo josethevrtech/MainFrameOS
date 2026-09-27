@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "compatible": [
+    "qcom,sm8650-dv1",
+    "qcom,sm8650"
+  ],
+  "kernel_release": "6.18.0-g8790bd420211",
+  "kernel_sha256": "5af1295d2d5a2b5db7b2b055e7191d21a929805183eb3a406fd903984f4d8386",
+  "dtb_sha256": "a0778d49749aefb5771b288ba70833a59f4d84dc63d63a39b4910b7f1c74f18a",
+  "config_sha256": "1b95f24834a524aa5f2074cb116ed017ea4e2ff1783a7dc41ff71921aee9abc5",
+  "packages": {
+    "linux-618-deckard": "6.18.0+g8790bd420211-1",
+    "linux-firmware-deckard": "20260801.1+gitdf2d800f-1",
+    "deckard-uboot": "20260922.3-1",
+    "deckard-uboot-splctl": "20260128.3-1"
+  },
+  "modules": {
+    "kernel/drivers/hid/i2c-hid/i2c-hid-of-elan.ko": "3c391241e19758546370dfd0da480f382c52212af1def06fb59955271f423001",
+    "kernel/drivers/hid/i2c-hid/i2c-hid-of-goodix.ko": "ae28db27b1dc5edcafe71b73069a76f194237a6ea8c0138ea5d1470d02f72186",
+    "kernel/drivers/hid/i2c-hid/i2c-hid-of.ko": "90f47fdd33c59a44bcced818d2d5e0164622cef08dc9e271d07160aa0ec0b59c",
+    "kernel/drivers/hid/i2c-hid/i2c-hid.ko": "58bd760a899cf399c91bbbff2cd8af3eb27d1adaa1671c9eab6cd08da20a90e3",
+    "kernel/drivers/input/touchscreen/edt-ft5x06.ko": "5ddfc0533f60b0ffe7d57db105c5b4ee1f1d591f7f6e2a5bf82d8295db3652ac",
+    "kernel/drivers/input/touchscreen/goodix_berlin_core.ko": "afd5c0c7cdabb0a3a2990012d3fc5c08be410c9a77c26d3d6ee287256ebe6ac3",
+    "kernel/drivers/input/touchscreen/goodix_berlin_i2c.ko": "f870b5da61913228c87ff4be8ccce5c46106f0f009670cca8fdb9ecbda09e506",
+    "kernel/drivers/input/touchscreen/goodix_berlin_spi.ko": "c13ba51887871f2ab336e45dd94f57b5a6da7eb91f98765ddcf5e9b9d5ca2a8b",
+    "kernel/drivers/input/touchscreen/goodix_ts.ko": "54d186b126c4bf26838fc24feb2bad2cd6df489e668fa7685ad8e0916a562c5e",
+    "kernel/drivers/input/touchscreen/himax_hx83112b.ko": "fe49c94102f4145646c89ad6f62297bbe17891a9c14a33c7805899f4ff3969b5",
+    "kernel/drivers/input/touchscreen/s6sy761.ko": "040dffa87d411e74cbfbcc626b10a18b394582add54674fa76fe882b4e5d0cc8",
+    "kernel/drivers/input/touchscreen/stmfts.ko": "4f15526b395de4974df535ef86607a516cbbf1cd9f252a1943de127738ce487c",
+    "kernel/drivers/media/common/videobuf2/videobuf2-dma-contig.ko": "e8e77965ab1a2cac73a97f50e2d85873d9070ec053e2f6cd55c9e56fcba96615",
+    "kernel/drivers/media/platform/qcom/vcodec/iris/iris.ko": "98ab414b71e02c5388a95ed24c106973f7bcfb30d58ad5117fe23d905f12090f",
+    "kernel/drivers/net/wireless/ath/ath12k/ath12k.ko": "30653ab365cb87cbb98dd07599dd9ec78610aef8971223c41f54bc20a5404b3c",
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": "cd2517615945113d7129e440794d1804dcd288c6c0d90e806005d997e570a5ca",
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": "bc6d17b54ba73fff352f3802d220b8ac03eaf87f7a46f007c38b1d20212cb201",
+    "kernel/drivers/power/supply/max1720x_battery.ko": "4f330ce0afbeb366bd05e1cae9721ec871dc70262eafe284ec575fb9d1fd891c",
+    "kernel/drivers/power/supply/mp2652_charger.ko": "0f6e597984cff27b18192c789a1af0c47eae9a346a28bcd77ea7595a6ed7f632",
+    "kernel/drivers/usb/host/xhci-pci-renesas.ko": "beae91753727b11d6d5948094630aa9d1a1a5bfae0479753e96466ebde9916df",
+    "kernel/net/l2tp/l2tp_core.ko": "f76a1a28f4ac81089a77952a7241c2665a8bb208527b706aa05dbec5e0400d57",
+    "kernel/net/l2tp/l2tp_debugfs.ko": "d134b43aefb18c455c5e897314f7ab823fd33409de9899444a50b962a4f8ed67",
+    "kernel/net/l2tp/l2tp_eth.ko": "7cde1036fded50dba6c7313addb734a44d56495ec6de7f9bc788ce5e3d13296d",
+    "kernel/net/l2tp/l2tp_ip.ko": "dd3197aeeb566c9274fde769bd15e84af08dc22dac85634120b044de60403713",
+    "kernel/net/l2tp/l2tp_ip6.ko": "4b316ff20785c3d11940d91573d457c2b9587c2b62a2591747be5e9fee6968b7",
+    "kernel/net/l2tp/l2tp_netlink.ko": "cfcbfb346ebb2050a30cbe31f48f9bfc27b72a1bcfedabab142804a9dd529b19",
+    "updates/v4l2loopback.ko": "2198f20ce06235b4b347d364739cbe6a529d6e7d1b82301ec3fda300b0023ab7"
+  },
+  "source_reference": {
+    "repository": "https://gitlab.steamos.cloud/deckard/deckardos/linux-valve",
+    "commit": "8790bd4202113bbce9ee4315d7735ab8b75c8485",
+    "access": "Sign-in required when checked on 2026-09-26; complete source not imported",
+    "license": "GPL-2.0-only according to package metadata",
+    "role": "Hardware reference, not a product package repository or reproducible custom kernel"
+  },
+  "physical_evidence": "docs/FRAME-BRINGUP.md"
+}

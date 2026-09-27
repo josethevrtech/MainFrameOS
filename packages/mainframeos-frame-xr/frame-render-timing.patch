@@ -1,0 +1,24 @@
+--- a/src/xrt/auxiliary/util/u_pacing_compositor_fake.c
++++ b/src/xrt/auxiliary/util/u_pacing_compositor_fake.c
+@@ -42,6 +42,7 @@
+ DEBUG_GET_ONCE_FLOAT_OPTION(min_comp_time_ms, "U_PACING_COMP_MIN_TIME_MS", 3.0f)
+ DEBUG_GET_ONCE_FLOAT_OPTION(comp_time_fraction_percent, "U_PACING_COMP_TIME_FRACTION_PERCENT", 20.0f)
+ DEBUG_GET_ONCE_BOOL_OPTION(live_stats, "U_PACING_LIVE_STATS", false)
++DEBUG_GET_ONCE_BOOL_OPTION(frame_probe, "MAINFRAME_FRAME_TIMING_PROBE", false)
+ 
+ // We keep track of this number of frames.
+ #define FRAME_COUNT 8
+@@ -257,6 +258,13 @@
+ static void
+ calc_gpu_stats(struct fake_timing *ft, struct frame *f, int64_t gpu_start_ns, int64_t gpu_end_ns)
+ {
++	if (debug_get_bool_option_frame_probe()) {
++		UPC_LOG_I("FRAME_RENDER id=%lld wake=%lld begin=%lld submit_begin=%lld submit_end=%lld gpu_start=%lld gpu_end=%lld desired=%lld",
++		          (long long)f->frame_id, (long long)f->when_woke_ns, (long long)f->when_began_ns,
++		          (long long)f->when_submit_began_ns, (long long)f->when_submit_end_ns,
++		          (long long)gpu_start_ns, (long long)gpu_end_ns, (long long)f->predicted_present_time_ns);
++	}
++
+ 	if (!debug_get_bool_option_live_stats()) {
+ 		return;
+ 	}

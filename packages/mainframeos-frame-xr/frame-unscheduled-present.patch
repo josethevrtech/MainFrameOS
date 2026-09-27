@@ -1,0 +1,20 @@
+--- a/src/xrt/compositor/main/comp_target_swapchain.c
++++ b/src/xrt/compositor/main/comp_target_swapchain.c
+@@ -49,6 +49,8 @@
+ DEBUG_GET_ONCE_NUM_OPTION(preferred_at_least_image_count, "XRT_COMPOSITOR_PREFERRED_IMAGE_COUNT", 2)
+ DEBUG_GET_ONCE_BOOL_OPTION(use_present_wait, "XRT_COMPOSITOR_USE_PRESENT_WAIT", false)
+ DEBUG_GET_ONCE_BOOL_OPTION(use_display_timing, "XRT_COMPOSITOR_USE_DISPLAY_TIMING", true)
++// Diagnostic opt-in: isolate desired-presentation-time scheduling on Frame.
++DEBUG_GET_ONCE_BOOL_OPTION(frame_unscheduled_present, "MAINFRAME_FRAME_UNSCHEDULED_PRESENT", false)
+ 
+ static inline struct vk_bundle *
+ get_vk(struct comp_target_swapchain *cts)
+@@ -1019,7 +1021,7 @@
+ 	    .pTimes = &times,
+ 	};
+ 
+-	if (vk->has_GOOGLE_display_timing) {
++	if (vk->has_GOOGLE_display_timing && !debug_get_bool_option_frame_unscheduled_present()) {
+ 		vk_append_to_pnext_chain((VkBaseInStructure *)&present_info, (VkBaseInStructure *)&timings);
+ 	}
+ #endif

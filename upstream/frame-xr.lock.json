@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "repository": "https://gitlab.freedesktop.org/monado/monado.git",
+  "commit": "2773473de89567771114d6818f15cfd7c8216822",
+  "tree": "a1dae4e662ff20f152e56cf2cda3c970a9372c46",
+  "license": "BSL-1.0; see upstream per-file notices and LICENSES",
+  "patches": [
+    "monado-diagnostic-transport.patch",
+    "monado-optics.patch",
+    "frame-presentation-diagnostics.patch",
+    "frame-unscheduled-present.patch",
+    "frame-render-timing.patch"
+  ],
+  "files": {
+    "LICENSE.monado": "42d8e141e9e254477b14594970f42989344619d18d67e676e07cf087ba5b8352",
+    "frame-presentation-diagnostics.patch": "ee9233411d6999320d9bd34841ea0ca630a1768adcec19efe484615818e7f4c0",
+    "frame-render-timing.patch": "57f9edea5a9f58c1e7a359368f1fe2ec6734a7e3ddceac464679f65c479abc44",
+    "frame-unscheduled-present.patch": "416e1c8c921d98a1aaeb28abc0b1b4aabfbb4de76f102a84f14dbed9dc7028dc",
+    "generate-optics.py": "2908472d152f0ca2fa1704fa2afd43594c2a5811ed62398a33acdf151dfbdf9a",
+    "monado-diagnostic-transport.patch": "c6ca356769d145ea2fc5b474d8234d73c3ed805dbb2721e3e7a2f8cbaa1ae9d9",
+    "monado-optics.patch": "0410f8a966cf08ee698e0efa50534e151d6f7f1c2be7ecccd0f9976131af4d9a"
+  },
+  "optics": {
+    "sha256": "a2caa58f610c95cc9855a749bb0275f4558e592cda6142360be957f6e57d3f86",
+    "distribution": "Private measured input, not bundled. Fixed IPD; single-device experiment only."
+  },
+  "cmake_options": [
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DBUILD_TESTING=OFF",
+    "-DXRT_FEATURE_STEAMVR_PLUGIN=OFF",
+    "-DXRT_BUILD_DRIVER_STEAMVR_LIGHTHOUSE=OFF",
+    "-DXRT_FEATURE_OPENVR=OFF"
+  ],
+  "targets": [
+    "all"
+  ]
+}

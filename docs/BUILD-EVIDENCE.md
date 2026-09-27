@@ -51,3 +51,14 @@ The automated PR review identified stale package staging files and a missing boo
 ## What this does not establish
 
 At the package-bootstrap milestone, no kernel Image/modules or disk image had been produced. The subsequent [USB preview](USB-PREVIEW.md) adds a compiled kernel and a disk image with a passing virtual boot test. A general installer, Android runtime integration, Windows runtime integration, image updater, release signatures and a hardware-certified MainFrameOS release remain pending. The DTB is unbooted and must not replace the current working one based on compilation alone. Repeat builds on one frozen builder are narrower evidence than independent reproducibility.
+
+## Frame XR integration — 2026-09-26
+
+A clean native AArch64 Monado/OpenXR build completed in the existing isolated
+ALARM build root, without installing on the host or switching the headset session.
+All 11 modified/generated source files matched the previously tested physical
+prototype. This build disables the unused OpenVR frontend and has not yet been
+physically retested. Repository checks and 32 unit tests passed.
+
+See [Frame build evidence and remaining dependencies](FRAME-BRINGUP.md). This is
+a runtime build, not a custom kernel, bootable headset image or complete desktop.

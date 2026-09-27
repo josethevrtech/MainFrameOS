@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-26",
+  "upstream_commit": "2773473de89567771114d6818f15cfd7c8216822",
+  "prepared_source_files": 2032,
+  "matched_working_prototype_files": 11,
+  "comparison": "Every modified/generated file matches the earlier physically validated prototype. Build configuration now disables the unused OpenVR frontend. New binary artifacts are not yet physically validated.",
+  "working_prototype_source_hashes": {
+    "src/xrt/auxiliary/util/u_pacing_compositor_fake.c": "06da22db2e18ebae16740aa0ae42192d5b7d02c2dd29ac175fdbfdaece5605c9",
+    "src/xrt/compositor/main/comp_compositor.c": "8272cb17804e022c215b42cafd03d4783b83050ab2b32ba74cbdc6bf9a007bbb",
+    "src/xrt/compositor/main/comp_renderer.c": "58fa8403fcac0fa1b8cf48a348bcc88c922350854bb372b406ce374aa8be5f78",
+    "src/xrt/compositor/main/comp_target_swapchain.c": "046b90084b2d419f8c6d9c1f49de1bea151ff3b493be5e6e8a0ca31c5e7356f6",
+    "src/xrt/drivers/remote/r_device.c": "15796b7fdda4dfc4f012dc978e8f007949d96baf514b41131c16539675217380",
+    "src/xrt/drivers/remote/r_frame_optics.h": "ab5333d082757d030d0a45ac099ca6435ee71909004386e92c21e82b34a78c1e",
+    "src/xrt/drivers/remote/r_hmd.c": "cdb1e0b981b23d930f4c96377c465511b615cbde0cbd1826e6a7cfa595e5a613",
+    "src/xrt/drivers/remote/r_hub.c": "87679b00f64441e81374c58998a9af972579e51b82101b0a54a7bef1b021fb73",
+    "src/xrt/drivers/remote/r_interface.h": "3d942ebe6e0fb86765fa6abac20772c3c1a2b325469505efbb271a1efe390335",
+    "src/xrt/drivers/remote/r_internal.h": "320a75534af3413347719643c1c6019e3a1856321bb4ea4cc006ed09c6f5e6ee",
+    "src/xrt/targets/common/target_builder_remote.c": "2fb6d93426ec3c0cdfa4391c0b0fb97c46fba39002fae1f8f9a18b27921d562d"
+  },
+  "checks": {
+    "make_check": "passed",
+    "unit_tests": 32,
+    "kernel_reference_recapture": "unchanged"
+  },
+  "physical_validation_of_new_build": false
+}
