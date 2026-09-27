@@ -1,0 +1,20 @@
+--- a/src/xrt/drivers/remote/r_hmd.c
++++ b/src/xrt/drivers/remote/r_hmd.c
+@@ -24,6 +24,7 @@
+ #include "r_frame_optics.h"
+ 
+ DEBUG_GET_ONCE_BOOL_OPTION(frame_optics, "MAINFRAME_FRAME_OPTICS", false)
++DEBUG_GET_ONCE_BOOL_OPTION(frame_panel_rotation, "MAINFRAME_FRAME_PANEL_ROTATION", false)
+ 
+ 
+ /*
+@@ -207,6 +208,9 @@
+   if(r->view_count!=2){r_hmd_destroy(&rh->base);return NULL;}
+   struct u_extents_2d extents={4320,2160};
+   u_extents_2d_split_side_by_side(&rh->base,&extents);
++  if(debug_get_bool_option_frame_panel_rotation()) {
++   for(int i=0;i<2;i++)rh->base.hmd->views[i].rot=u_device_rotation_180;
++  }
+   rh->base.hmd->screens[0].nominal_frame_interval_ns=11111111;
+   for(int i=0;i<2;i++)rh->base.hmd->distortion.fov[i]=(struct xrt_fov){frame_fovs[i][0],frame_fovs[i][1],frame_fovs[i][2],frame_fovs[i][3]};
+   rh->base.hmd->distortion.models=XRT_DISTORTION_MODEL_COMPUTE;

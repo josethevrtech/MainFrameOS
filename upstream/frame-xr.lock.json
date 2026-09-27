@@ -9,7 +9,8 @@
     "monado-optics.patch",
     "frame-presentation-diagnostics.patch",
     "frame-unscheduled-present.patch",
-    "frame-render-timing.patch"
+    "frame-render-timing.patch",
+    "frame-panel-rotation.patch"
   ],
   "files": {
     "LICENSE.monado": "42d8e141e9e254477b14594970f42989344619d18d67e676e07cf087ba5b8352",
@@ -18,7 +19,8 @@
     "frame-unscheduled-present.patch": "416e1c8c921d98a1aaeb28abc0b1b4aabfbb4de76f102a84f14dbed9dc7028dc",
     "generate-optics.py": "2908472d152f0ca2fa1704fa2afd43594c2a5811ed62398a33acdf151dfbdf9a",
     "monado-diagnostic-transport.patch": "c6ca356769d145ea2fc5b474d8234d73c3ed805dbb2721e3e7a2f8cbaa1ae9d9",
-    "monado-optics.patch": "0410f8a966cf08ee698e0efa50534e151d6f7f1c2be7ecccd0f9976131af4d9a"
+    "monado-optics.patch": "0410f8a966cf08ee698e0efa50534e151d6f7f1c2be7ecccd0f9976131af4d9a",
+    "frame-panel-rotation.patch": "5201c9ada5bf6394e230a3cbe76e7e9252141c281ca1eb526eb5c3056b052941"
   },
   "optics": {
     "sha256": "a2caa58f610c95cc9855a749bb0275f4558e592cda6142360be957f6e57d3f86",

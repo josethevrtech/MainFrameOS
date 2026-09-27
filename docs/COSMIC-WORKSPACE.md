@@ -1,7 +1,8 @@
 # COSMIC direction and OpenXR workspace bring-up
 
 The owner selected COSMIC as MainFrameOS's intended desktop on 2026-09-26.
-Plasma remains the initial validation and recovery baseline. XR presentation,
+Plasma was the initial validation baseline. The development Frame now uses a
+separate COSMIC session on the existing runtime as its recovery desktop. XR presentation,
 tracking and the desktop session must be separate components so changing the
 shell does not require replacing headset drivers.
 
@@ -69,7 +70,7 @@ preparation recipe was checked against the native build inputs byte for byte.
 The patched build passed separate 30-second simulated runs with both the ALARM
 and Frame-specific Vulkan drivers. Each reached FOCUSED, retained a visible
 1280×800 COSMIC surface, and exited through the bounded test normally. This does
-not verify headset pixels or headset input. The physical view test is pending.
+not verify headset pixels or headset input. Physical tabletop tests now provide captured headset pixels; see the update below.
 
 [Recorded build and simulation evidence](evidence/cosmic-workspace-2026-09-27.json).
 
@@ -85,3 +86,30 @@ not verify headset pixels or headset input. The physical view test is pending.
 
 A successful cube scene proves neither a spatial desktop nor a usable desktop
 input path. Keep those milestones separate in release evidence.
+
+## Physical tabletop update, 2026-09-27
+
+The first physical desktop showed inverted, misaligned imagery to the wearer.
+A short independent Linux KMS recording reproduced the inversion. Monado's
+Frame optical setup was missing the physical panels' 180-degree rotation. The
+opt-in `MAINFRAME_FRAME_PANEL_ROTATION=1` correction produces upright COSMIC
+and keyboard images in both recorded eyes. Multiple one-minute runs completed, and
+Files and Terminal appeared inside the desktop in captured pixels. Normal desktop services
+were restored after each run.
+
+This is progress toward gate 3, not completion of gates 4–5. Recordings cannot
+confirm wearer comfort, stereo fusion or natural tracked motion. Pointer,
+keyboard and controller interaction remain separate checks. The original
+short cube confirmation did not expose this desktop orientation defect.
+
+[Tabletop evidence](evidence/frame-workspace-tabletop-2026-09-27.json).
+
+The recorded desktop initially presented at about 45 Hz. In the isolated test
+profile, removing the sky background, reducing internal compositor scale from
+80% to 50%, and increasing the minimum render budget from 7 ms to 9 ms produced
+88.49 successful presentation returns/s over 58.71 seconds (median interval
+11.12 ms, p95 11.80 ms). Median GPU work was 6.43 ms. These are host/API
+measurements, not application frame rate or photon latency. The desktop remained
+1280×800; the lower internal scale can reduce perceived sharpness. A quiet tone
+was also captured through system audio with the microphone disabled. Neither
+these runtime settings nor the test profile replaces the normal desktop.
