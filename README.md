@@ -20,6 +20,14 @@ See the [unified installer design](docs/INSTALLER.md), [hardware support policy]
 
 See [USB preview instructions and limitations](docs/USB-PREVIEW.md) for the current test build.
 
+## Frame XR bring-up
+
+A physical Monado/OpenXR experiment has shown a tracked stereo scene on the Frame
+without the SteamVR compositor. The recorded source patches now have a verified,
+isolated rebuild path in this repository. Vendor tracking and hardware dependencies
+remain; an independent bootable headset image and spatial KDE workspace are still
+in development. See [Frame bring-up and kernel update policy](docs/FRAME-BRINGUP.md).
+
 ## Build and maintenance
 
 The product base is **Arch Linux ARM**, independent of SteamOS. Collabora's preview is integrated selectively as pinned source recipes rebuilt in the ALARM toolchain.

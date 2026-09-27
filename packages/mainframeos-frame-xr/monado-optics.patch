@@ -1,0 +1,76 @@
+--- a/src/xrt/drivers/remote/r_hmd.c
++++ b/src/xrt/drivers/remote/r_hmd.c
+@@ -21,6 +21,9 @@
+ #include "math/m_mathinclude.h"
+ 
+ #include <stdio.h>
++#include "r_frame_optics.h"
++
++DEBUG_GET_ONCE_BOOL_OPTION(frame_optics, "MAINFRAME_FRAME_OPTICS", false)
+ 
+ 
+ /*
+@@ -44,6 +47,23 @@
+  out_relation->relation_flags = (enum xrt_space_relation_flags)snapshot.relation_flags;
+ }
+ 
++// Bilinear lookup in the captured optical reference. XRT_MESH_SIZE=128 matches its vertices.
++static xrt_result_t
++frame_compute_distortion(struct xrt_device *xdev, uint32_t view, float u, float v, struct xrt_uv_triplet *out)
++{
++ (void)xdev;
++ if(view>=2 || !isfinite(u) || !isfinite(v) || u<0 || u>1 || v<0 || v>1) return XRT_ERROR_INPUT_UNSUPPORTED;
++ float x=u*FRAME_OPTICS_CELLS,y=v*FRAME_OPTICS_CELLS;
++ int ix=(int)x,iy=(int)y;
++ if(ix==FRAME_OPTICS_CELLS)ix--;
++ if(iy==FRAME_OPTICS_CELLS)iy--;
++ float a=x-ix,b=y-iy,uv[6];
++ int stride=FRAME_OPTICS_CELLS+1;
++ for(int k=0;k<6;k++)uv[k]=(1-a)*(1-b)*frame_uv[view][iy*stride+ix][k] + a*(1-b)*frame_uv[view][iy*stride+ix+1][k] + (1-a)*b*frame_uv[view][(iy+1)*stride+ix][k] + a*b*frame_uv[view][(iy+1)*stride+ix+1][k];
++ out->r=(struct xrt_vec2){uv[0],uv[1]};out->g=(struct xrt_vec2){uv[2],uv[3]};out->b=(struct xrt_vec2){uv[4],uv[5]};
++ return XRT_SUCCESS;
++}
++
+ static void
+ r_hmd_destroy(struct xrt_device *xdev)
+ {
+@@ -88,6 +108,17 @@
+ 
+ 	struct r_remote_data snapshot;
+ 	r_hub_snapshot(rh->r, &snapshot);
++ if(debug_get_bool_option_frame_optics()) {
++  assert(view_count<=2);
++  out_head_relation->pose=snapshot.head.center;
++  out_head_relation->relation_flags=(enum xrt_space_relation_flags)snapshot.relation_flags;
++  for(uint32_t i=0;i<view_count;i++){
++   out_poses[i]=(struct xrt_pose)XRT_POSE_IDENTITY;
++   out_poses[i].position=(struct xrt_vec3){frame_eye_positions[i][0],frame_eye_positions[i][1],frame_eye_positions[i][2]};
++   out_fovs[i]=(struct xrt_fov){frame_fovs[i][0],frame_fovs[i][1],frame_fovs[i][2],frame_fovs[i][3]};
++  }
++  return XRT_SUCCESS;
++ }
+ 	if (!snapshot.head.per_view_data_valid) {
+ 		return u_device_get_view_poses( //
+ 		    xdev,                       //
+@@ -172,7 +203,20 @@
+ 	}
+ 
+ 	// Distortion information, fills in xdev->compute_distortion().
+-	u_distortion_mesh_set_none(&rh->base);
++ if(debug_get_bool_option_frame_optics()) {
++  if(r->view_count!=2){r_hmd_destroy(&rh->base);return NULL;}
++  struct u_extents_2d extents={4320,2160};
++  u_extents_2d_split_side_by_side(&rh->base,&extents);
++  rh->base.hmd->screens[0].nominal_frame_interval_ns=11111111;
++  for(int i=0;i<2;i++)rh->base.hmd->distortion.fov[i]=(struct xrt_fov){frame_fovs[i][0],frame_fovs[i][1],frame_fovs[i][2],frame_fovs[i][3]};
++  rh->base.hmd->distortion.models=XRT_DISTORTION_MODEL_COMPUTE;
++  rh->base.hmd->distortion.preferred=XRT_DISTORTION_MODEL_COMPUTE;
++  rh->base.compute_distortion=frame_compute_distortion;
++  u_distortion_mesh_fill_in_compute(&rh->base);
++  snprintf(rh->base.str,sizeof(rh->base.str),"MainFrameOS Frame optical prototype");
++ }else{
++  u_distortion_mesh_set_none(&rh->base);
++ }
+ 
+ 	// Setup variable tracker.
+ 	u_var_add_root(rh, rh->base.str, true);

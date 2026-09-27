@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_lock_sha256": "ec5310a88a238c88ec2df4a269a194d81a26d74d4f87e78d5242ae48f49bdb6f",
+  "source_commit": "2773473de89567771114d6818f15cfd7c8216822",
+  "artifacts": {
+    "stage/usr/bin/monado-cli": "780f56d221d459b00900360f00e09a507dfa08e4b2fcbf76de1b80c941ad7d01",
+    "stage/usr/bin/monado-ctl": "ea9a5895b3737b60ba78da44394ea0cda957d90840566def5f041b6e4ef9972e",
+    "stage/usr/bin/monado-gui": "b6563bb93826eba4db1f83737bce775496f216a0bf53c8d23de3c3951860b328",
+    "stage/usr/bin/monado-service": "cc892a8fb6de8d1fad8cc507bae9e9efa0ad75ff704b0992c226cf5e096c4fc8",
+    "stage/usr/include/monado/monado.h": "6322a5570dd958686e69ead1faaba2e714cdcb860adddc4664cec814ef7a6107",
+    "stage/usr/lib/libmonado.so": "8c37930143c56677f484071c7a207250fc45b7986aa2b549c7847fe725f3b237",
+    "stage/usr/lib/libmonado.so.25": "8c37930143c56677f484071c7a207250fc45b7986aa2b549c7847fe725f3b237",
+    "stage/usr/lib/libmonado.so.25.1.0": "8c37930143c56677f484071c7a207250fc45b7986aa2b549c7847fe725f3b237",
+    "stage/usr/lib/libopenxr_monado.so": "2430f114a4bcd086b9bd5cfab0904992b205c2672856837c365781f68d4a39c6",
+    "stage/usr/lib/systemd/user/monado.service": "97c9ff4fc435b93beef565526adc05622d0c1311706d032be1457ef6f3e1545c",
+    "stage/usr/lib/systemd/user/monado.socket": "4b5ae0758c8645a4cc4fc3b00ee686f8335b26fdd6e6c971b154d0bec233769d",
+    "stage/usr/share/openxr/1/openxr_monado.json": "a6fe164702281f786bcc9c3a4e1951d8fedade04bd56570ce503c6f62ebee538"
+  },
+  "build_script_sha256": "ec838c03bcf6e816e7c35abc1d885175bc499f8d8b55e6aa31ec4cf6166e82e4",
+  "cmake_cache_sha256": "dfb11766f0a59e9911e35ace7e16a48dff981e900b9848d5e46f2bf2bd216b26",
+  "builder_packages_sha256": "a9fe8d625a69a8e18186b46888039019c1d2bdf4e3c2861fc215136452f36108",
+  "scope": "Clean isolated build in recorded ALARM environment; not a complete reproducible OS",
+  "hardware_validated": false,
+  "bootable_image": false,
+  "release_signed": false
+}

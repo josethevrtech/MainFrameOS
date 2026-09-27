@@ -1,0 +1,48 @@
+--- a/src/xrt/compositor/main/comp_compositor.c
++++ b/src/xrt/compositor/main/comp_compositor.c
+@@ -311,6 +311,8 @@
+ 	struct comp_compositor *c = comp_compositor(xc);
+ 
+ 	COMP_SPEW(c, "LAYER_COMMIT at %8.3fms", ts_ms());
++	static unsigned frame_probe_commits;
++	if(frame_probe_commits++ < 5) COMP_INFO(c,"FRAME_PROBE commit layers=%u",c->base.layer_accum.layer_count);
+ 
+ 	/*
+ 	 * We have a fast path for single projection layer that goes directly
+--- a/src/xrt/compositor/main/comp_renderer.c
++++ b/src/xrt/compositor/main/comp_renderer.c
+@@ -798,7 +798,9 @@
+ 		// Not ready yet.
+ 		return;
+ 	}
++	COMP_INFO(r->c,"FRAME_PROBE before acquire");
+ 	ret = comp_target_acquire(r->c->target, &buffer_index);
++	COMP_INFO(r->c,"FRAME_PROBE after acquire result=%d",ret);
+ 
+ 	while ((ret == VK_ERROR_OUT_OF_DATE_KHR) || (ret == VK_SUBOPTIMAL_KHR)) {
+ 		COMP_DEBUG(r->c, "Received %s.", vk_result_string(ret));
+@@ -845,6 +847,7 @@
+ 	assert(!comp_frame_is_invalid_locked(&r->c->frame.rendering));
+ 	uint64_t render_complete_signal_value = (uint64_t)r->c->frame.rendering.id;
+ 
++	COMP_INFO(r->c,"FRAME_PROBE before present");
+ 	ret = comp_target_present(        //
+ 	    r->c->target,                 //
+ 	    r->c->base.vk.main_queue,     //
+@@ -853,6 +856,7 @@
+ 	    desired_present_time_ns,      //
+ 	    present_slop_ns);             //
+ 	r->acquired_buffer = -1;
++	COMP_INFO(r->c,"FRAME_PROBE after present result=%d time_ns=%llu",ret,(unsigned long long)os_monotonic_get_ns());
+ 
+ 	if (ret == VK_ERROR_OUT_OF_DATE_KHR || ret == VK_SUBOPTIMAL_KHR) {
+ 		renderer_resize(r);
+@@ -884,7 +888,7 @@
+ 		// @note we don't actually care about the return value, just swallow errors, anything *critical* that
+ 		// may be returned will be handled quite soon by later calls
+ 		VkResult result = comp_target_wait_for_present(c->target, timeout_ns);
+-		(void)result;
++		COMP_INFO(c,"FRAME_WAIT result=%d time_ns=%llu", result, (unsigned long long)os_monotonic_get_ns());
+ 
+ 		assert(result != VK_ERROR_EXTENSION_NOT_PRESENT);
+ 	} else {
