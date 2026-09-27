@@ -6,7 +6,7 @@ Status: proposed implementation choices unless marked as observed or confirmed i
 flowchart TB
   Installer[Shared Snapdragon installer] --> Detection[Hardware detection and boot adapter]
   Detection --> Profile
-  Desktop[Plasma Wayland desktop / headset XR session]
+  Desktop[COSMIC target / Plasma baseline / headset XR session]
   Desktop --> Native[ARM64 native apps and Flatpaks]
   Desktop --> Android[Waydroid ARM64 Android environment]
   Desktop --> Windows[Wine with FEX for selected Windows apps]
@@ -42,7 +42,7 @@ An unrecognized board must not silently receive another laptop's hardware profil
 
 ## Desktop and integration
 
-Use Plasma Wayland and normal desktop defaults. Prioritize display scaling, multiple monitors, virtual desktops, touchpad behavior, accessibility, clipboard, file associations and screen/audio capture.
+Target COSMIC on Wayland. Use the working Plasma session as the initial integration baseline and fallback while COSMIC is validated. Keep the desktop session separate from XR presentation and device tracking. Prioritize display scaling, multiple monitors, virtual desktops, touchpad behavior, accessibility, clipboard, file associations and screen/audio capture.
 
 Use Discover with Flatpak support as the initial application interface candidate. Integrate Android and Windows launchers into the existing desktop before considering a custom app manager. Separate application installation from complete operating-system updates so that the interface clearly identifies what is being updated.
 

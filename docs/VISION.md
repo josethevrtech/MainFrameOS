@@ -17,7 +17,7 @@ The SteamOS inspiration is its integrated system experience and recoverability. 
 
 ## MainFrameOS 0.1
 
-Deliver a shared installer prototype, first exercised on the available test laptop, with a Plasma Wayland desktop, working ARM64 Flatpaks, an Android proof of concept, and a small Windows application compatibility record. Device profiles are implementation details within one distribution; the product is not restricted to the first machine. Publish an image manifest, documented installation/recovery approach and an honest list of remaining limitations.
+Deliver a shared installer prototype, first exercised on the available test laptop, with a working Wayland desktop (Plasma for initial validation, COSMIC as the intended environment), working ARM64 Flatpaks, an Android proof of concept, and a small Windows application compatibility record. Device profiles are implementation details within one distribution; the product is not restricted to the first machine. Publish an image manifest, documented installation/recovery approach and an honest list of remaining limitations.
 
 An Android or Windows blocker discovered during prototyping must be documented and explicitly reflected in release scope. Do not silently remove either long-term application goal or advertise it as complete.
 

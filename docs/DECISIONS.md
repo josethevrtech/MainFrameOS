@@ -1,6 +1,6 @@
 # Decision register
 
-Updated 2026-09-23.
+Updated 2026-09-26.
 
 | Decision | State | Reason / next action |
 | --- | --- | --- |
@@ -12,7 +12,8 @@ Updated 2026-09-23.
 | One installer with hardware detection | Owner requirement | Shared installation flow and system, with platform profiles and boot adapters |
 | Current laptop as first test machine | Owner clarification | A starting point for validation, not a product boundary or brand restriction |
 | Full detail maintained on GitHub | Owner requirement | Keep design, roadmap and evidence in repository |
-| KDE Plasma on Wayland | Proposed | Reuse familiar desktop; confirm during prototype |
+| COSMIC on Wayland | Owner-selected direction | Target desktop for productivity; validate display, input, apps and portals before migration |
+| KDE Plasma on Wayland | Initial validation baseline | Keep working during XR integration and COSMIC bring-up; desktop adapters must be replaceable |
 | Waydroid ARM64 | Proposed | Existing Android-on-Linux route; prove prerequisites and workflows |
 | Wine with FEX | Proposed | Existing Windows API/CPU translation route; prove packaging and apps |
 | Developer image before managed base | Proposed | Ease hardware bring-up while designing production recovery |

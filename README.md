@@ -26,7 +26,8 @@ A physical Monado/OpenXR experiment has shown a tracked stereo scene on the Fram
 without the SteamVR compositor. The recorded source patches now have a verified,
 isolated rebuild path in this repository. Vendor tracking and hardware dependencies
 remain; an independent bootable headset image and spatial KDE workspace are still
-in development. See [Frame bring-up and kernel update policy](docs/FRAME-BRINGUP.md).
+in development. See [Frame bring-up and kernel update policy](docs/FRAME-BRINGUP.md) and
+[COSMIC workspace direction](docs/COSMIC-WORKSPACE.md).
 
 ## Build and maintenance
 
@@ -44,7 +45,7 @@ See [Build instructions](docs/BUILD-AND-PACKAGING.md), [Engineering contract](do
 
 ## Proposed experience
 
-- KDE Plasma on Wayland, opening directly into a productive desktop.
+- COSMIC on Wayland as the intended desktop; KDE Plasma remains the initial integration and recovery baseline.
 - ARM64 native packages and Flatpaks for the primary application experience.
 - Android applications through an integrated Waydroid environment.
 - Selected Windows `.exe` applications through Wine and FEX CPU translation.
