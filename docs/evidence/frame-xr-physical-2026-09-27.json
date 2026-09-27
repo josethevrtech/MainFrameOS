@@ -1,0 +1,93 @@
+{
+  "date_utc": "2026-09-27",
+  "build_commit": "afa335a08d0ffadf5cad9e45123e7dc9b2f3f187",
+  "build_artifacts": {
+    "stage/usr/bin/monado-service": "cc892a8fb6de8d1fad8cc507bae9e9efa0ad75ff704b0992c226cf5e096c4fc8",
+    "stage/usr/lib/libopenxr_monado.so": "2430f114a4bcd086b9bd5cfab0904992b205c2672856837c365781f68d4a39c6"
+  },
+  "test": "18-second seated left/right/up/center movement test after standalone tracking warm-up",
+  "owner_confirmation": "Scene and movement looked correct; desktop returned",
+  "services_restored": true,
+  "brightness_restored": 253,
+  "scope": "Short physical validation of rebuilt Monado/OpenXR runtime only; vendor tracking and graphics dependencies remain. Not a desktop, kernel or OS release validation.",
+  "pacing": {
+    "source": "scene-service.log",
+    "scope": "First logged nonzero scene layer through client disconnect; host API timestamps, not photon timing",
+    "present_results": {
+      "0": 1610
+    },
+    "present_return_cadence": {
+      "samples": 1610,
+      "duration_seconds": 17.888135291,
+      "events_per_second": 89.94788857671101,
+      "interval_ms": {
+        "mean": 11.117548347420758,
+        "p50": 11.108119,
+        "p95": 11.68165,
+        "p99": 12.147995,
+        "max": 22.271654
+      },
+      "intervals_over_50ms": 0
+    },
+    "wait_results": {},
+    "successful_wait_return_cadence": {
+      "samples": 0,
+      "insufficient": true
+    }
+  },
+  "render": {
+    "source": "scene-service.log",
+    "frames": 1610,
+    "scope": "Compositor frame timestamps after first scene layer; GPU times depend on driver timestamp calibration; not input-to-photon latency",
+    "frames_gpu_completed_after_desired": 1,
+    "durations": {
+      "cpu_before_submit_ms": {
+        "mean": 0.05285019254658385,
+        "min": 0.017239,
+        "p50": 0.036874,
+        "p95": 0.108696,
+        "max": 0.316191
+      },
+      "submit_call_ms": {
+        "mean": 0.09172028385093167,
+        "min": 0.022656,
+        "p50": 0.052499,
+        "p95": 0.383586,
+        "max": 0.684934
+      },
+      "gpu_execution_ms": {
+        "mean": 2.957475236645963,
+        "min": 2.912968,
+        "p50": 2.913386,
+        "p95": 3.154218,
+        "max": 11.423385
+      },
+      "wake_to_gpu_end_ms": {
+        "mean": 3.4955726763975155,
+        "min": 3.019576,
+        "p50": 3.452483,
+        "p95": 3.719814,
+        "max": 12.083815
+      },
+      "gpu_end_after_desired_ms": {
+        "mean": -3.4571013826086956,
+        "min": -3.955858,
+        "p50": -3.515121,
+        "p95": -3.188143,
+        "max": 5.101427
+      },
+      "render_budget_ms": {
+        "mean": 6.9526740590062115,
+        "min": 5.296223,
+        "p50": 6.979159,
+        "p95": 6.991346,
+        "max": 7.041838
+      }
+    }
+  },
+  "raw_log_sha256": {
+    "scene-service.log": "c15ebe200269216f9e6c3e37937047962cd6c1d481ab5126389b7b35c53bca3b",
+    "scene-thermal.jsonl": "2485859164b7c713a952e778d555df2afca21731b73a18f58794ec0c91770f0f",
+    "scene-openxr.log": "bd6e3b9c046f9dc5f09163371405164a93ed54419b88330503885f0dd81a62b6"
+  }
+}

@@ -57,8 +57,9 @@ At the package-bootstrap milestone, no kernel Image/modules or disk image had be
 A clean native AArch64 Monado/OpenXR build completed in the existing isolated
 ALARM build root, without installing on the host or switching the headset session.
 All 11 modified/generated source files matched the previously tested physical
-prototype. This build disables the unused OpenVR frontend and has not yet been
-physically retested. Repository checks and 32 unit tests passed.
+prototype. This build disables the unused OpenVR frontend. A subsequent 18-second physical
+movement check passed on 2026-09-27 UTC, with correct stereo/movement confirmed
+by the owner and successful desktop recovery. Presentation cadence was 89.95 Hz. Repository checks and 32 unit tests passed.
 
 See [Frame build evidence and remaining dependencies](FRAME-BRINGUP.md). This is
 a runtime build, not a custom kernel, bootable headset image or complete desktop.

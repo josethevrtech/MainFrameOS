@@ -45,8 +45,11 @@ OpenVR, the SteamVR plugin and SteamVR lighthouse integration are disabled.
 All 32 repository tests passed. See the [artifact hashes](evidence/frame-xr-build-2026-09-26.json)
 and [source comparison](evidence/frame-source-rebuild-2026-09-26.json).
 
-The measured source modifications reproduce the working prototype. New build
-artifacts require their own physical validation. This work does not claim a
+The measured source modifications reproduce the working prototype. The rebuilt binaries subsequently passed an 18-second seated physical movement
+check on 2026-09-27 UTC: the owner confirmed correct stereo/movement and return
+of the desktop. Presentation returns averaged 89.95 Hz with no gaps over 50 ms.
+See [short physical validation](evidence/frame-xr-physical-2026-09-27.json).
+This validates the bounded scene, not long-duration operation or a KDE session. This work does not claim a
 complete bootable MainFrameOS Frame image, custom kernel or finished spatial
 KDE desktop.
 
