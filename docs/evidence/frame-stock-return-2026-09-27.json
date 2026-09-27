@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-27",
+  "checkpoint": "stock-return-20260927",
+  "archives_sha256": {
+    "development-home.tar.zst": "524ab65509ae3368f05e613eba97367c574db234c2ba17a0078bc91ee3fa3e1b",
+    "efi-B.img.zst": "3800e18f53768957ec94a023919f9e85ea2c900a7d3e8ba9390988ad20ce245f",
+    "root-B.btrfs.zst": "c6842278d20d23e1f30a3747e15d23f84044080922730de6403ec7aed13aa199",
+    "shared-settings.tar.zst": "e801aa1abe26eeff6544a497d7ba668c27db330731cdff2bf7e683da9051ae30",
+    "var-B.tar.zst": "d6032c4c41c050602b5a9413ef4a8e72bd115f847f0faefd97754325302644f6"
+  },
+  "root_stream_decoded_and_parsed": true,
+  "all_tar_archives_decoded_and_listed": true,
+  "pc_copy_verified": true,
+  "physical_checkpoint_restore_boot_tested": false,
+  "slot_before": "B",
+  "stock_slot_target": "A",
+  "shared_home_overrides_saved": [
+    {
+      "path": ".config/systemd/user/steamvr-plasma.service.d/90-mainframeos.conf",
+      "sha256": "312c141fee3bdb081488780dbb5813866cf8ed3dc171bf26a8d68059465493bc"
+    },
+    {
+      "path": ".config/systemd/user/gamescope-session.service.d/90-mainframeos-ultrawide.conf",
+      "sha256": "7ac0703484cdbfaae9f735693c0740f5198cc67f6012bbab8dbf9177980407c9"
+    },
+    {
+      "path": ".config/autostart/steam.desktop",
+      "sha256": "41fdf37f4f4fd73c6676d01793e1ef563b6e3298960b033a7b7467d6097ad184"
+    }
+  ],
+  "stock_boot_verified": true,
+  "override_restore_helper_tested_in_temporary_tree": true,
+  "primary_selected": "A",
+  "stock_root": "/dev/sda4",
+  "stock_os": "SteamOS 0.5.0",
+  "stock_build": "20260925.6142658",
+  "stock_services_active": [
+    "steamvr",
+    "gamescope-session"
+  ],
+  "development_overrides_inactive": true
+}

@@ -1,0 +1,46 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -54,8 +54,7 @@
+ 
+ [patch.crates-io]
+ vulkano = {
+-  git = "https://github.com/galister/vulkano.git",
+-  rev = "cf7f92867928a56ce16b376037c1120f2b167678"
++  path = "mainframe-patches/vulkano"
+ }
+ 
+ [profile.dev]
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -5917,7 +5917,6 @@
+ [[package]]
+ name = "vulkano"
+ version = "0.35.2"
+-source = "git+https://github.com/galister/vulkano.git?rev=cf7f92867928a56ce16b376037c1120f2b167678#cf7f92867928a56ce16b376037c1120f2b167678"
+ dependencies = [
+  "ash",
+  "bytemuck",
+@@ -5946,7 +5945,6 @@
+ [[package]]
+ name = "vulkano-macros"
+ version = "0.35.0"
+-source = "git+https://github.com/galister/vulkano.git?rev=cf7f92867928a56ce16b376037c1120f2b167678#cf7f92867928a56ce16b376037c1120f2b167678"
+ dependencies = [
+  "proc-macro-crate",
+  "proc-macro2",
+--- a/mainframe-patches/vulkano/src/image/view.rs
++++ b/mainframe-patches/vulkano/src/image/view.rs
+@@ -647,6 +647,13 @@
+                         format: image.format(),
+                         image_type: image.image_type(),
+                         tiling: image.tiling(),
++                        drm_format_modifier_info: image.drm_format_modifier().map(|(modifier, _)| {
++                            super::ImageDrmFormatModifierInfo {
++                                drm_format_modifier: modifier,
++                                sharing: image.sharing().clone(),
++                                ..Default::default()
++                            }
++                        }),
+                         usage: image.usage(),
+                         image_view_type: Some(view_type),
+                         ..Default::default()

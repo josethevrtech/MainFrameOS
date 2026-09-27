@@ -1,7 +1,7 @@
 # MainFrameOS Frame XR source integration
 
 This is a source recipe, not yet a distributable pacman package. It imports the
-five patches used by the physical Frame experiment into the independent ALARM
+six patches used by the physical Frame experiment into the independent ALARM
 project. It does not install SteamVR or change the active OpenXR runtime.
 
 Upstream: <https://gitlab.freedesktop.org/monado/monado.git>, commit
@@ -11,7 +11,8 @@ notices; see `LICENSE.monado` and upstream per-file licensing. The MainFrameOS
 generator and build scripts use the project's MIT license.
 
 Patch order: timestamped diagnostic pose transport; measured optics; presentation
-diagnostics; optional unscheduled presentation workaround; optional GPU timing.
+diagnostics; optional unscheduled presentation workaround; optional GPU timing;
+optional Frame panel rotation.
 The transport changes the experimental remote-driver protocol, so an unmodified
 upstream remote client is not compatible. It is not a general network XR service.
 
@@ -51,3 +52,19 @@ This records the existing builder; it does not yet reconstruct a fresh dependenc
 image from archived packages. Passing this build is not a bootable image test or
 a physical validation of the newly compiled binaries. See
 [Frame bring-up](../../docs/FRAME-BRINGUP.md).
+
+## Panel orientation experiment
+
+`MAINFRAME_FRAME_PANEL_ROTATION=1`, together with `MAINFRAME_FRAME_OPTICS=1`,
+sets each physical panel view to Monado's 180-degree rotation. It changes panel
+mapping, not desktop texture orientation or head/eye poses. Both options default
+to off. Enable this only for the identified Frame optical prototype, not generic
+remote headsets.
+
+The first physical COSMIC test exposed upside-down, misaligned stereo imagery
+despite the earlier cube-scene confirmation. A six-second KMS recording reproduced
+the issue. With this correction an isolated incremental build produced upright
+COSMIC and keyboard images in both recorded eyes. This is capture-based evidence;
+wearer comfort, stereo fusion and controller input remain unvalidated. See
+`docs/evidence/frame-workspace-tabletop-2026-09-27.json` for build and test scope.
+The normal desktop remains the recovery session.

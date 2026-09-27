@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "component": "WayVR",
+  "role": "Experimental OpenXR workspace bridge; simulated COSMIC surface validated, physical view pending",
+  "repository": "https://github.com/wayvr-org/wayvr.git",
+  "tag": "v26.8.0",
+  "commit": "cb3aa42bd91aeda0e4d0de91593a6f878350c757",
+  "license": "GPL-3.0; preserve upstream per-file and dependency licenses",
+  "source_archive_sha256": "874b924ed4216f0fe07f552d2755ae565eb90a57880d0cdce4b9a9bdaf4dd580",
+  "cargo_lock_sha256": "8f89f7beff53a055b312a6d78c721a835da00fee60a0f5466569e6ecb8b3aeae",
+  "cargo_features": [
+    "openxr",
+    "wayland",
+    "x11"
+  ],
+  "default_features": false,
+  "build_profile": "plain",
+  "target_architecture": "aarch64",
+  "preferred_desktop": "cosmic",
+  "vendor_archive": {
+    "url": "https://github.com/wayvr-org/wayvr/releases/download/v26.8.0/vendor.tar.xz",
+    "sha256": "c5361c8b1e2d08fd139a0078df59c4062e79305c991f69b93be49d81499b288d",
+    "role": "Pinned upstream dependency source bundle for offline Cargo build; checksums remain enabled"
+  },
+  "patches": [
+    {
+      "path": "upstream/workspace/patches/0001-preserve-drm-modifier-in-image-view-query.patch",
+      "sha256": "e6bc43f1e8d1793cf2911d5c32b9497116b42e779c91174ae7d895b288c5c93f",
+      "purpose": "Preserve DRM modifier and sharing metadata in Vulkano cubic-filter image-format query (VUID tiling-02249)"
+    }
+  ],
+  "patched_cargo_lock_sha256": "097b79762ec232fd5f328d9f2e0e6903510d2c11be1a39c7c095e4b87dadfae1",
+  "recovery_desktop": "plasma",
+  "patched_dependencies": [
+    {
+      "name": "vulkano",
+      "origin": "https://github.com/galister/vulkano.git",
+      "commit": "cf7f92867928a56ce16b376037c1120f2b167678",
+      "license": "MIT OR Apache-2.0",
+      "source": "Verified upstream vendor archive; local path patch preserves vendor checksums"
+    }
+  ]
+}

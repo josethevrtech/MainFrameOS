@@ -1,0 +1,125 @@
+{
+  "date_utc": "2026-09-27",
+  "scope": "Recorded tabletop validation; wearer stereo comfort, tracking after rotation and controller input not validated",
+  "source_lock_sha256": "3de7d9a324fed8785f087903b681e00a74a35671f6b50e14aa77d59850f2eb29",
+  "artifacts": {
+    "stage/usr/bin/monado-service": "33a641f950e5fdc8b237822f6ac9a7efe3a3155ab788fc14e07d63c5d65e9cd5",
+    "stage/usr/lib/libopenxr_monado.so": "2430f114a4bcd086b9bd5cfab0904992b205c2672856837c365781f68d4a39c6"
+  },
+  "clean_isolated_build": true,
+  "host_boot_or_kernel_changed": false,
+  "default_runtime_changed": false,
+  "changes": [
+    "Opt-in 180-degree per-panel rotation in Frame optical prototype"
+  ],
+  "recording": {
+    "mode": "stereo",
+    "width": 2160,
+    "height": 1080,
+    "fps": 20,
+    "microphone": false,
+    "method": "Independent Linux KMS capture with saved optical inverse mesh; approximate mirror, not direct pre-distortion compositor image"
+  },
+  "results": {
+    "before": "User reported upside down and eyes not aligned; reproduced in recorded pixels",
+    "after": "Recorded COSMIC desktop and keyboard upright in both eyes",
+    "one_minute_runs": 7,
+    "application_visible": "COSMIC Files and Terminal visible in separate late captures",
+    "normal_desktop_services_restored": true,
+    "audio": "Tone player exited 0; recorded AAC audio is non-silent, mean -43.0 dB and peak -32.1 dB; microphone disabled"
+  },
+  "limitations": [
+    "One device at fixed measured IPD",
+    "Vendor standalone tracking and Frame graphics dependencies remain",
+    "Static recording cannot establish stereo comfort or correct head-motion response",
+    "No complete custom kernel source imported",
+    "Lower internal render scale trades image detail for GPU time; perceived sharpness unvalidated",
+    "Minute-scale tabletop measurements do not establish sustained thermal behavior or motion-to-photon latency"
+  ],
+  "clips": {
+    "monado-before.mp4": "055dc8222735968cceef7e4312d11a7e9031be7727dc9a09f9e43b3d1a53c97d",
+    "rotation.mp4": "5f695d634d16c96e50c084f73ddf6e08a7054b77da7767e0a17a69fc627c9781",
+    "apps-first.mp4": "98f539e849816cdefc1dcb558fac0c37edbc83f55cde88579077be0db069f927",
+    "apps-second.mp4": "6f60454c8cd6af753192e03b8d9970758ac7b0a9a408594f2b6e75a5850e9cdb",
+    "final-audio.mp4": "bdfee11cd973d9004f1f0486a8cd339e79529f366a665fda254dc202ebe67dcc",
+    "final-budget9-late.mp4": "2fc6b73cc9b519f4867ba2c2900acee156e08a96138a15f5342b09a95af09353"
+  },
+  "pacing_with_decorative_background": {
+    "scope": "Whole run including tracking warm-up; host API/GPU timestamps, not photon timing or head-motion latency",
+    "successful_presents": 2594,
+    "present_interval_ms": {
+      "median": 22.243129,
+      "p95": 23.468106,
+      "max": 27433.188027
+    },
+    "intervals_over_50ms": 2,
+    "gpu_ms": {
+      "median": 15.43276,
+      "p95": 15.449166,
+      "max": 17.292448
+    }
+  },
+  "clean_build_service_matches_incremental": true,
+  "final_test_settings": {
+    "MAINFRAME_FRAME_PANEL_ROTATION": 1,
+    "XRT_COMPOSITOR_SCALE_PERCENTAGE": 50,
+    "U_PACING_COMP_MIN_TIME_MS": 9,
+    "use_skybox": false,
+    "desktop_surface": [
+      1280,
+      800
+    ],
+    "panel_mode": [
+      4320,
+      2160,
+      90
+    ]
+  },
+  "pacing_final": {
+    "scope": "Successful presents after largest >5s startup gap, if present; GPU statistics cover whole run. Host API/GPU timestamps, not photon timing or head-motion latency",
+    "successful_presents": 5196,
+    "measured_seconds": 58.707617398,
+    "presents_per_second": 88.48936867563934,
+    "present_interval_ms": {
+      "median": 11.120158,
+      "p95": 11.803271,
+      "max": 36.970513
+    },
+    "intervals_over_50ms": 0,
+    "gpu_ms": {
+      "median": 6.43026,
+      "p95": 6.434114,
+      "max": 14.152656
+    }
+  },
+  "pacing_no_background_scale80": {
+    "scope": "Whole run including tracking warm-up; host API/GPU timestamps, not photon timing or head-motion latency",
+    "successful_presents": 2634,
+    "present_interval_ms": {
+      "median": 22.221151,
+      "p95": 23.134571,
+      "max": 27533.057
+    },
+    "intervals_over_50ms": 2,
+    "gpu_ms": {
+      "median": 11.93625,
+      "p95": 11.96677,
+      "max": 14.883594
+    }
+  },
+  "pacing_no_background_scale50_budget7": {
+    "scope": "Successful presents after largest >5s startup gap, if present; GPU statistics cover whole run. Host API/GPU timestamps, not photon timing or head-motion latency",
+    "successful_presents": 2651,
+    "present_interval_ms": {
+      "median": 22.21537,
+      "p95": 23.144468,
+      "max": 35.832098
+    },
+    "intervals_over_50ms": 0,
+    "gpu_ms": {
+      "median": 6.500625,
+      "p95": 6.506302,
+      "max": 14.160052
+    }
+  }
+}

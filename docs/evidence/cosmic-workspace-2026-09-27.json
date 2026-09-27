@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-09-27",
+  "component": "COSMIC through WayVR/Monado",
+  "architecture": "aarch64",
+  "cosmic_version": "1:1.9.0-1",
+  "wayvr_revision": "cb3aa42bd91aeda0e4d0de91593a6f878350c757",
+  "wayvr_patch": "upstream/workspace/patches/0001-preserve-drm-modifier-in-image-view-query.patch",
+  "wayvr_binary_sha256": "cbba30e258e6605458ce4afd91748671f4212f6e4cfd2b7cda31a312ff0c74eb",
+  "wayvrctl_binary_sha256": "9787b145790e79af3acc3331350b67fb332e762992bc4ac14c121527aea9f874",
+  "builder_inventory_sha256": "36aa7a19181f06f0b947ea4e36aa9004a95b1ac5588071e4c1bf43eaf0cab1d2",
+  "native_build": {
+    "offline": true,
+    "cargo_frozen": true,
+    "default_features": false,
+    "features": [
+      "openxr",
+      "wayland",
+      "x11"
+    ],
+    "public_preparation_matches_native_inputs": true,
+    "note": "Public preparation verified separately; native compilation used equivalent commands and the existing lab build cache."
+  },
+  "nested_x11_owner_confirmation": "Menu, apps and typing work",
+  "simulated_tests": [
+    {
+      "driver": "ALARM vulkan-freedreno 1:26.2.3-1",
+      "client_duration_seconds": 30,
+      "session": "FOCUSED",
+      "visible_window_size": [
+        1280,
+        800
+      ],
+      "exit_code": 0,
+      "log_sha256": "d68ec44b8c169cc96f5ea17a5ea80b4f3d1682c43f24f468d86cd5a5b0ff93e2"
+    },
+    {
+      "driver": "Frame reference snapshot",
+      "driver_library_sha256": "dfed0652b592b263a400ba0a64fbdd421870a938abed4d447a9aafa6a4ad789a",
+      "client_duration_seconds": 30,
+      "session": "FOCUSED",
+      "visible_window_size": [
+        1280,
+        800
+      ],
+      "exit_code": 0,
+      "log_sha256": "1e4f4cbcebc37c63d021751ad44702be00c7762afcd3a7b440c52e3bb8c662ee"
+    }
+  ],
+  "limitations": [
+    "Physical COSMIC view pending",
+    "XR desktop input and controller support unvalidated",
+    "Portal/audio/system service integration incomplete",
+    "Not an installer, OS image, or release certification"
+  ]
+}
