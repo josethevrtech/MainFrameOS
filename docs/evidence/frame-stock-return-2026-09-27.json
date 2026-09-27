@@ -10,7 +10,7 @@
   },
   "root_stream_decoded_and_parsed": true,
   "all_tar_archives_decoded_and_listed": true,
-  "pc_copy_verified": false,
+  "pc_copy_verified": true,
   "physical_checkpoint_restore_boot_tested": false,
   "slot_before": "B",
   "stock_slot_target": "A",
@@ -28,5 +28,15 @@
       "sha256": "41fdf37f4f4fd73c6676d01793e1ef563b6e3298960b033a7b7467d6097ad184"
     }
   ],
-  "stock_boot_verified": false
+  "stock_boot_verified": true,
+  "override_restore_helper_tested_in_temporary_tree": true,
+  "primary_selected": "A",
+  "stock_root": "/dev/sda4",
+  "stock_os": "SteamOS 0.5.0",
+  "stock_build": "20260925.6142658",
+  "stock_services_active": [
+    "steamvr",
+    "gamescope-session"
+  ],
+  "development_overrides_inactive": true
 }

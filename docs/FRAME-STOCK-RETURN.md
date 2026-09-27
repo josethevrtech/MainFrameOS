@@ -2,6 +2,9 @@
 
 The owner requested a temporary return to the stock SteamOS slot after the
 COSMIC/Monado wearer test failed stereo alignment and apparent screen size.
+**Stock slot A boot succeeded**: `/dev/sda4`, `rauc.slot=A`, SteamOS 0.5.0
+build 20260925.6142658. SSH, sudo, SteamVR and gamescope-session are working.
+All five private archive copies on the PC matched their device SHA256 hashes.
 Development is paused, not discarded. This record is device-specific; it is
 not a generic partition-switching or flashing guide.
 
@@ -112,5 +115,7 @@ and EFI, and the shared development tree/settings. Validate that reconstruction
 in a temporary image before any internal partition replacement. No such fresh
 checkpoint reconstruction has yet been boot-tested. Do not replay the partition
 table or firmware images merely to switch slots.
+
+[Checkpoint verification receipt](evidence/frame-stock-return-2026-09-27.json).
 
 [Latest wearer result](evidence/frame-workspace-wearer-2026-09-27.json).
