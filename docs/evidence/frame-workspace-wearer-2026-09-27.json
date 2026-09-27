@@ -1,0 +1,17 @@
+{
+  "time_utc": "2026-09-27T06:09:12Z",
+  "scope": "25-second wearer check of corrected COSMIC/Monado candidate",
+  "test_exit": 0,
+  "settings": {
+    "panel_rotation": 180,
+    "compositor_scale_percent": 50,
+    "render_budget_ms": 9,
+    "skybox": false
+  },
+  "normal_desktop_services_active_afterward": true,
+  "probe_inactive_afterward": true,
+  "wearer_confirmation": "Visual or movement problem; usual desktop returned",
+  "default_runtime_changed": false,
+  "visual_validation_passed": false,
+  "problem_details": "Desktop not aligned between the eyes and appeared too small; usual desktop returned."
+}

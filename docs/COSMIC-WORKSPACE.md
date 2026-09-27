@@ -113,3 +113,16 @@ measurements, not application frame rate or photon latency. The desktop remained
 1280×800; the lower internal scale can reduce perceived sharpness. A quiet tone
 was also captured through system audio with the microphone disabled. Neither
 these runtime settings nor the test profile replaces the normal desktop.
+
+## Wearer follow-up and return to stock
+
+The 25-second follow-up on 2026-09-27 **failed visual validation**. The wearer
+reported that the desktop did not align between the eyes and appeared too small.
+The usual desktop returned. Upright pixels and successful presentation timing
+do not establish correct stereo geometry or usable virtual screen size.
+Do not make this candidate the default. The next development work must resolve
+per-eye geometry and workspace angular size before another wearer test.
+
+[Wearer evidence](evidence/frame-workspace-wearer-2026-09-27.json).
+The owner requested returning to stock slot A while preserving development B;
+see [checkpoint and recovery record](FRAME-STOCK-RETURN.md).
