@@ -1,0 +1,18 @@
+[Unit]
+Description=Steam Frame keyboard and touchpad shortcut service
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
+[Service]
+Type=dbus
+BusName=org.mainframeos.FrameControl
+ExecStart=%h/.local/lib/mainframeos-frame-control/frame-control-service
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=3
+KillMode=control-group
+
+[Install]
+WantedBy=graphical-session.target

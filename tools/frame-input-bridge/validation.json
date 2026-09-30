@@ -1,0 +1,21 @@
+{
+  "time_utc": "2026-09-30T00:20:16.557358+00:00",
+  "build": "native ARM64; warnings as errors; existing libraries only",
+  "service_enabled": true,
+  "idle_dbus_status": "idle",
+  "activation_test": "controlling-frame",
+  "release_test": "idle",
+  "shortcut_registered": "F11",
+  "physical_fn_f11_confirmation": "Both presses work; Frame control works",
+  "receiver_changed": false,
+  "capture_surface": "compact borderless SDL strip while active; no window while idle",
+  "checks": {
+    "repository_tests": 29,
+    "service_unit_verification": "passed",
+    "fresh_login_tested": false
+  },
+  "installed_artifacts_sha256": {
+    "frame-control-service": "009fc61a8cbe7ff8887acb323274a581c272f1f554d6aec7be100ec804701496",
+    "frame-input-client": "5f2b55b5cddc5e3129acef438362b786dacaaea234bfcc88536af131bb173a7e"
+  }
+}
