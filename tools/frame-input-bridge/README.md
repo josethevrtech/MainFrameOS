@@ -89,3 +89,36 @@ and Linux interfaces retain their own licenses. References:
 [Linux uinput](https://docs.kernel.org/input/uinput.html),
 [SDL relative input](https://wiki.libsdl.org/SDL3/SDL_SetWindowRelativeMouseMode),
 [KDE GlobalAccel](https://api.kde.org/kglobalaccel.html).
+
+## Portable hostname discovery and VRhotspot
+
+To follow the same headset across LAN/hotspot address changes, use a paired target
+such as `USER@frame.local` and install the private transport wrapper:
+
+```sh
+mkdir -p ~/.local/lib/mainframeos-frame-control/transport
+install -m755 ssh-mdns.py ~/.local/lib/mainframeos-frame-control/transport/ssh
+systemctl --user restart mainframeos-frame-control.service
+```
+
+This requires Python 3, `/usr/bin/avahi-resolve-host-name` and `/usr/bin/ssh`.
+The controller adds this private directory only to its capture worker's PATH.
+Ordinary IP targets pass through unchanged. `.local` targets resolve with a bounded
+Avahi call; SSH connects to that private IPv4 address using `HostKeyAlias` for the
+original hostname and the client's existing strict host-key checking. No global
+NSS configuration is changed. Verify the hostname's key independently before use;
+do not automatically trust an mDNS response or unverified ssh-keyscan output.
+
+The optional VRhotspot companion calls the existing session D-Bus interface.
+Its root networking daemon does not receive credentials or input events. The
+native companion bridge was tested through actual discovery and SSH capture:
+`idle` → `controlling-frame` → `idle`. Native builds and all 34 repository tests
+passed. Offline hotspot operation and a packaged Flatpak UI remain untested;
+the inspected VRhotspot vendor networking binaries require an ARM64 port for the
+test laptop. Discovery depends on local multicast and the headset's Avahi service.
+
+To undo discovery deployment, stop the user service, restore the previous controller
+and connection configuration from your backup, remove its private `transport/ssh`,
+and restart the service. Only remove the specific hostname known_hosts entry if
+it was newly added for this pairing; preserve other trusted hosts. Keep the hostname
+configuration and key pins private rather than committing device details.

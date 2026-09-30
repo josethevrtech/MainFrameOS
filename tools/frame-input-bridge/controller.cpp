@@ -68,6 +68,7 @@ public slots:
         }
         failed=false;stopping=false;captured=false;output.clear();
         auto env=QProcessEnvironment::systemEnvironment();env.insert("MAINFRAMEOS_INPUT_OVERLAY","1");
+        env.insert("PATH",QCoreApplication::applicationDirPath()+"/transport:"+env.value("PATH"));
         worker.setProcessEnvironment(env);
         worker.start(client,{key,target,receiver});
     }
