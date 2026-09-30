@@ -145,7 +145,7 @@ both machines; the headset hidden-SSID setting and PC hotspot were restored and 
 temporary pairing profile and credential file removed. No persistent headset AP
 configuration or firmware was modified.
 
-The current product remains a 5 GHz PC-hosted hotspot. A complete 6 GHz client/direct
+At that stage, the product remained a 5 GHz PC-hosted hotspot. A complete 6 GHz client/direct
 mode still needs validated association, routing, secure pairing, reconnect and
 rollback. Valve's [Multi-Link and foveated streaming](https://store.steampowered.com/hardware/steamframe)
 are streaming-application features, not generic hotspot toggles. No performance
@@ -184,3 +184,41 @@ directory, `depmod -a`, reload `rtw89_8852cu`, and restart the hotspot. Kernel u
 need their own compatible build. Shipping desktop pairing, direct-mode lifecycle,
 internet relay and Frame Control route selection remains separate integration work;
 the current default still uses the validated PC-hosted hotspot.
+
+
+## Frame Direct product integration
+
+VRhotspot [PR #155](https://github.com/josethevrtech/VRhotspot/pull/155),
+commit `50c6a26687699853dd1121c495b08c63408709a7`, now adds an experimental, explicitly selected Frame Direct mode
+with a native-portal card and authenticated pairing/connect/disconnect API. It
+requires the working rtw89 USB ACPI fix described above and the Frame-hosted AP.
+The PC does not run Steam. This is not removal of the headset's existing AP service.
+
+The local deployment preserves the ARM64 vendor runtime and Frame Control tray
+integration. Only API/lifecycle, the new frame_direct module, portal HTML/JavaScript
+and the native client's exact route allowlist were updated. Originals are backed
+up under `/var/lib/vr-hotspot/frame-direct-before/`. Credentials are stored only in
+the root-owned 0600 NetworkManager profile; no credentials or raw logs are committed.
+
+The profile uses WPA3-SAE/required PMF, hidden discovery, powersave off, autoconnect
+off, no default route, no imported DHCP DNS/routes and IPv6 disabled on this private
+link. Laptop and Frame keep their existing internet uplinks. Travel internet relay
+over the direct connection and Frame Control route preference are not implemented.
+The ordinary 5 GHz hotspot retains internet sharing.
+
+Hardware tests: 6135 MHz/160 MHz with DHCP, daemon restart without disconnect,
+Return to Hotspot at channel 36/80 MHz, and automatic hotspot restoration after an
+unavailable Frame network. Handoff exposed a NetworkManager readiness race; the
+new mode waits for device readiness before activation. Product samples at about
+-68 dBm: 393.91/349.85 Mb/s forward/reverse, idle ICMP average 2.777 ms, no loss.
+SteamMini reference at about -56 to -58 dBm: 427.75/643.35 Mb/s, idle average
+3.131 ms, no loss. Both are short eight-second single-stream TCP measurements.
+Different machines and signal conditions do not establish overall Valve parity.
+
+Rollback: use Frame Direct → Disconnect (or Return to Hotspot), stop the daemon,
+restore the four backed-up existing files under their original app paths, remove
+only the new frame_direct.py and frame_direct.js files, then restart daemon and UI.
+To remove pairing after disconnect, delete NetworkManager UUID
+`c463edeb-f2ee-48f3-bf4c-99fc7600341f`. This UI/backend rollback does not require
+rolling back the working driver or changing the boot kernel. No host kernel image,
+bootloader, headset AP config or firmware was changed in this integration.
