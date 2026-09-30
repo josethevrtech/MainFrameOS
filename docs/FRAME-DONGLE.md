@@ -99,7 +99,7 @@ stopping the daemon, reloading `rtw89_8852cu` cleared a queue-flush timeout from
 failed attempts. Restarting the daemon and hotspot succeeded. Verified IPv4
 forwarding enabled, subnet-scoped masquerading and forwarding rules, and DHCP/DNS
 input allowances. UFW remains active and the laptop's home Wi-Fi remains its
-default route. End-to-end headset internet access is awaiting confirmation.
+default route. The owner confirmed headset internet and Frame Control both work through the hotspot.
 
 The config persists `enable_internet=true`; hotspot autostart remains disabled.
 The compatibility module applies only to the current kernel ABI; a future image
@@ -107,3 +107,46 @@ must include the corresponding Kconfig option. To roll back only internet sharin
 set `enable_internet=false` through VRhotspot and restart the hotspot; its managed
 NAT rules are removed on stop. Stop the hotspot before removing the added module
 and running `depmod -a`. No boot artifacts were replaced.
+
+## Latency qualification and 6 GHz blocker (2026-09-29)
+
+The owner enabled the backed-up and validated `steamos` passwordless sudo rule.
+Before changing Wi-Fi power saving, 100 idle ICMP probes on channel 36/80 MHz
+averaged 51.353 ms (maximum 323.505 ms, zero loss). After the following narrowly
+scoped change, another 100 probes averaged 3.026 ms (maximum 8.355 ms, zero loss):
+
+```sh
+sudo nmcli connection modify VR-Hotspot 802-11-wireless.powersave 2
+sudo iw dev wlan0 set power_save off
+```
+
+The saved connection previously used value 0/default. Rollback is the same nmcli
+command with value 0; `sudo iw dev wlan0 set power_save on` restores the observed
+previous live state. Other saved Wi-Fi connections are unchanged. Disabling power
+saving can increase headset power consumption while this profile is active.
+
+An eight-second single TCP stream using in-memory Python buffers measured
+473.02 Mb/s PC-to-Frame and 253.60 Mb/s Frame-to-PC after the change. Concurrent
+ICMP averages were 6.915 ms and 10.692 ms respectively, with no packet loss.
+These are short sequential diagnostics, not an iperf certification or a controlled
+Valve comparison. Channel 149/80 MHz was tested twice earlier and regressed the
+PC-to-headset direction (194.66 and 169.73 Mb/s versus 470.68 Mb/s on channel 36),
+so channel 36 was restored. Do not prescribe this channel globally.
+
+The headset's dedicated AP was observed using 6 GHz channel 37/160 MHz, WPA3-SAE,
+mandatory protected management frames and a hidden SSID. A temporary client-mode
+NetworkManager profile failed to associate. A second guarded test temporarily
+made the headset AP name visible using hostapd's runtime control socket. Discovery
+then succeeded, but wpa_supplicant authentication requests failed and mac80211 logged
+`failed to insert STA entry for the AP (error -22)`. The failure needs driver/kernel
+diagnosis; it is not evidence that the pairing password was wrong or that regulatory
+restrictions should be bypassed. Independent recovery timers were established on
+both machines; the headset hidden-SSID setting and PC hotspot were restored and the
+temporary pairing profile and credential file removed. No persistent headset AP
+configuration or firmware was modified.
+
+The current product remains a 5 GHz PC-hosted hotspot. A complete 6 GHz client/direct
+mode still needs validated association, routing, secure pairing, reconnect and
+rollback. Valve's [Multi-Link and foveated streaming](https://store.steampowered.com/hardware/steamframe)
+are streaming-application features, not generic hotspot toggles. No performance
+parity or improvement over Valve's complete implementation is claimed.
