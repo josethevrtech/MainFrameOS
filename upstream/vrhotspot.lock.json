@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "component": "VRhotspot",
+  "role": "MainFrameOS local VR networking and laptop-to-headset input control",
+  "repository": "https://github.com/josethevrtech/VRhotspot.git",
+  "commit": "668c7725d6a590ddd26ae5edd844e66b89817394",
+  "source_archive_url": "https://codeload.github.com/josethevrtech/VRhotspot/tar.gz/668c7725d6a590ddd26ae5edd844e66b89817394",
+  "source_archive_sha256": "12e46490e74a612b55af2cc73f0dd49927a328ce89bb0b859ceaf109d1d64e2f",
+  "license": "MIT project code; upstream networking and library licenses remain separate",
+  "license_file": "LICENSE.md",
+  "architecture": "aarch64",
+  "status": "installed-development-component-not-release-packaged",
+  "patches": [
+    {
+      "path": "upstream/vrhotspot/patches/0001-frame-control-tray.patch",
+      "sha256": "6b8a9748cef2cfffc0e5902609fb21d1571cfea13ccb048c37d2bc1702b43969",
+      "origin_commit": "786b39f5cdac51300aeeefbba0110329498d9ed2",
+      "purpose": "Optional user-session Frame Control tray integration"
+    }
+  ],
+  "native_network_build": "tools/arm64/build.py; source archive hashes and flags in tools/arm64/",
+  "defaults": {
+    "management_bind": "127.0.0.1:8732",
+    "hotspot_autostart": false,
+    "input_capture_on_login": false
+  },
+  "release_ready": false
+}

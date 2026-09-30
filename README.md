@@ -34,6 +34,12 @@ make kernel-dtb        # Compile the initial test-platform device tree; does not
 
 See [Build instructions](docs/BUILD-AND-PACKAGING.md), [Engineering contract](docs/ENGINEERING.md), [Collabora integration](docs/COLLABORA-INTEGRATION.md), [Build evidence](docs/BUILD-EVIDENCE.md), [Support](SUPPORT.md), and [Security](SECURITY.md). Builds are isolated from the running OS. Generated packages are unsigned development artifacts.
 
+## VR networking and headset control
+
+[VRhotspot integration](docs/VRHOTSPOT.md) provides the development path for local
+VR networking and laptop keyboard/touchpad control. It is installed on the development
+laptop; release image packaging and offline hotspot qualification remain pending.
+
 ## Proposed experience
 
 - KDE Plasma on Wayland, opening directly into a productive desktop.
