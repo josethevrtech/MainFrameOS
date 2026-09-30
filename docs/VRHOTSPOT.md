@@ -67,3 +67,8 @@ menu/icons, service units and native bundle when no process uses them. Preserve
 they contain credentials. Reload systemd afterward. Clear only VRhotspot's wallet
 credential through the companion before uninstalling if desired. Keep Frame Control
 and other applications untouched. The WebKit runtime can remain for other apps.
+
+## Frame USB adapter
+
+[Frame dongle bring-up](FRAME-DONGLE.md) records the separate driver deployment,
+5 GHz AP/start-stop evidence, rollback and pending direct-link/performance work.
