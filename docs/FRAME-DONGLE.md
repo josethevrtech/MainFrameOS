@@ -150,3 +150,37 @@ mode still needs validated association, routing, secure pairing, reconnect and
 rollback. Valve's [Multi-Link and foveated streaming](https://store.steampowered.com/hardware/steamframe)
 are streaming-application features, not generic hotspot toggles. No performance
 parity or improvement over Valve's complete implementation is claimed.
+
+## Upstream driver fix and successful direct-link test
+
+The preceding 6 GHz blocker was resolved on this development kernel by upstream
+Linux commit `bf4a37f516f0382832c10a9d04414944d0d96591` (Realtek authors): USB devices
+must not depend on internal-card ACPI capability checks. In the older driver, US/CA
+VLP was denied without ACPI opt-in; the Frame AP advertises VLP. The unmodified
+upstream patch applies cleanly to the pinned kernel source. Its exact patch,
+attribution and SHA-256 are under `upstream/vrhotspot/patches/0002-rtw89-usb-acpi.*`.
+This is not a regulatory-domain override; normal cfg80211 and power constraints
+remain. It does not enable a 6 GHz PC AP on no-IR channels.
+
+Built a separate copy of the rtw89 sources with the same four-module command above,
+after `patch -p6 < 0002-rtw89-usb-acpi.patch`. Preserved prior modules in root-owned
+`/var/lib/vr-hotspot/module-backups/pre-usb-acpi/`. With the hotspot stopped, unloaded
+those four modules, installed the patched modules in the existing updates directory,
+ran `depmod -a`, and loaded `rtw89_8852cu`. An independent timed module rollback was
+armed before replacement. No kernel image, bootloader or firmware was replaced.
+
+Physical result: WPA3-SAE association and DHCP succeeded at 6135 MHz, channel 37,
+160 MHz. Reconnection succeeded with the original hidden SSID restored and a hidden
+NetworkManager profile. Initial PHY rate was 1921.5 Mb/s. Eight-second TCP samples
+measured 1017.81 Mb/s PC-to-Frame and 423.77 Mb/s reverse. Concurrent ICMP averages
+were 17.819/19.479 ms, maxima 99.349/99.959 ms, zero loss. Wider channels increased
+throughput in these samples but did not improve loaded latency. Do not claim parity
+with Valve without a controlled streaming comparison.
+
+The normal 5 GHz hotspot was restored, and the patched modules retained. To undo
+the driver update: stop the hotspot, unload `rtw89_8852cu rtw89_8852c rtw89_usb
+rtw89_core`, reinstall only the four backed-up modules to the exact kernel's updates
+directory, `depmod -a`, reload `rtw89_8852cu`, and restart the hotspot. Kernel updates
+need their own compatible build. Shipping desktop pairing, direct-mode lifecycle,
+internet relay and Frame Control route selection remains separate integration work;
+the current default still uses the validated PC-hosted hotspot.

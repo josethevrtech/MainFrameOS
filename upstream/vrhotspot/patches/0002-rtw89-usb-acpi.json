@@ -1,0 +1,9 @@
+{
+  "upstream": "https://github.com/torvalds/linux",
+  "commit": "bf4a37f516f0382832c10a9d04414944d0d96591",
+  "url": "https://github.com/torvalds/linux/commit/bf4a37f516f0382832c10a9d04414944d0d96591.patch",
+  "sha256": "2216868ae618c5878ef6f0eb9b3733ca819e644b0adcf4dcf256a1b6df29e261",
+  "license": "GPL-2.0 OR BSD-3-Clause",
+  "applied_to_source_revision": "8a4f6449525101e3445d33d642d6b1927f2fba3b",
+  "scope": "External matching-kernel development modules; not automatically integrated into release images."
+}
