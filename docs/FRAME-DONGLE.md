@@ -231,3 +231,28 @@ An unavailable link keeps the session reserved until explicit Disconnect. This i
 one manual wake/reconnect test, not sustained unattended-link validation. Visible
 desktop-UI confirmation remains pending. Local suite: 1,872 passed, 5 skipped,
 4 subtests passed; GitHub CI passed for the implementation commit.
+
+
+## Unified connection interface
+
+The separate Frame Direct dashboard was removed in favor of VRhotspot's existing
+setup and status controls. Under the existing adapter field, the user chooses
+whether to share the PC's connection or connect to a paired headset. The same
+primary button connects/disconnects; saved pairing is collapsed; AP-only name,
+password and tuning steps disappear when connecting to the headset. Basic and Pro
+both present two headset setup steps. Pro retains the 6 GHz/160 MHz status detail.
+The network-role distinction remains because client mode does not relay internet.
+
+This deployment changes seven portal assets, not the network backend, pairing,
+firmware or kernel. Originals are under
+`/var/lib/vr-hotspot/unified-ui-before/assets/`; restore them to the app's assets
+directory and reopen the desktop app to undo this UI revision. Actual Chromium
+rendering was inspected at 1440×1000 in both Basic and Pro, with the existing
+6 GHz link still connected. Interaction tests verify that the normal primary
+button routes to the correct transport and switching purpose alone does not
+start either connection.
+
+UI implementation: VRhotspot commit `0dcd57baec6e485fb0792f0e0eab481be1b6d495`.
+Validation: 1,875 pytest tests passed, 2 skipped, 4 subtests; 35 Node UI tests passed.
+MainFrameOS `make check` passed. No production network transition was needed for
+the layout deployment.
