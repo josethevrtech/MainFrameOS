@@ -44,7 +44,7 @@ replug, fresh boot and suspend/resume have not yet been qualified.
   NetworkManager's ownership. An earlier immediate handoff failed and hostapd crashed
   during cleanup. The normal VRhotspot lifecycle then started/stopped successfully.
 - VRhotspot inventory recommended the USB adapter; configuration selects it explicitly,
-  with SSID `MainFrameOS-VR`, a generated private password, no internet sharing and
+  with owner-selected SSID/password, no internet sharing and
   no boot-time hotspot autostart. Original config is backed up root-only at
   `/var/lib/vr-hotspot/config.before-frame-dongle.json`.
 - Laptop uplink/default route stayed on the built-in adapter.
@@ -66,3 +66,9 @@ for the exact kernel. The built-in Wi-Fi and Frame Control service remain separa
 The live country request resets on reboot unless another service reapplies it;
 configure the real location through normal distro mechanisms, never by bypassing
 regulatory enforcement.
+
+The upstream hostapd version probe was also corrected: missing feature labels are
+unknown, not proof of missing HE/SAE. The installed preflight module was updated,
+with its prior copy preserved at `/var/lib/vr-hotspot/preflight.before-frame-dongle.py`.
+VRhotspot subsequently started the dongle with Wi-Fi 6 enabled at 5 GHz/80 MHz.
+Client negotiation and throughput have not yet been confirmed.
