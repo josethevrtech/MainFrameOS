@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 static int outfd=-1, infd=-1; static pid_t child=-1;
+static bool overlay=false;
 static bool active=false, connected=false; static SDL_Window *window;
 static const char *status="Connecting to Frame...";
 static int mapping[SDL_SCANCODE_COUNT];
@@ -55,10 +56,12 @@ static void start(void) {
     if(!SDL_SetWindowRelativeMouseMode(window,true)) {status="Pointer capture failed. Close and retry."; return;}
     if(!SDL_SetWindowKeyboardGrab(window,true)) {SDL_SetWindowRelativeMouseMode(window,false); status="Keyboard capture failed."; return;}
     sendline("R\n"); active=true; status="CONTROLLING STEAM FRAME";
+    if(overlay) {puts("ACTIVE");fflush(stdout);}
 }
 int main(int argc,char **argv) {
     if(argc!=4) {fprintf(stderr,"Usage: client SSH_KEY USER@HOST REMOTE_RECEIVER\n");return 2;}
     signal(SIGPIPE,SIG_IGN); mapkeys();
+    overlay=getenv("MAINFRAMEOS_INPUT_OVERLAY")!=NULL;
     int to[2],from[2]; if(pipe(to)||pipe(from)) return 2;
     child=fork();
     if(child==0) {
@@ -68,12 +71,13 @@ int main(int argc,char **argv) {
     close(to[0]); close(from[1]); outfd=to[1]; infd=from[0];
     fcntl(outfd,F_SETFL,O_NONBLOCK); fcntl(infd,F_SETFL,O_NONBLOCK);
     if(child<0 || !SDL_Init(SDL_INIT_VIDEO)) return 2;
-    window=SDL_CreateWindow("Control Steam Frame - Ctrl+Alt+Escape releases input",820,430,0);
+    window=SDL_CreateWindow("Control Steam Frame",820,overlay?130:430,overlay?(SDL_WINDOW_BORDERLESS|SDL_WINDOW_ALWAYS_ON_TOP|SDL_WINDOW_UTILITY):0);
     SDL_Renderer *r=window?SDL_CreateRenderer(window,NULL):NULL;
     if(!r) {fprintf(stderr,"SDL: %s\n",SDL_GetError());close(outfd);kill(child,SIGTERM);return 2;}
-    SDL_SetRenderLogicalPresentation(r,410,215,SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    SDL_SetRenderLogicalPresentation(r,410,overlay?65:215,SDL_LOGICAL_PRESENTATION_LETTERBOX);
     Uint64 last_ping=0,last_ack=SDL_GetTicks(); bool running=true; char reply[128], incoming[256]={0}; size_t used=0;
     float mx=0,my=0,wx=0,wy=0;
+    Uint64 born=SDL_GetTicks(); bool started=false;
     while(running) {
         ssize_t got=read(infd,reply,sizeof(reply)-1);
         if(got>0) {
@@ -94,8 +98,9 @@ int main(int argc,char **argv) {
         SDL_Event e;
         while(SDL_PollEvent(&e)) {
             if(e.type==SDL_EVENT_QUIT) {running=false;break;}
-            if(e.type==SDL_EVENT_WINDOW_FOCUS_LOST) {release_input();status="Paused. Click this window, then press Space.";}
-            if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_ESCAPE && (e.key.mod&SDL_KMOD_CTRL) && (e.key.mod&SDL_KMOD_ALT)) {release_input();status="Paused. Input is back on your laptop.";continue;}
+            if(e.type==SDL_EVENT_WINDOW_FOCUS_LOST) {if(overlay && active) running=false;release_input();status="Paused. Click this window, then press Space.";}
+            if(overlay && e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_F11 && !e.key.repeat) {release_input();running=false;continue;}
+            if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_ESCAPE && (e.key.mod&SDL_KMOD_CTRL) && (e.key.mod&SDL_KMOD_ALT)) {release_input();if(overlay) running=false;status="Paused. Input is back on your laptop.";continue;}
             if(!active) {
                 if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_SPACE && !e.key.repeat) start();
                 if(e.type==SDL_EVENT_MOUSE_BUTTON_UP && e.button.button==SDL_BUTTON_LEFT) start();
@@ -118,7 +123,19 @@ int main(int argc,char **argv) {
                 if(x || y) eventline('W',SDL_clamp(x,-120,120),SDL_clamp(y,-120,120));
             }
         }
+        if(overlay && connected && !started && (SDL_GetWindowFlags(window)&SDL_WINDOW_INPUT_FOCUS)) {
+            started=true;start();if(!active) {puts("ERROR: Input capture failed");fflush(stdout);running=false;}
+        }
+        if(overlay && SDL_GetTicks()-born>10000 && !started) {puts("ERROR: Connection or window focus unavailable");fflush(stdout);running=false;}
+        if(overlay && started && !connected) {puts("ERROR: Headset connection lost");fflush(stdout);running=false;}
         SDL_SetRenderDrawColor(r,18,24,33,255);SDL_RenderClear(r);
+        if(overlay) {
+            SDL_SetRenderDrawColor(r,90,235,165,255);
+            SDL_RenderDebugText(r,15,12,active?"STEAM FRAME CONTROL":"CONNECTING TO STEAM FRAME...");
+            SDL_SetRenderDrawColor(r,225,230,240,255);
+            SDL_RenderDebugText(r,15,34,"F11 or Ctrl+Alt+Escape: return to laptop");
+            SDL_RenderPresent(r);SDL_Delay(8);continue;
+        }
         SDL_SetRenderDrawColor(r,active?90:180,active?235:200,active?165:220,255);
         SDL_RenderDebugText(r,18,20,"MAINFRAMEOS / FRAME INPUT");
         SDL_RenderDebugText(r,18,52,status);
