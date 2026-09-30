@@ -44,7 +44,7 @@ replug, fresh boot and suspend/resume have not yet been qualified.
   NetworkManager's ownership. An earlier immediate handoff failed and hostapd crashed
   during cleanup. The normal VRhotspot lifecycle then started/stopped successfully.
 - VRhotspot inventory recommended the USB adapter; configuration selects it explicitly,
-  with owner-selected SSID/password, no internet sharing and
+  with owner-selected SSID/password, internet sharing enabled and
   no boot-time hotspot autostart. Original config is backed up root-only at
   `/var/lib/vr-hotspot/config.before-frame-dongle.json`.
 - Laptop uplink/default route stayed on the built-in adapter.
@@ -53,7 +53,7 @@ replug, fresh boot and suspend/resume have not yet been qualified.
   client requires a separate pairing/control implementation.
 
 No SteamOS performance parity, improvement, complete Steam-independent headset
-runtime, or general distro support is claimed. Association/DHCP, latency/throughput,
+runtime, or general distro support is claimed. The owner confirmed client association during the initial offline test. DHCP/internet, latency/throughput,
 replug and sleep qualification are separate from successful AP startup. The
 VRhotspot diagnostic and portability notes are maintained upstream.
 
@@ -61,7 +61,7 @@ VRhotspot diagnostic and portability notes are maintained upstream.
 
 Stop the VRhotspot hotspot first. Restore only the backed-up VRhotspot config if
 needed, then unload `rtw89_8852cu`, `rtw89_8852c`, `rtw89_usb`, `rtw89_core` once no
-interface uses them. Remove only the four added modules/directory and run `depmod -a`
+interface uses them. Remove only the added driver modules and the separately added `xt_MASQUERADE.ko` and run `depmod -a`
 for the exact kernel. The built-in Wi-Fi and Frame Control service remain separate.
 The live country request resets on reboot unless another service reapplies it;
 configure the real location through normal distro mechanisms, never by bypassing
@@ -71,4 +71,39 @@ The upstream hostapd version probe was also corrected: missing feature labels ar
 unknown, not proof of missing HE/SAE. The installed preflight module was updated,
 with its prior copy preserved at `/var/lib/vr-hotspot/preflight.before-frame-dongle.py`.
 VRhotspot subsequently started the dongle with Wi-Fi 6 enabled at 5 GHz/80 MHz.
-Client negotiation and throughput have not yet been confirmed.
+Client association was confirmed by the owner; negotiated rates and throughput have not been qualified.
+
+## Internet sharing repair
+
+The initial offline test deliberately omitted routing. Internet sharing was then
+requested by the owner. The first routed start failed with iptables reporting
+`Extension MASQUERADE revision 0 not supported` and `RULE_INSERT failed`.
+The running kernel provided native nftables masquerading but omitted the
+`CONFIG_NETFILTER_XT_TARGET_MASQUERADE` compatibility module used by this lnxrouter
+installation. This was a host kernel prerequisite, not a wireless width failure,
+although the backend's final reported error incorrectly pointed to AP width.
+
+Built the unchanged `net/netfilter/xt_MASQUERADE.c` from the same immutable kernel
+source above (GPL), in a private directory with `obj-m += xt_MASQUERADE.o`:
+
+```sh
+make -C /lib/modules/"$(uname -r)"/build M=/absolute/private/nat modules
+sudo install -m 0644 /absolute/private/nat/xt_MASQUERADE.ko \
+  /lib/modules/"$(uname -r)"/updates/mainframeos-frame-dongle/
+sudo depmod -a
+sudo modprobe xt_MASQUERADE
+```
+
+A masquerade rule insertion passed in a disposable network namespace. After
+stopping the daemon, reloading `rtw89_8852cu` cleared a queue-flush timeout from the
+failed attempts. Restarting the daemon and hotspot succeeded. Verified IPv4
+forwarding enabled, subnet-scoped masquerading and forwarding rules, and DHCP/DNS
+input allowances. UFW remains active and the laptop's home Wi-Fi remains its
+default route. End-to-end headset internet access is awaiting confirmation.
+
+The config persists `enable_internet=true`; hotspot autostart remains disabled.
+The compatibility module applies only to the current kernel ABI; a future image
+must include the corresponding Kconfig option. To roll back only internet sharing,
+set `enable_internet=false` through VRhotspot and restart the hotspot; its managed
+NAT rules are removed on stop. Stop the hotspot before removing the added module
+and running `depmod -a`. No boot artifacts were replaced.
